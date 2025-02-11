@@ -38,6 +38,9 @@ class Trabajador
     #[ORM\OneToMany(targetEntity: Cita::class, mappedBy: 'trabajador')]
     private Collection $citas;
 
+    #[ORM\Column(length: 255)]
+    private ?string $contrasenya = null;
+
     public function __construct()
     {
         $this->citas = new ArrayCollection();
@@ -134,6 +137,18 @@ class Trabajador
                 $cita->setTrabajador(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getContrasenya(): ?string
+    {
+        return $this->contrasenya;
+    }
+
+    public function setContrasenya(string $contrasenya): static
+    {
+        $this->contrasenya = $contrasenya;
 
         return $this;
     }

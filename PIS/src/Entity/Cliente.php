@@ -41,6 +41,9 @@ class Cliente
     #[ORM\OneToMany(targetEntity: Cita::class, mappedBy: 'cliente')]
     private Collection $citas;
 
+    #[ORM\Column(length: 255)]
+    private ?string $contrasenya = null;
+
     public function __construct()
     {
         $this->opinions = new ArrayCollection();
@@ -156,6 +159,18 @@ class Cliente
                 $cita->setCliente(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getContraseña(): ?string
+    {
+        return $this->contrasenya;
+    }
+
+    public function setContraseña(string $contrasenya): static
+    {
+        $this->contrasenya = $contrasenya;
 
         return $this;
     }
