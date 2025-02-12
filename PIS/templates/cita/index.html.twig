@@ -1,20 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CitaController!{% endblock %}
+{% block title %}Cita index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Cita index</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Precio</th>
+                <th>Pagado</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for citum in citas %}
+            <tr>
+                <td>{{ citum.id }}</td>
+                <td>{{ citum.fecha ? citum.fecha|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ citum.precio }}</td>
+                <td>{{ citum.pagado ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_cita_show', {'id': citum.id}) }}">show</a>
+                    <a href="{{ path('app_cita_edit', {'id': citum.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/carlo/OneDrive/Documentos/DAW2/Proyecto/PIS/src/Controller/CitaController.php</code></li>
-        <li>Your template at <code>C:/Users/carlo/OneDrive/Documentos/DAW2/Proyecto/PIS/templates/cita/index.html.twig</code></li>
-    </ul>
-</div>
+    <a href="{{ path('app_cita_new') }}">Create new</a>
 {% endblock %}
