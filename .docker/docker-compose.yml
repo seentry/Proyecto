@@ -1,4 +1,5 @@
 version: "3.7"
+
 services:
   server-php:
     container_name: servidor_php_proyecto_final
@@ -13,14 +14,27 @@ services:
       - mariadb-server
     ports:
       - "8000:8000"
+
   mariadb-server:
     container_name: servidor_db_proyecto_final
     image: mariadb
     ports:
-      - "3306:3306"
+      - "3307:3306"
     restart: unless-stopped
     environment:
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ../.db_mysql/:/var/lib/mysql
+
+  phpmyadmin:
+    container_name: phpmyadmin_proyecto_final
+    image: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mariadb-server
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - mariadb-server
