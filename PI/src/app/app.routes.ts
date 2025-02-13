@@ -4,6 +4,8 @@ import { ContactoComponent } from './views/contacto/contacto.component';
 import { TiendaComponent } from './views/tienda/tienda.component';
 import { ReservaComponent } from './views/reserva/reserva.component';
 import { CentroComponent } from './views/centro/centro.component';
+import { IniciarSesionComponent } from './views/iniciar-sesion/iniciar-sesion.component';
+import { RegistrarseComponent } from './views/registrarse/registrarse.component';
 
 export const routes: Routes = [
     {path: 'inicio', component: InicioComponent},
@@ -11,6 +13,8 @@ export const routes: Routes = [
     {path: 'tienda', component: TiendaComponent},
     {path: 'reserva', component: ReservaComponent},
     {path: 'contacto', component: ContactoComponent},
+    {path: 'inicio_sesion', component: IniciarSesionComponent},
+    {path: 'registrarse', component: RegistrarseComponent},
 
     {path: '', redirectTo: 'inicio', pathMatch: 'full'},
 ];
