@@ -1,12 +1,24 @@
 <div class="container-fluid p-0">
-    <header class="d-flex flex-column align-items-center py-3 justify-content-center" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('../img/fondo2.jpg'); height: 100vh; background-size: cover;">
-        <app-header></app-header>
-    </header>
-  <router-outlet />
-    <footer class="mt-5 bg-dark text-light py-5">
-        <app-footer></app-footer>
-    </footer>
+  <header class="d-flex flex-column align-items-center py-3 justify-content-center" 
+          style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('../img/fondo2.jpg'); height: 100vh; background-size: cover;">
+    
+          @if (isHomePage) {
+            <app-header-inicio></app-header-inicio>
+          }
+          
+          @if (!isHomePage) {
+            <app-header></app-header>
+          }
+    
+  </header>
+
+  <router-outlet></router-outlet>
+
+  <footer class="mt-5 bg-dark text-light py-5">
+    <app-footer></app-footer>
+  </footer>
 </div>
+
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
