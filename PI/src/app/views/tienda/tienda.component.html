@@ -1,0 +1,11 @@
+<h1 class="text-center my-4">PRODUCTOS</h1>
+
+<section class="container">
+    <div class="row justify-content-center">
+        @for (producto of productos; track producto) {
+            <div class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex justify-content-center mb-5">
+                <app-card></app-card>
+            </div>
+        }
+    </div>
+</section>

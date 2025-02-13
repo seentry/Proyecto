@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-
 class CitaController extends AbstractController
 {
     #[Route('/cita', name: 'citas', methods: 'GET', format: 'json')]
