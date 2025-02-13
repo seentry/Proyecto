@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files 
 #form {
     width: 250px;
     margin: 0 auto;
@@ -34,3 +34,4 @@ label:hover~label {
 input[type="radio"]:checked~label {
     color: orange;
 }
+*/
