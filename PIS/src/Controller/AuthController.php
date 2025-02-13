@@ -17,7 +17,7 @@ class AuthController extends AbstractController
         // Get data from body
         $parameters = json_decode($request->getContent(), true);
         $email = $parameters['email'];
-        $password = $parameters['password'];
+        $password = $parameters['contrasenya'];
 
         // Hash password
         $password = md5($password);
@@ -25,12 +25,12 @@ class AuthController extends AbstractController
         // Comprobar datos en tabla Trabajador y Cliente
         $resultado = $entityManager->getRepository(Trabajador::class)->findOneBy(['email' => $email, 'contrasenya' => $password]);
         if($resultado != null){
-            return $this->json($resultado, Response::HTTP_OK);
+            return $this->json($resultado, Response::HTTP_OK,[],['groups' => ['login']]);
         }
 
         $resultado = $entityManager->getRepository(Cliente::class)->findOneBy(['email' => $email, 'contrasenya' => $password]);
         if($resultado != null){
-            return $this->json($resultado, Response::HTTP_OK);
+            return $this->json($resultado, Response::HTTP_OK,[],['groups' => ['login']]);
         }
 
         return new Response('ERROR: DATOS INCORRECTOS', Response::HTTP_UNAUTHORIZED);

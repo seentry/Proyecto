@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CitaRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CitaRepository::class)]
 class Cita
@@ -12,23 +13,29 @@ class Cita
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('cita')]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups('cita')]
     private ?\DateTimeInterface $fecha = null;
 
     #[ORM\Column]
+    #[Groups('cita')]
     private ?float $precio = null;
 
     #[ORM\Column]
+    #[Groups('cita')]
     private ?bool $pagado = null;
 
     #[ORM\ManyToOne(inversedBy: 'citas')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('citaCliente')]
     private ?Cliente $cliente = null;
 
     #[ORM\ManyToOne(inversedBy: 'citas')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups('citaTrabajador')]
     private ?Trabajador $trabajador = null;
 
     public function getId(): ?int

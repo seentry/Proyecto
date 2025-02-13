@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\OpinionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: OpinionRepository::class)]
 class Opinion
@@ -11,18 +12,23 @@ class Opinion
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('opinion')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('opinion')]
     private ?string $descripcion = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('opinion')]
     private ?string $titulo = null;
 
     #[ORM\Column]
+    #[Groups('opinion')]
     private ?int $valoracion = null;
 
     #[ORM\ManyToOne(inversedBy: 'opinions')]
+    #[Groups('opinionCliente')]
     private ?Cliente $cliente = null;
 
     public function getId(): ?int

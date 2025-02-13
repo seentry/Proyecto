@@ -6,6 +6,7 @@ use App\Repository\ClienteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ClienteRepository::class)]
 class Cliente
@@ -13,33 +14,35 @@ class Cliente
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['cliente','login'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('cliente')]
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('cliente')]
     private ?string $apellidos = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['cliente','login'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 9)]
+    #[Groups('cliente')]
     private ?string $dni = null;
 
-    /**
-     * @var Collection<int, Opinion>
-     */
     #[ORM\OneToMany(targetEntity: Opinion::class, mappedBy: 'cliente')]
+    #[Groups('clienteOpinions')]
     private Collection $opinions;
 
-    /**
-     * @var Collection<int, Cita>
-     */
     #[ORM\OneToMany(targetEntity: Cita::class, mappedBy: 'cliente')]
+    #[Groups('clienteCitas')]
     private Collection $citas;
 
     #[ORM\Column(length: 255)]
+    #[Groups('cliente')]
     private ?string $contrasenya = null;
 
     public function __construct()
