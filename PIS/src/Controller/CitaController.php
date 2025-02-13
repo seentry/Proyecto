@@ -3,79 +3,56 @@
 namespace App\Controller;
 
 use App\Entity\Cita;
-use App\Form\CitaType;
-use App\Repository\CitaRepository;
+use App\Entity\Cliente;
+use DateMalformedStringException;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/cita')]
-final class CitaController extends AbstractController
+class CitaController extends AbstractController
 {
-    #[Route(name: 'app_cita_index', methods: ['GET'])]
-    public function index(CitaRepository $citaRepository): Response
+    #[Route('/cita', name: 'citas', methods: 'GET', format: 'json')]
+    public function getAllCitas(EntityManagerInterface $entityManager): JsonResponse
     {
-        return $this->render('cita/index.html.twig', [
-            'citas' => $citaRepository->findAll(),
-        ]);
+        $citas = $entityManager->getRepository(Cita::class)->findAll();
+        return $this->json(
+            $citas,
+            200,
+            [],
+            ['groups' => ['cita', 'citaCliente', 'cliente','citaTrabajador','trabajador']]
+        );
     }
 
-    #[Route('/new', name: 'app_cita_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/cita', name: 'citaCreate', methods: 'POST', format: 'json')]
+    public function createCita(EntityManagerInterface $entityManager, Request $request): Response
     {
-        $citum = new Cita();
-        $form = $this->createForm(CitaType::class, $citum);
-        $form->handleRequest($request);
+        $requestContent = json_decode($request->getContent(), true);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($citum);
-            $entityManager->flush();
+        $cita = new Cita();
+        try {
+            $cita->setFecha(new DateTime($requestContent['fecha']));
+        } catch (DateMalformedStringException $e) {
+            return new Response('ERROR: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+        $cita->setPrecio($requestContent['precio']);
+        $cita->setPagado(false);
+        try {
 
-            return $this->redirectToRoute('app_cita_index', [], Response::HTTP_SEE_OTHER);
+            $cita->setCliente($entityManager->getRepository(Cliente::class)->find($requestContent['cliente']));
+            if ($cita->getCliente() == null) {
+                return new Response('ERROR: ' . 'El cliente no existe', Response::HTTP_NOT_FOUND);
+            }
+        } catch (Exception $e) {
+            return new Response('ERROR: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->render('cita/new.html.twig', [
-            'citum' => $citum,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_cita_show', methods: ['GET'])]
-    public function show(Cita $citum): Response
-    {
-        return $this->render('cita/show.html.twig', [
-            'citum' => $citum,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_cita_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Cita $citum, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(CitaType::class, $citum);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_cita_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('cita/edit.html.twig', [
-            'citum' => $citum,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_cita_delete', methods: ['POST'])]
-    public function delete(Request $request, Cita $citum, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$citum->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($citum);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_cita_index', [], Response::HTTP_SEE_OTHER);
+        $entityManager->persist($cita);
+        $entityManager->flush();
+        return new Response('CITA CREADA', Response::HTTP_CREATED);
     }
 }

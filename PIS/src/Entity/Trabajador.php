@@ -2,41 +2,51 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TrabajadorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TrabajadorRepository::class)]
-#[ApiResource]
 class Trabajador
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['trabajador','login'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('trabajador')]
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('trabajador')]
     private ?string $apellidos = null;
 
     #[ORM\Column(length: 9)]
+    #[Groups('trabajador')]
     private ?string $dni = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['trabajador','login'])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups('trabajador')]
     private ?float $salario = null;
 
     /**
      * @var Collection<int, Cita>
      */
     #[ORM\OneToMany(targetEntity: Cita::class, mappedBy: 'trabajador')]
+    #[Groups('trabajadorCitas')]
     private Collection $citas;
+
+    #[ORM\Column(length: 255)]
+    #[Groups('trabajador')]
+    private ?string $contrasenya = null;
 
     public function __construct()
     {
@@ -134,6 +144,18 @@ class Trabajador
                 $cita->setTrabajador(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getContrasenya(): ?string
+    {
+        return $this->contrasenya;
+    }
+
+    public function setContrasenya(string $contrasenya): static
+    {
+        $this->contrasenya = $contrasenya;
 
         return $this;
     }

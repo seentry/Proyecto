@@ -2,29 +2,33 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ServicioRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ServicioRepository::class)]
-#[ApiResource]
 class Servicio
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('servicio')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('servicio')]
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('servicio')]
     private ?string $descripcion = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('servicio')]
     private ?int $stock = null;
 
     #[ORM\Column]
+    #[Groups('servicio')]
     private ?float $precio = null;
 
     public function getId(): ?int
