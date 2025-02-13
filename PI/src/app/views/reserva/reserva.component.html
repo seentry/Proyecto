@@ -2,26 +2,26 @@
     <h2 class="text-center fw-bold">Reserva tu Cita</h2>
     
     <section class="mt-4">
-        <form class="card p-4 mx-auto" style="max-width: 600px; background: transparent; border: none;">
+        <form (ngSubmit)="onSubmit()" [formGroup]="reactiveForm" class="card p-4 mx-auto" style="max-width: 600px; background: transparent; border: none;">
             <label for="tipoReserva" class="form-label fw-bold text-dark">¿Qué quieres reservar?</label>
-            <select id="tipoReserva" class="form-select mb-3">
+            <select id="tipoReserva" class="form-select mb-3" formControlName="tipoReserva">
                 <option value="servicio">Servicio</option>
                 <option value="producto">Producto</option>
                 <option value="evento">Evento</option>
             </select>
 
             <label for="opcionAdicional" class="form-label fw-bold text-dark">Selecciona una opción adicional</label>
-            <select id="opcionAdicional" class="form-select mb-3">
+            <select id="opcionAdicional" class="form-select mb-3" formControlName="opcionAdicional">
                 <option value="opcion1">Opción 1</option>
                 <option value="opcion2">Opción 2</option>
                 <option value="opcion3">Opción 3</option>
             </select>
             
             <label for="fechaHora" class="form-label fw-bold text-dark">Selecciona fecha y hora</label>
-            <input type="datetime-local" id="fechaHora" class="form-control mb-3">
+            <input type="datetime-local" id="fechaHora" class="form-control mb-3" formControlName="fechaHora">
             
             <label for="comentario" class="form-label fw-bold text-dark">¿Algún comentario sobre la reserva?</label>
-            <textarea id="comentario" class="form-control" rows="4" placeholder="Escribe aquí tus comentarios..."></textarea>
+            <textarea id="comentario" class="form-control" rows="4" placeholder="Escribe aquí tus comentarios..." formControlName="comentario"></textarea>
             
             <button type="submit" class="btn btn-primary mt-3">Enviar Reserva</button>
         </form>
