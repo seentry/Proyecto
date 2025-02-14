@@ -11,4 +11,6 @@ import { HeaderInicioComponent } from '../header-inicio/header-inicio.component'
 })
 export class HeaderComponent {
 
+
+  public inicio: boolean = true;
 }
