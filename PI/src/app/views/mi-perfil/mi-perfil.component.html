@@ -1,1 +1,57 @@
-<p>mi-perfil works!</p>
+<div class="profile-container">
+    <h2>Mi Perfil</h2>
+  
+    <!-- Imagen de perfil -->
+    <div class="profile-picture">
+      <img [src]="userProfile.photoUrl || 'assets/default-profile.png'" alt="Foto de perfil">
+    </div>
+  
+    <!-- Información del usuario -->
+    <div class="profile-info">
+      <p><strong>Nombre:</strong> {{ userProfile.name }}</p>
+      <p><strong>Apellidos:</strong> {{ userProfile.surname }}</p>
+      <p><strong>Email:</strong> {{ userProfile.email }}</p>
+      <p><strong>DNI:</strong> {{ userProfile.dni }}</p>
+      <p><strong>Fecha de Nacimiento:</strong> {{ userProfile.birthDate }}</p>
+    </div>
+  
+    <!-- Botón para editar perfil -->
+    <button class="edit-btn" (click)="editProfile()">Editar Perfil</button>
+  </div>
+  
+
+  <h1>Mis citas:</h1>
+  <br>
+  <div class="appointments-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+          <th>Servicio</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (userAppointments.length === 0) {
+          <tr>
+            <td colspan="6">No tienes citas programadas.</td>
+          </tr>
+        }
+        @for (appointment of userAppointments; track appointment) {
+          <tr>
+            <td>{{ appointment.id }}</td>
+            <td>{{ appointment.date }}</td>
+            <td>{{ appointment.time }}</td>
+            <td>{{ appointment.service }}</td>
+            <td>{{ appointment.status }}</td>
+            <td>
+              <button class="cancel-btn" (click)="cancelAppointment(appointment.id)">Cancelar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
