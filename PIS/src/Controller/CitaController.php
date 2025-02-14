@@ -57,6 +57,16 @@ class CitaController extends AbstractController
             return new Response('ERROR: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
+        if ($requestContent['trabajador'] != null) {
+            try {
+                $cita->setTrabajador($entityManager->getRepository(Usuario::class)->find($requestContent['trabajador']));
+            } catch (Exception $e) {
+                return new Response('ERROR: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+        }else{
+            $cita->setTrabajador(null);
+        }
+
         $entityManager->persist($cita);
         $entityManager->flush();
         return new Response('CITA CREADA', Response::HTTP_CREATED);
