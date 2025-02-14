@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends AbstractController
 {
-    #[Route('/login', name: 'login', methods: ['POST'])]
+    #[Route('/auth/login', name: 'login', methods: ['POST'])]
     public function login(Request $request, EntityManagerInterface $entityManager): Response{
         // Get data from body
         $parameters = json_decode($request->getContent(), true);
@@ -34,5 +34,36 @@ class AuthController extends AbstractController
         }
 
         return new Response('ERROR: DATOS INCORRECTOS', Response::HTTP_UNAUTHORIZED);
+    }
+
+    // Función para que el usuario pueda modificar la contraseña
+    #[Route('/auth/change-password', name: 'changePassword', methods: ['POST'])]
+    public function changePassword(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $parameters = json_decode($request->getContent(), true);
+        $email = $parameters['email'];
+        $password = $parameters['contrasenya'];
+        $password = md5($password);
+
+        // Buscar en trabajador
+        $trabajador = $entityManager->getRepository(Trabajador::class)->findOneBy(['email' => $email]);
+        if($trabajador != null){
+            $trabajador->setContrasenya($password);
+            $entityManager->persist($trabajador);
+            $entityManager->flush();
+            return $this->json('CONTRASEÑA CAMBIADA', Response::HTTP_OK);
+        }
+
+        // Buscar en cliente
+        $cliente = $entityManager->getRepository(Cliente::class)->findOneBy(['email' => $email]);
+        if($cliente != null){
+            $cliente->setContrasenya($password);
+            $entityManager->persist($cliente);
+            $entityManager->flush();
+            return $this->json('CONTRASEÑA CAMBIADA', Response::HTTP_OK);
+        }
+
+        return $this->json('USUARIO INCORRECTO', Response::HTTP_UNAUTHORIZED);
+
     }
 }

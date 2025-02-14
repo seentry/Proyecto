@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CitaController extends AbstractController
 {
-    #[Route('/cita', name: 'citas', methods: 'GET', format: 'json')]
+    #[Route('/api/cita', name: 'citas', methods: 'GET', format: 'json')]
     public function getAllCitas(EntityManagerInterface $entityManager): JsonResponse
     {
         $citas = $entityManager->getRepository(Cita::class)->findAll();
@@ -27,8 +27,13 @@ class CitaController extends AbstractController
             ['groups' => ['cita', 'citaCliente', 'cliente','citaTrabajador','trabajador']]
         );
     }
+    #[Route('/api/cita/{id}', name: 'cita', methods: 'GET', format: 'json')]
+    public function getCita(Cita $cita): JsonResponse
+    {
+        return $this->json($cita,Response::HTTP_OK,[],['groups' => ['cita', 'citaCliente', 'cliente','citaTrabajador','trabajador']]);
+    }
 
-    #[Route('/cita', name: 'citaCreate', methods: 'POST', format: 'json')]
+    #[Route('/api/cita', name: 'citaCreate', methods: 'POST', format: 'json')]
     public function createCita(EntityManagerInterface $entityManager, Request $request): Response
     {
         $requestContent = json_decode($request->getContent(), true);
@@ -54,5 +59,20 @@ class CitaController extends AbstractController
         $entityManager->persist($cita);
         $entityManager->flush();
         return new Response('CITA CREADA', Response::HTTP_CREATED);
+    }
+    #[Route('/api/cita/modificar-fecha', name: 'citaChangeTime', methods: 'POST', format: 'json')]
+    public function changeTimeCita(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $requestContent = json_decode($request->getContent(), true);
+        $cita = $entityManager->getRepository(Cita::class)->find($requestContent['id']);
+        try {
+            $cita->setFecha(new DateTime($requestContent['fecha']));
+        } catch (DateMalformedStringException $e) {
+            return new Response('ERROR: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+
+        $entityManager->persist($cita);
+        $entityManager->flush();
+        return new Response('CITA MODIFICADA', Response::HTTP_OK);
     }
 }

@@ -12,13 +12,13 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ClienteController extends AbstractController
 {
-    #[Route('/cliente', name: 'cliente', methods: 'GET', format: 'json')]
+    #[Route('/api/cliente', name: 'cliente', methods: 'GET', format: 'json')]
     public function getAllClientes(EntityManagerInterface $entityManager): JsonResponse
     {
         $trabajadores = $entityManager->getRepository(Cliente::class)->findAll();
         return $this->json($trabajadores, 200, [], ['groups' => ['cliente']]);
     }
-    #[Route('/cliente', name: 'clienteCreate', methods: 'POST', format: 'json')]
+    #[Route('/api/cliente', name: 'clienteCreate', methods: 'POST', format: 'json')]
     public function createCliente(EntityManagerInterface $entityManager, Request $request): JsonResponse
     {
         $requestContent = json_decode($request->getContent(), true);

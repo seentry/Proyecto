@@ -11,13 +11,13 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class TrabajadorController extends AbstractController
 {
-    #[Route('/trabajador', name: 'trabajador', methods: 'GET', format: 'json')]
+    #[Route('/api/trabajador', name: 'trabajador', methods: 'GET', format: 'json')]
     public function getAllTrabajadores(EntityManagerInterface $entityManager): JsonResponse
     {
         $trabajadores = $entityManager->getRepository(Trabajador::class)->findAll();
         return $this->json($trabajadores, 200, [], ['groups' => ['trabajador']]);
     }
-    #[Route('/trabajador', name: 'trabajadorCreate', methods: 'POST', format: 'json')]
+    #[Route('/api/trabajador', name: 'trabajadorCreate', methods: 'POST', format: 'json')]
     public function createTrabajador(EntityManagerInterface $entityManager, Request $request): JsonResponse
     {
         $requestContent = json_decode($request->getContent(), true);
