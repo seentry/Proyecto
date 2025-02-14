@@ -123,10 +123,13 @@ class Usuario
         return $this->rol;
     }
 
+    //MODIFICADO PARA PERMITIR LA INSERCION DE DATOS
     public function setRol(string $rol): static
     {
         $this->rol = $rol;
+        return $this; // Esto soluciona el problema
     }
+
 
     /**
      * @return Collection<int, Cita>

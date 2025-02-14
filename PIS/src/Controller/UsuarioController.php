@@ -16,13 +16,16 @@ class UsuarioController extends AbstractController
     public function getAllUsuarios(EntityManagerInterface $entityManager): JsonResponse
     {
         $usuarios = $entityManager->getRepository(Usuario::class)->findAll();
-        return $this->json($usuarios, Response::HTTP_OK, [], ['groups' => ['usuarios']]);
+
+        // Modificacion de usuarios a usuario
+        return $this->json($usuarios, Response::HTTP_OK, [], ['groups' => ['usuario']]);
     }
 
     #[Route('/api/usuario/{id}', name: 'usuario', methods: 'GET', format: 'json')]
     public function getUsuario(Usuario $usuario): JsonResponse
     {
-        return $this->json($usuario, Response::HTTP_OK, [], ['groups' => ['usuarios']]);
+        // Modificacion de usuarios a usuario
+        return $this->json($usuario, Response::HTTP_OK, [], ['groups' => ['usuario']]);
     }
 
     #[Route('/api/usuario', name: 'usuarioCreate', methods: 'POST', format: 'json')]
@@ -40,6 +43,9 @@ class UsuarioController extends AbstractController
 
         $entityManager->persist($usuario);
         $entityManager->flush();
-        return $this->json($usuario, Response::HTTP_CREATED, [], ['groups' => ['usuarios']]);
+
+        // Modificacion de usuarios a usuario
+        return $this->json($usuario, Response::HTTP_CREATED, [], ['groups' => ['usuario']]);
     }
+
 }

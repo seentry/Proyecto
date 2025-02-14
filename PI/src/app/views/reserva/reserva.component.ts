@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { RequestService } from '../../services/request.service';
 import { HttpClient } from '@angular/common/http';
-import { Cita } from '../../models/response.interfaceCita';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
-import { Trabajador } from '../../models/response.interfaceTrabajador';
+import { Servicio, Cita, Usuario } from '../../models/response.interface';
 
 @Component({
   selector: 'app-reserva',
@@ -15,12 +14,11 @@ export class ReservaComponent {
 
   constructor(private service: RequestService) { }
 
-  public servicios: any[] = [];
-  private apiUrl: string = 'http://localhost:8000/cita';
+  public servicios: Servicio[] = [];
+  private apiUrl: string = 'http://localhost:8000/api/cita';
 
-  private apiTrabajadorUrl: string = 'http://localhost:8000/trabajador';
-  public trabajadores: Trabajador[] = [];
-
+  private apiUsuarioUrl: string = 'http://localhost:8000/api/usuario'; 
+  public trabajadores: Usuario[] = [];
 
   public options: string[][] = [
     ['Limpieza facial', 'Hidratación facial', 'Tratamiento antiarrugas'], 
@@ -30,18 +28,16 @@ export class ReservaComponent {
   ];
 
   public specificOptions: string[] = [];
-
   public price: number = 0;
-  public worker: number = 0;
+  public worker: Usuario | null = null;
+  public currentUser: Usuario | null = null;  
 
   ngOnInit(): void {
     this.getServicios();
-    this.getTrabajadores();
-    this.selectWorker();
+    this.getUsuarios();
   }
 
   public actualizarOpciones(): void {
-  
     const tipo = this.reactiveForm.value.tipoReserva;
   
     if (tipo === 'facial') {
@@ -57,25 +53,25 @@ export class ReservaComponent {
     }
   }
 
-
   public getServicios(): void {
     this.service.getServicios(this.apiUrl).subscribe((response) => {
-      console.log(response);
       this.servicios = response;
+      console.log(response);
     }, (error) => {
       console.error("Error al obtener servicios:", error);
     });
   }
 
-  public getTrabajadores(): void {
-    this.service.getTrabajadores(this.apiTrabajadorUrl).subscribe((response) => {
-        this.trabajadores = response;
-        this.selectWorker();
-      }
-    );
+  public getUsuarios(): void {
+    this.service.getUsuarios(this.apiUsuarioUrl).subscribe((response) => {
+      this.trabajadores = response.filter(user => user.rol === "ROL_TRABAJADOR");
+      this.currentUser = response.find(user => user.rol === "ROL_CLIENTE") || null;
+      console.log(response);
+      this.selectWorker();
+    }, (error) => {
+      console.error("Error al obtener usuarios:", error);
+    });
   }
-  
-  
 
   reactiveForm = new FormGroup({
     tipoReserva: new FormControl(''),   
@@ -102,7 +98,6 @@ export class ReservaComponent {
       case 'Tratamiento antiarrugas':
         this.price = 50;
         break;
-      
       case 'Masaje reductivo':
         this.price = 40;
         break;
@@ -112,7 +107,6 @@ export class ReservaComponent {
       case 'Drenaje linfático':
         this.price = 50;
         break;
-      
       case 'Depilación láser':
         this.price = 60;
         break;
@@ -122,7 +116,6 @@ export class ReservaComponent {
       case 'Rejuvenecimiento con luz pulsada':
         this.price = 70;
         break;
-      
       case 'Manicure spa':
         this.price = 25;
         break;
@@ -132,7 +125,6 @@ export class ReservaComponent {
       case 'Diseño personalizado':
         this.price = 35;
         break;
-  
       default:
         this.price = 0; 
         break;
@@ -142,24 +134,31 @@ export class ReservaComponent {
   public selectWorker(): void {
     if (this.trabajadores.length > 0) {
       const randomIndex = Math.floor(Math.random() * this.trabajadores.length);
-      this.worker = this.trabajadores[randomIndex].id; 
+      this.worker = this.trabajadores[randomIndex]; 
     }
   }
   
   public crearCita(): void {
     const nuevaCita: Cita = {
-      fecha: this.reactiveForm.value.fechaHora ? this.reactiveForm.value.fechaHora : "",  // Si no hay fecha, usa una cadena vacía
+      fecha: this.reactiveForm.value.fechaHora ?? "", // Asegura que sea un string
       precio: this.price,
-      pagado: Boolean(this.reactiveForm.value.pagoEfectivo),  
-      cliente: 1,  
-      trabajador: this.worker  
+      pagado: !!this.reactiveForm.value.pagoEfectivo,
+      cliente: this.currentUser?.id ?? 0, 
+      trabajador: this.worker?.id ?? 0
     };
+    
+  
+    console.log("Datos enviados");  
   
     this.service.postCita(this.apiUrl, nuevaCita).subscribe(
       (response) => console.log('Cita creada con éxito:', response),
       (error) => console.error('Error al crear cita:', error)
     );
   }
+  
+  
+  
+  
+  
 
 }
-

@@ -25,7 +25,6 @@ class CitaController extends AbstractController
             200,
             [],
             ['groups' => ['cita', 'citaCliente', 'cliente', 'citaTrabajador', 'trabajador']]
-            ['groups' => ['cita', 'citaCliente', 'cliente', 'citaTrabajador', 'trabajador']]
         );
     }
 
@@ -41,28 +40,19 @@ class CitaController extends AbstractController
         $requestContent = json_decode($request->getContent(), true);
 
         $cita = new Cita();
-
         try {
             $cita->setFecha(new DateTime($requestContent['fecha']));
-        } catch (Exception $e) { // 🔹 Se cambió DateMalformedStringException por Exception, ya que la anterior no existe en PHP
-            return new Response('ERROR: Formato de fecha inválido', Response::HTTP_BAD_REQUEST);
+        } catch (DateMalformedStringException $e) {
+            return new Response('ERROR: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
-
         $cita->setPrecio($requestContent['precio']);
         $cita->setPagado(false);
-
         try {
 
             $cita->setCliente($entityManager->getRepository(Usuario::class)->find($requestContent['cliente']));
             if ($cita->getCliente() == null) {
                 return new Response('ERROR: ' . 'El cliente no existe', Response::HTTP_NOT_FOUND);
             }
-            if (!$trabajador) { // 🔹 Se añadió esta validación para evitar que trabajador_id sea NULL
-                return new Response('ERROR: El trabajador no existe', Response::HTTP_NOT_FOUND);
-            }
-
-            $cita->setCliente($cliente);
-            $cita->setTrabajador($trabajador); //Se añade el campo de trabajador, ya que la entidad cuenta con una relaicon con trabajador
         } catch (Exception $e) {
             return new Response('ERROR: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }

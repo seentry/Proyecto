@@ -77,27 +77,31 @@ class Cita
         return $this;
     }
 
-    public function getCliente(): ?Cliente
+    //MODIFICADO
+    public function getCliente(): ?Usuario
     {
         return $this->cliente;
     }
 
-    public function setCliente(?Cliente $cliente): static
+    //MODIFICADO
+    public function setCliente(?Usuario $cliente): static
     {
         $this->cliente = $cliente;
-
         return $this;
     }
 
-    public function getTrabajador(): ?Trabajador
+
+    //MODIFICADO
+    public function getTrabajador(): ?Usuario
     {
         return $this->trabajador;
     }
 
-    public function setTrabajador(?Trabajador $trabajador): static
+    //MODIFICADO
+    public function setTrabajador(?Usuario $trabajador): static
     {
         $this->trabajador = $trabajador;
-
         return $this;
     }
+
 }
