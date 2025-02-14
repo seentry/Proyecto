@@ -65,27 +65,3 @@ export class ReservaComponent {
 
 }
 
-  /*
-  public crearCita(): void {
-    const nuevaCita: any = {
-      fecha: '2024-02-15T10:30:00',
-      precio: 50,
-      cliente: 1, // ✅ Cliente es obligatorio
-    };
-  
-    // Solo incluir trabajador si tiene un valor definido
-    const trabajadorId = 1; // O el valor real del trabajador
-    if (trabajadorId) {
-      nuevaCita.trabajador = trabajadorId;
-    }
-  
-    this.service.postCita(this.apiUrl, nuevaCita).subscribe(
-      (response) => {
-        console.log('Cita creada con éxito:', response);
-      },
-      (error) => {
-        console.error('Error al crear cita:', error);
-      }
-    );
-  }
-  */
