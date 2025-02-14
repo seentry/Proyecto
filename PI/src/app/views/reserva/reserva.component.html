@@ -1,29 +1,44 @@
 <article class="container mt-5">
-    <h2 class="text-center fw-bold">Reserva tu Cita</h2>
-    
-    <section class="mt-4">
-        <form (ngSubmit)="onSubmit()" [formGroup]="reactiveForm" class="card p-4 mx-auto" style="max-width: 600px; background: transparent; border: none;">
-            <label for="tipoReserva" class="form-label fw-bold text-dark">¿Qué quieres reservar?</label>
-            <select id="tipoReserva" class="form-select mb-3" formControlName="tipoReserva">
-                <option value="servicio">Servicio</option>
-                <option value="producto">Producto</option>
-                <option value="evento">Evento</option>
-            </select>
+    <h2 class="text-center fw-bold title">Reserva tu Cita</h2>
 
-            <label for="opcionAdicional" class="form-label fw-bold text-dark">Selecciona una opción adicional</label>
-            <select id="opcionAdicional" class="form-select mb-3" formControlName="opcionAdicional">
-                <option value="opcion1">Opción 1</option>
-                <option value="opcion2">Opción 2</option>
-                <option value="opcion3">Opción 3</option>
-            </select>
-            
-            <label for="fechaHora" class="form-label fw-bold text-dark">Selecciona fecha y hora</label>
-            <input type="datetime-local" id="fechaHora" class="form-control mb-3" formControlName="fechaHora">
-            
-            <label for="comentario" class="form-label fw-bold text-dark">¿Algún comentario sobre la reserva?</label>
-            <textarea id="comentario" class="form-control" rows="4" placeholder="Escribe aquí tus comentarios..." formControlName="comentario"></textarea>
-            
-            <button type="submit" class="btn btn-primary mt-3">Enviar Reserva</button>
-        </form>
+    <section class="row mt-4 justify-content-center">
+        <div class="col-md-8">
+            <form (ngSubmit)="onSubmit()" [formGroup]="reactiveForm" class="card p-4 form-container">
+                <label for="tipoReserva" class="form-label fw-bold text-dark">Selecciona un servicio</label>
+                <select id="tipoReserva" class="form-select mb-3" formControlName="tipoReserva"
+                    (change)="actualizarOpciones()">
+                    <option value="facial">Cuidado facial</option>
+                    <option value="corporal">Cuidado corporal</option>
+                    <option value="laser">Láser</option>
+                    <option value="uñas">Uñas</option>
+                </select>
+
+                <label for="opcionAdicional" class="form-label fw-bold text-dark">Selecciona servicio específico</label>
+                <select id="opcionAdicional" class="form-select mb-3" formControlName="opcionAdicional"  (change)="generatePrice()">
+                    @for (specificOption of specificOptions; track specificOption) {
+                    <option [value]="specificOption">{{ specificOption }}</option>
+                    }
+                </select>
+
+                <label for="fechaHora" class="form-label fw-bold text-dark">Selecciona fecha y hora</label>
+                <input type="datetime-local" id="fechaHora" class="form-control mb-3" formControlName="fechaHora">
+
+                <label for="comentario" class="form-label fw-bold text-dark">¿Algún comentario sobre la reserva?</label>
+                <textarea id="comentario" class="form-control" rows="4" placeholder="Escribe aquí tus comentarios..."
+                    formControlName="comentario"></textarea>
+
+                <div class="form-check">
+                    <input type="checkbox" id="pagoEfectivo" class="form-check-input" formControlName="pagoEfectivo">
+                    <label for="pagoEfectivo" class="form-check-label fw-bold text-dark">Pago en efectivo</label>
+                </div>
+
+                <div class="price-box text-center mt-4">
+                    <h5 class="fw-bold">Precio Total</h5>
+                    <p class="price-text">${{ price }}</p>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3 w-100">Enviar Reserva</button>
+            </form>
+        </div>
     </section>
 </article>

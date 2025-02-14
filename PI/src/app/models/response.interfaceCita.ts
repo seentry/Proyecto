@@ -1,11 +1,12 @@
 import { Cliente } from "./response.interfaceClientes";
 import { Trabajador } from "./response.interfaceTrabajador";
 export interface Cita {
-  id?: number;
   fecha: string;
   precio: number;
-  pagado?: boolean;
+  pagado: boolean;
   cliente: number;  
-  trabajador?: number;  
+  trabajador: number; 
 }
+
+
 
