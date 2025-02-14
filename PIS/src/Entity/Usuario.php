@@ -2,52 +2,54 @@
 
 namespace App\Entity;
 
-use App\Repository\ClienteRepository;
+use App\Repository\UsuarioRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ORM\Entity(repositoryClass: ClienteRepository::class)]
-class Cliente
+#[ORM\Entity(repositoryClass: UsuarioRepository::class)]
+class Usuario
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['cliente', 'login'])]
+    #[Groups('usuario')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('cliente')]
+    #[Groups('usuario')]
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('cliente')]
+    #[Groups('usuario')]
     private ?string $apellidos = null;
 
-    #[ORM\Column(length: 255)]
-    #[Groups(['cliente', 'login'])]
-    private ?string $email = null;
-
     #[ORM\Column(length: 9)]
-    #[Groups('cliente')]
+    #[Groups('usuario')]
     private ?string $dni = null;
 
-    #[ORM\OneToMany(targetEntity: Opinion::class, mappedBy: 'cliente')]
-    #[Groups('clienteOpinions')]
-    private Collection $opinions;
-
-    #[ORM\OneToMany(targetEntity: Cita::class, mappedBy: 'cliente')]
-    #[Groups('clienteCitas')]
-    private Collection $citas;
+    #[ORM\Column(length: 255)]
+    #[Groups('usuario')]
+    private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('cliente')]
-    private ?string $contrasenya = null;
+    #[Groups('usuario')]
+    private ?string $contrasena = null;
+
+    #[ORM\Column(type: 'role')]
+    #[Groups('usuario')]
+    private ?string $rol = null;
+
+    /**
+     * @var Collection<int, Cita>
+     */
+    #[ORM\OneToMany(targetEntity: Cita::class, mappedBy: 'cliente')]
+    #[Groups('usuarioCitas')]
+    private Collection $citas;
 
     public function __construct()
     {
-        $this->opinions = new ArrayCollection();
         $this->citas = new ArrayCollection();
     }
 
@@ -80,18 +82,6 @@ class Cliente
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
     public function getDni(): ?string
     {
         return $this->dni;
@@ -104,34 +94,38 @@ class Cliente
         return $this;
     }
 
-    /**
-     * @return Collection<int, Opinion>
-     */
-    public function getOpinions(): Collection
+    public function getEmail(): ?string
     {
-        return $this->opinions;
+        return $this->email;
     }
 
-    public function addOpinion(Opinion $opinion): static
+    public function setEmail(string $email): static
     {
-        if (!$this->opinions->contains($opinion)) {
-            $this->opinions->add($opinion);
-            $opinion->setCliente($this);
-        }
+        $this->email = $email;
 
         return $this;
     }
 
-    public function removeOpinion(Opinion $opinion): static
+    public function getContrasena(): ?string
     {
-        if ($this->opinions->removeElement($opinion)) {
-            // set the owning side to null (unless already changed)
-            if ($opinion->getCliente() === $this) {
-                $opinion->setCliente(null);
-            }
-        }
+        return $this->contrasena;
+    }
+
+    public function setContrasena(string $contrasena): static
+    {
+        $this->contrasena = $contrasena;
 
         return $this;
+    }
+
+    public function getRol(): ?string
+    {
+        return $this->rol;
+    }
+
+    public function setRol(string $rol): static
+    {
+        $this->rol = $rol;
     }
 
     /**
@@ -160,18 +154,6 @@ class Cliente
                 $cita->setCliente(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getContrasenya(): ?string
-    {
-        return $this->contrasenya;
-    }
-
-    public function setContrasenya(string $contrasenya): static
-    {
-        $this->contrasenya = $contrasenya;
 
         return $this;
     }

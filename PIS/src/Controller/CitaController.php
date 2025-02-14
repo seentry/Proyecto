@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cita;
-use App\Entity\Cliente;
+use App\Entity\Usuario;
 use DateMalformedStringException;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -49,7 +49,7 @@ class CitaController extends AbstractController
         $cita->setPagado(false);
         try {
 
-            $cita->setCliente($entityManager->getRepository(Cliente::class)->find($requestContent['cliente']));
+            $cita->setCliente($entityManager->getRepository(Usuario::class)->find($requestContent['cliente']));
             if ($cita->getCliente() == null) {
                 return new Response('ERROR: ' . 'El cliente no existe', Response::HTTP_NOT_FOUND);
             }

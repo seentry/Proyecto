@@ -27,9 +27,9 @@ class Opinion
     #[Groups('opinion')]
     private ?int $valoracion = null;
 
-    #[ORM\ManyToOne(inversedBy: 'opinions')]
-    #[Groups('opinionCliente')]
-    private ?Cliente $cliente = null;
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Usuario $usuario = null;
 
     public function getId(): ?int
     {
@@ -80,6 +80,18 @@ class Opinion
     public function setCliente(?Cliente $cliente): static
     {
         $this->cliente = $cliente;
+
+        return $this;
+    }
+
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?Usuario $usuario): static
+    {
+        $this->usuario = $usuario;
 
         return $this;
     }

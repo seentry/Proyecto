@@ -31,13 +31,10 @@ class Cita
 
     #[ORM\ManyToOne(inversedBy: 'citas')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('citaCliente')]
-    private ?Cliente $cliente = null;
+    private ?Usuario $cliente = null;
 
     #[ORM\ManyToOne(inversedBy: 'citas')]
-    #[ORM\JoinColumn(nullable: true)]
-    #[Groups('citaTrabajador')]
-    private ?Trabajador $trabajador = null;
+    private ?Usuario $trabajador = null;
 
     public function getId(): ?int
     {
