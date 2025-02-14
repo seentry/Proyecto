@@ -14,7 +14,7 @@ class Trabajador
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['trabajador','login'])]
+    #[Groups(['trabajador', 'login'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -30,7 +30,7 @@ class Trabajador
     private ?string $dni = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['trabajador','login'])]
+    #[Groups(['trabajador', 'login'])]
     private ?string $email = null;
 
     #[ORM\Column]

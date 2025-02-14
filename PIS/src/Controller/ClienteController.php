@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Cliente;
-use App\Entity\Trabajador;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,6 +17,7 @@ class ClienteController extends AbstractController
         $trabajadores = $entityManager->getRepository(Cliente::class)->findAll();
         return $this->json($trabajadores, 200, [], ['groups' => ['cliente']]);
     }
+
     #[Route('/api/cliente', name: 'clienteCreate', methods: 'POST', format: 'json')]
     public function createCliente(EntityManagerInterface $entityManager, Request $request): JsonResponse
     {

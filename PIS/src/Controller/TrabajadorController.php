@@ -17,6 +17,7 @@ class TrabajadorController extends AbstractController
         $trabajadores = $entityManager->getRepository(Trabajador::class)->findAll();
         return $this->json($trabajadores, 200, [], ['groups' => ['trabajador']]);
     }
+
     #[Route('/api/trabajador', name: 'trabajadorCreate', methods: 'POST', format: 'json')]
     public function createTrabajador(EntityManagerInterface $entityManager, Request $request): JsonResponse
     {

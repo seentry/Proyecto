@@ -24,13 +24,14 @@ class CitaController extends AbstractController
             $citas,
             200,
             [],
-            ['groups' => ['cita', 'citaCliente', 'cliente','citaTrabajador','trabajador']]
+            ['groups' => ['cita', 'citaCliente', 'cliente', 'citaTrabajador', 'trabajador']]
         );
     }
+
     #[Route('/api/cita/{id}', name: 'cita', methods: 'GET', format: 'json')]
     public function getCita(Cita $cita): JsonResponse
     {
-        return $this->json($cita,Response::HTTP_OK,[],['groups' => ['cita', 'citaCliente', 'cliente','citaTrabajador','trabajador']]);
+        return $this->json($cita, Response::HTTP_OK, [], ['groups' => ['cita', 'citaCliente', 'cliente', 'citaTrabajador', 'trabajador']]);
     }
 
     #[Route('/api/cita', name: 'citaCreate', methods: 'POST', format: 'json')]
@@ -60,6 +61,7 @@ class CitaController extends AbstractController
         $entityManager->flush();
         return new Response('CITA CREADA', Response::HTTP_CREATED);
     }
+
     #[Route('/api/cita/modificar-fecha', name: 'citaChangeTime', methods: 'POST', format: 'json')]
     public function changeTimeCita(EntityManagerInterface $entityManager, Request $request): Response
     {

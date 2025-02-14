@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CitaRepository;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -18,7 +19,7 @@ class Cita
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups('cita')]
-    private ?\DateTimeInterface $fecha = null;
+    private ?DateTimeInterface $fecha = null;
 
     #[ORM\Column]
     #[Groups('cita')]
@@ -43,12 +44,12 @@ class Cita
         return $this->id;
     }
 
-    public function getFecha(): ?\DateTimeInterface
+    public function getFecha(): ?DateTimeInterface
     {
         return $this->fecha;
     }
 
-    public function setFecha(\DateTimeInterface $fecha): static
+    public function setFecha(DateTimeInterface $fecha): static
     {
         $this->fecha = $fecha;
 

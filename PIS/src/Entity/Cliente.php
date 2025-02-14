@@ -14,7 +14,7 @@ class Cliente
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['cliente','login'])]
+    #[Groups(['cliente', 'login'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -26,7 +26,7 @@ class Cliente
     private ?string $apellidos = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['cliente','login'])]
+    #[Groups(['cliente', 'login'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 9)]
