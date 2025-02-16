@@ -15,79 +15,106 @@ export class ReservaComponent {
   constructor(private service: RequestService) { }
 
   public servicios: Servicio[] = [];
-  private apiUrl: string = 'http://localhost:8000/api/cita';
+  private apiUrlCita: string = 'http://localhost:8000/api/cita';
 
-  private apiUsuarioUrl: string = 'http://localhost:8000/api/usuario'; 
-  public trabajadores: Usuario[] = [];
+  private apiUrlUsuario: string = 'http://localhost:8000/api/usuario';
+
+  private apiUrlServicio: string = 'http://localhost:8000/api/servicio';
+  private citas: Cita[] = [];
 
   public options: string[][] = [
-    ['Limpieza facial', 'Hidratación facial', 'Tratamiento antiarrugas'], 
-    ['Masaje reductivo', 'Exfoliación corporal', 'Drenaje linfático'],    
-    ['Depilación láser', 'Tratamiento de manchas', 'Rejuvenecimiento con luz pulsada'], 
-    ['Manicure spa', 'Uñas acrílicas', 'Diseño personalizado']           
+    ['Limpieza facial', 'Hidratación facial', 'Tratamiento antiarrugas'],
+    ['Masaje reductivo', 'Exfoliación corporal', 'Drenaje linfático'],
+    ['Depilación láser', 'Tratamiento de manchas', 'Rejuvenecimiento con luz pulsada'],
+    ['Manicure spa', 'Uñas acrílicas', 'Diseño personalizado']
   ];
+
+  public hours: string[] = [
+    "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00",
+    "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00"
+  ];
+
+  public citasOcupadas: { fecha: string; hora: string; trabajador: number }[] = [];
 
   public specificOptions: string[] = [];
   public price: number = 0;
-  public worker: Usuario | null = null;
-  public currentUser: Usuario | null = null;  
+  public allWorkers: Usuario[] = [];
+  public currentUser: Usuario | null = null;
 
   ngOnInit(): void {
     this.getServicios();
     this.getUsuarios();
+    this.getCitas();
   }
 
   public actualizarOpciones(): void {
-    const tipo = this.reactiveForm.value.tipoReserva;
-  
+    let tipo = this.reactiveForm.value.tipoReserva;
+
     if (tipo === 'facial') {
-      this.specificOptions = this.options[0]; 
+      this.specificOptions = this.options[0];
     } else if (tipo === 'corporal') {
-      this.specificOptions = this.options[1]; 
+      this.specificOptions = this.options[1];
     } else if (tipo === 'laser') {
-      this.specificOptions = this.options[2]; 
+      this.specificOptions = this.options[2];
     } else if (tipo === 'uñas') {
       this.specificOptions = this.options[3];
     } else {
-      this.specificOptions = []; 
+      this.specificOptions = [];
     }
   }
 
   public getServicios(): void {
-    this.service.getServicios(this.apiUrl).subscribe((response) => {
+    this.service.getServicios(this.apiUrlServicio).subscribe((response) => {
       this.servicios = response;
-      console.log(response);
+      console.log("Servicio: ", response);
     }, (error) => {
       console.error("Error al obtener servicios:", error);
     });
   }
 
+  public getCitas(): void {
+    this.service.getCitas(this.apiUrlCita).subscribe((response) => {
+      this.citas = response;
+      this.citasOcupadas = this.citas.map(({ fecha, trabajador }) => ({
+        fecha: fecha.split('T')[0], //el split('T')[0] fuerza a que la fecha sea de tipo ISO 8601 para que sea comptible con la API, ademas la posicion 0 coge solo el campo de fecha
+        hora: fecha.split('T')[1].slice(0, 5), //La posicion de 1 coge el campos de hora y ademas el .slice(0, 5) elimina los segundos de forma que solo se coge hora y minutos
+        trabajador: (trabajador as { id?: number })?.id ?? trabajador //Para que funcione hay que forzar a que sea de tipo number, ademas de poner interrogantes para que si es un objeto obtener su id y si es un numero usarlo directamente
+      }));
+    }, (error) => {
+      console.error("Error al obtener citas:", error);
+    });
+  }
+
+
+
   public getUsuarios(): void {
-    this.service.getUsuarios(this.apiUsuarioUrl).subscribe((response) => {
-      this.trabajadores = response.filter(user => user.rol === "ROL_TRABAJADOR");
+    this.service.getUsuarios(this.apiUrlUsuario).subscribe((response) => {
+      this.allWorkers = response.filter(user => user.rol === "ROL_TRABAJADOR");
       this.currentUser = response.find(user => user.rol === "ROL_CLIENTE") || null;
-      console.log(response);
-      this.selectWorker();
+      console.log("Usuarios: ", response);
     }, (error) => {
       console.error("Error al obtener usuarios:", error);
     });
   }
 
   reactiveForm = new FormGroup({
-    tipoReserva: new FormControl(''),   
-    opcionAdicional: new FormControl(''), 
-    fechaHora: new FormControl(''),      
-    comentario: new FormControl(''), 
-    pagoEfectivo: new FormControl('')     
+    tipoReserva: new FormControl(''),
+    opcionAdicional: new FormControl(''),
+    worker: new FormControl(null),
+    fecha: new FormControl(''),
+    hora: new FormControl(''),
+    comentario: new FormControl(''),
+    pagoEfectivo: new FormControl(false)
   });
 
   public onSubmit(): void {
     this.crearCita();
+    this.createServicio();
   }
 
   public generatePrice(): void {
     let service = this.reactiveForm.value.opcionAdicional;
-  
+
     switch (service) {
       case 'Limpieza facial':
         this.price = 30;
@@ -126,39 +153,78 @@ export class ReservaComponent {
         this.price = 35;
         break;
       default:
-        this.price = 0; 
+        this.price = 0;
         break;
     }
   }
 
-  public selectWorker(): void {
-    if (this.trabajadores.length > 0) {
-      const randomIndex = Math.floor(Math.random() * this.trabajadores.length);
-      this.worker = this.trabajadores[randomIndex]; 
+  public selectTime(): void {
+    let selectedWorker = Number(this.reactiveForm.value.worker);
+    let selectedDate = this.reactiveForm.value.fecha;
+
+    if (!selectedWorker || !selectedDate) {
+      this.hours = [];
+    } else {
+      // Restauramos las horas originales antes de filtrar
+      this.hours = [
+        "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00",
+        "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00"
+      ].filter(hour => {
+        return !this.citasOcupadas.some(cita =>
+          cita.trabajador === selectedWorker &&
+          cita.fecha === selectedDate &&
+          cita.hora === hour
+        );
+      });
     }
   }
-  
+
   public crearCita(): void {
+    let selectedDate = this.reactiveForm.value.fecha ?? "";
+    let selectedHour = this.reactiveForm.value.hora ?? "";
+    let fechaCompleta = selectedDate && selectedHour ? `${selectedDate}T${selectedHour}` : "";
+
     const nuevaCita: Cita = {
-      fecha: this.reactiveForm.value.fechaHora ?? "", // Asegura que sea un string
+      fecha: fechaCompleta,
       precio: this.price,
-      pagado: !!this.reactiveForm.value.pagoEfectivo,
-      cliente: this.currentUser?.id ?? 0, 
-      trabajador: this.worker?.id ?? 0
+      pagado: this.reactiveForm.value.pagoEfectivo === true, //Siempre devuelve false
+      cliente: this.currentUser?.id ?? 0,
+      trabajador: this.reactiveForm.value.worker ?? 0
     };
-    
-  
-    console.log("Datos enviados");  
-  
-    this.service.postCita(this.apiUrl, nuevaCita).subscribe(
+
+
+    console.log("Cita añadida");
+
+    this.service.postCita(this.apiUrlCita, nuevaCita).subscribe(
       (response) => console.log('Cita creada con éxito:', response),
       (error) => console.error('Error al crear cita:', error)
     );
   }
-  
-  
-  
-  
-  
+
+  public createServicio(): void {
+    const newService: Servicio = {
+      nombre: this.reactiveForm.value.opcionAdicional ?? "",
+      descripcion: this.reactiveForm.value.comentario ?? "",
+      precio: this.price,
+      stock: 0 //REVISAR VIEN 
+    }
+
+    console.log("Servicio añadido");
+
+    this.service.createServicio(this.apiUrlServicio, newService).subscribe(
+      (response) => console.log('Cita creada con éxito:', response),
+      (error) => console.error('Error al crear cita:', error)
+    );
+  }
+
+
+  //ROBLEMAS
+  // - El campo stock tiene que poder ser nulo ya que si es un servicio no tiene stock a diferencia de los productos, hay que hacer una modificacion
+
+  //FALTA
+  //Falta añadir que dependiendo de si se paga en efectivo o no se suba el campo pagado
+
+
+
 
 }

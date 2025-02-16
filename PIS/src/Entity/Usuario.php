@@ -14,7 +14,8 @@ class Usuario
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('usuario')]
+    #[Groups(['usuario', 'cita'])]//Modificacion para la correcta salida de los datos
+    //#[Groups('usuario')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]

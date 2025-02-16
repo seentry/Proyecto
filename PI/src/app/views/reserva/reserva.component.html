@@ -14,14 +14,26 @@
                 </select>
 
                 <label for="opcionAdicional" class="form-label fw-bold text-dark">Selecciona servicio específico</label>
-                <select id="opcionAdicional" class="form-select mb-3" formControlName="opcionAdicional"  (change)="generatePrice()">
+                <select id="opcionAdicional" class="form-select mb-3" formControlName="opcionAdicional" (change)="generatePrice()">
                     @for (specificOption of specificOptions; track specificOption) {
                     <option [value]="specificOption">{{ specificOption }}</option>
                     }
                 </select>
 
-                <label for="fechaHora" class="form-label fw-bold text-dark">Selecciona fecha y hora</label>
-                <input type="datetime-local" id="fechaHora" class="form-control mb-3" formControlName="fechaHora">
+                <select id="worker" class="form-select mb-3" formControlName="worker" (change)="selectTime()">
+                    @for (worker of allWorkers; track worker) {
+                    <option [value]="worker.id">{{ worker.nombre }}</option>
+                    }
+                </select>
+                
+                <input type="date" id="fecha" class="form-control mb-3" formControlName="fecha" (change)="selectTime()">
+                
+                <select id="hours" class="form-select mb-3" formControlName="hora">
+                    @for (hour of hours; track hour) {
+                    <option [value]="hour">{{ hour }}</option> 
+                    }
+                </select>
+                
 
                 <label for="comentario" class="form-label fw-bold text-dark">¿Algún comentario sobre la reserva?</label>
                 <textarea id="comentario" class="form-control" rows="4" placeholder="Escribe aquí tus comentarios..."

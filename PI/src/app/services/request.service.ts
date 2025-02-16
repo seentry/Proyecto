@@ -20,14 +20,19 @@ export class RequestService {
   public getCitas(url: string): Observable<Cita[]> {
     return this.http.get<Cita[]>(url);
   }
+  public postCita(url: string, cita: Cita): Observable<any> { 
+    return this.http.post<any>(url, cita); 
+  }
 
   public getServicios(url: string): Observable<Servicio[]> {
     return this.http.get<Servicio[]>(url);
   }
 
-  public postCita(url: string, cita: Cita): Observable<any> { 
-    return this.http.post<any>(url, cita); 
+  public createServicio(url: string, servicio: Servicio): Observable<Servicio> {
+    return this.http.post<Servicio>(url, servicio);
   }
+
+
   
 
 

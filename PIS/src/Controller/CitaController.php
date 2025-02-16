@@ -87,4 +87,15 @@ class CitaController extends AbstractController
         $entityManager->flush();
         return new Response('CITA MODIFICADA', Response::HTTP_OK);
     }
+
+    //Añadido para permitir la eliminacion de citas
+    #[Route('/api/cita/{id}', name: 'citaDelete', methods: ['DELETE'], format: 'json')]
+    public function deleteCita(EntityManagerInterface $entityManager, Cita $cita): Response
+    {
+        $entityManager->remove($cita);
+        $entityManager->flush();
+
+        return new Response('CITA ELIMINADA', Response::HTTP_OK);
+    }
+
 }

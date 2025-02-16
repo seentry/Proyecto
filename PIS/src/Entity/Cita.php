@@ -29,13 +29,25 @@ class Cita
     #[Groups('cita')]
     private ?bool $pagado = null;
 
+    // SE AGREGA Groups('cita') PARA QUE SE SERIALICE EL CLIENTE
+    #[ORM\ManyToOne(inversedBy: 'citas')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups('cita')]
+    private ?Usuario $cliente = null;
+
+    // SE AGREGA Groups('cita') PARA QUE SE SERIALICE EL TRABAJADOR
+    #[ORM\ManyToOne(inversedBy: 'citas')]
+    #[Groups('cita')]
+    private ?Usuario $trabajador = null;
+
+    /* //Datos que se han modificado
     #[ORM\ManyToOne(inversedBy: 'citas')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Usuario $cliente = null;
 
     #[ORM\ManyToOne(inversedBy: 'citas')]
     private ?Usuario $trabajador = null;
-
+    */
     public function getId(): ?int
     {
         return $this->id;
