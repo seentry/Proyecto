@@ -80,12 +80,11 @@ export class ReservaComponent {
         hora: fecha.split('T')[1].slice(0, 5), //La posicion de 1 coge el campos de hora y ademas el .slice(0, 5) elimina los segundos de forma que solo se coge hora y minutos
         trabajador: (trabajador as { id?: number })?.id ?? trabajador //Para que funcione hay que forzar a que sea de tipo number, ademas de poner interrogantes para que si es un objeto obtener su id y si es un numero usarlo directamente
       }));
+      console.log("Citas: ", response);
     }, (error) => {
       console.error("Error al obtener citas:", error);
     });
   }
-
-
 
   public getUsuarios(): void {
     this.service.getUsuarios(this.apiUrlUsuario).subscribe((response) => {
@@ -110,6 +109,7 @@ export class ReservaComponent {
   public onSubmit(): void {
     this.crearCita();
     this.createServicio();
+    console.log(this.reactiveForm.value.pagoEfectivo);
   }
 
   public generatePrice(): void {
@@ -187,11 +187,12 @@ export class ReservaComponent {
     const nuevaCita: Cita = {
       fecha: fechaCompleta,
       precio: this.price,
-      pagado: this.reactiveForm.value.pagoEfectivo === true, //Siempre devuelve false
+      pagado: !!this.reactiveForm.value.pagoEfectivo,
       cliente: this.currentUser?.id ?? 0,
       trabajador: this.reactiveForm.value.worker ?? 0
     };
-
+    
+    console.log(nuevaCita)
 
     console.log("Cita añadida");
 
@@ -206,17 +207,14 @@ export class ReservaComponent {
       nombre: this.reactiveForm.value.opcionAdicional ?? "",
       descripcion: this.reactiveForm.value.comentario ?? "",
       precio: this.price,
-      stock: 0 //REVISAR VIEN 
+      stock: 0
     }
-
-    console.log("Servicio añadido");
 
     this.service.createServicio(this.apiUrlServicio, newService).subscribe(
       (response) => console.log('Cita creada con éxito:', response),
       (error) => console.error('Error al crear cita:', error)
     );
   }
-
 
   //ROBLEMAS
   // - El campo stock tiene que poder ser nulo ya que si es un servicio no tiene stock a diferencia de los productos, hay que hacer una modificacion
