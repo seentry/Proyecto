@@ -207,7 +207,8 @@ export class ReservaComponent {
       nombre: this.reactiveForm.value.opcionAdicional ?? "",
       descripcion: this.reactiveForm.value.comentario ?? "",
       precio: this.price,
-      stock: 0
+      stock: null,
+      imagen: null
     }
 
     this.service.createServicio(this.apiUrlServicio, newService).subscribe(
@@ -215,14 +216,5 @@ export class ReservaComponent {
       (error) => console.error('Error al crear cita:', error)
     );
   }
-
-  //ROBLEMAS
-  // - El campo stock tiene que poder ser nulo ya que si es un servicio no tiene stock a diferencia de los productos, hay que hacer una modificacion
-
-  //FALTA
-  //Falta añadir que dependiendo de si se paga en efectivo o no se suba el campo pagado
-
-
-
 
 }

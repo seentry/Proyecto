@@ -43,6 +43,7 @@ export interface Servicio {
   id?: number;
   nombre: string;
   descripcion: string;
-  stock?: number;
+  stock: number|null;
   precio: number;
+  imagen?: string | null; 
 }

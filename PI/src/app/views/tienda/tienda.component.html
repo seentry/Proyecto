@@ -1,26 +1,11 @@
-<h2>Lista de Servicios</h2>
+<article class="container">
+  <h1 class="text-center fw-bold title" style="margin-top: 30px;">Productos</h1>
 
-<table border="1">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Fecha</th>
-      <th>Precio</th>
-      <th>Pagado</th>
-      <th>Cliente</th>
-      <th>Email</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (servicio of servicios; track servicio) {
-      <tr>
-        <td>{{ servicio.id }}</td>
-        <td>{{ servicio.fecha }}</td>
-        <td>{{ servicio.precio }}</td>
-        <td>{{ servicio.pagado ? 'Sí' : 'No' }}</td>
-        <td>{{ servicio.cliente.nombre }} {{ servicio.cliente.apellidos }}</td>
-        <td>{{ servicio.cliente.email }}</td>
-      </tr>
-    }
-  </tbody>
-</table>
+  <div class="row">
+    <div class="col-md-10 mx-auto" style="background-color: aliceblue;">
+        <p>datos</p>
+    </div>
+  </div>
+</article>
+
+
