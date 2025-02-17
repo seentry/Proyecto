@@ -29,6 +29,8 @@ class ServicioController extends AbstractController
         $servicio->setStock($requestContent['stock']);
         $servicio->setPrecio($requestContent['precio']);
 
+        $servicio->setImagen($requestContent['imagen'] ?? null);
+
         $entityManager->persist($servicio);
         $entityManager->flush();
         return $this->json($servicio, 200, [], ['groups' => ['servicio']]);

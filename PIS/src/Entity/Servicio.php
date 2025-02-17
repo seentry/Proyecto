@@ -31,6 +31,10 @@ class Servicio
     #[Groups('servicio')]
     private ?float $precio = null;
 
+    #[ORM\Column(length: 1000, nullable: true)]
+    #[Groups('servicio')]
+    private ?string $imagen = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -80,6 +84,18 @@ class Servicio
     public function setPrecio(float $precio): static
     {
         $this->precio = $precio;
+
+        return $this;
+    }
+
+    public function getImagen(): ?string
+    {
+        return $this->imagen;
+    }
+
+    public function setImagen(?string $imagen): static
+    {
+        $this->imagen = $imagen;
 
         return $this;
     }

@@ -1,35 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { RequestService } from '../../services/request.service';
+import { Servicio } from '../../models/response.interface';
+import { CardComponent } from '../../components/card/card.component';
 
 @Component({
   selector: 'app-tienda',
   templateUrl: './tienda.component.html',
-  styleUrls: ['./tienda.component.css']
+  styleUrls: ['./tienda.component.css'],
+  imports: [CardComponent]
 })
 export class TiendaComponent implements OnInit {
-  
-  public servicios: any[] = []; 
-  public filteredServicios: any[] = [];
 
-  public searchTerm: string = "";
-  public sortType: string = "id";
+  constructor(private service: RequestService) { }
 
-  constructor(private service: RequestService) {}
+  public servicios: Servicio[] = [];
 
-  private apiUrl = 'http://127.0.0.1:8000/cita';
+  private apiUrlServicio: string = 'http://localhost:8000/api/servicio';
 
   ngOnInit(): void {
     this.getServicios();
   }
 
-  public getServicios(): void {
-    this.service.getServicios(this.apiUrl).subscribe((response) => {
-      console.log(response); 
-      this.servicios = response; 
-      this.filteredServicios = response;
-    }, (error) => {
-      console.error("Error al obtener servicios:", error);
-    });
+  private getServicios(): void {
+    this.service.getServicios(this.apiUrlServicio).subscribe(
+      (response) => {
+        console.log("Servicios recibidos:", response);
+        this.servicios = response.filter(servicio => servicio.imagen !== null && servicio.imagen !== ''); //Filtra las imagenes que sean null, las elimina del array 
+      },
+      (error) => {
+        console.error("Error al obtener servicios:", error);
+      }
+    );
   }
 
   public updateSearchTerm(event: Event): void {
