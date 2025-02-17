@@ -6,11 +6,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { IniciarSesionComponent } from './views/iniciar-sesion/iniciar-sesion.component';
 import { RegistrarseComponent } from './views/registrarse/registrarse.component';
 import { HeaderInicioComponent } from './components/header-inicio/header-inicio.component';
+import { GestionTrabajadoresComponent } from './views/gestion-trabajadores/gestion-trabajadores.component';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, IniciarSesionComponent, RegistrarseComponent, HeaderInicioComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, IniciarSesionComponent, RegistrarseComponent, HeaderInicioComponent, GestionTrabajadoresComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
