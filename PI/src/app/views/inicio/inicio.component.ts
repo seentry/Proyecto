@@ -11,4 +11,16 @@ import { CarouselComponent } from '../../components/carousel/carousel.component'
 })
 export class InicioComponent {
 
+  public servicios_productos: string = "servicios";
+
+
+  public click_servicios(){
+    console.log("servicios");
+  }
+
+  public click_productos(){
+    this.servicios_productos = "productos"
+    console.log("productos");
+  }
+
 }

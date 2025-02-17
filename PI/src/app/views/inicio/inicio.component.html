@@ -4,18 +4,27 @@
   
         <section class="col-12 text-center mt-5">
             <div class="row justify-content-center">
-                <div class="col-md-4 servicio">
+                <div class="col-md-4 servicio" (click)="click_servicios()">
                     <i class="bi bi-briefcase"></i>
                     <p>Servicios</p>
                 </div>
-                <div class="col-md-4 servicio">
+                <div class="col-md-4 servicio" (click)="click_productos()">
                     <i class="bi bi-box-seam"></i>
                     <p>Productos</p>
                 </div>
             </div>
         </section>
   
-        <app-card></app-card>
+        @if (servicios_productos == "servicios") {
+            <p>estas servicios</p>
+            <app-card></app-card>
+        }
+
+        @if (servicios_productos == "productos") {
+            <p>estas productos</p>
+            <app-card></app-card>
+        }
+
   
         <app-carousel></app-carousel>
         
