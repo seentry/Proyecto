@@ -9,10 +9,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class CardComponent {
   @Input() price: number = 0;
-  @Input() stock: string = '';
+  @Input() stock: number | null = 0;
   @Input() name: string = '';
   @Input() description: string = '';
-  @Input() img: string = '';
+  @Input() img: string | null = '';
 
 }
 
