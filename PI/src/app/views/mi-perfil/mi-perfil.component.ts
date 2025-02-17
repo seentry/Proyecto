@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RequestService } from '../../services/request.service';
+import { Cliente } from '../../models/response.interfaceClientes';
+import { Cita } from '../../models/response.interfaceCita';
+
 
 @Component({
   selector: 'app-mi-perfil',
@@ -6,34 +10,43 @@ import { Component } from '@angular/core';
   templateUrl: './mi-perfil.component.html',
   styleUrl: './mi-perfil.component.css'
 })
-export class MiPerfilComponent {
+export class MiPerfilComponent implements OnInit {
+  public userProfile: Cliente | null = null;
+  public userAppointments: Cita[] = [];
 
-  public userProfile = {
-    name: "Juan Pérez",
-    surname: "Pére",
-    email: "juan.perez@example.com",
-    dni: "Calle Falsa 123, Ciudad",
-    birthDate: "1990-05-20",
-    photoUrl: "assets/user-profile.jpg"
-  };
+  constructor(private service: RequestService) {}
 
-  public userAppointments = [
-    { id: 1, date: "2024-03-10", time: "10:00 AM", service: "Corte de Pelo", status: "Confirmada" },
-    { id: 2, date: "2024-03-15", time: "02:00 PM", service: "Masaje Relajante", status: "Pendiente" },
-    { id: 3, date: "2024-03-20", time: "04:30 PM", service: "Limpieza Facial", status: "Confirmada" }
-  ];
-
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  editProfile(): void {
-    alert("Funcionalidad para editar perfil aún no implementada.");
+  ngOnInit(): void {
+    this.getUserProfile();
+    this.getUserAppointments();
   }
 
-  cancelAppointment(appointmentId: number): void {
-    if (confirm("¿Estás seguro de cancelar esta cita?")) {
-      this.userAppointments = this.userAppointments.filter(appointment => appointment.id !== appointmentId);
+  public getUserProfile(): void {
+    this.service.getProfile().subscribe((response: Cliente) => {
+      console.log("Perfil recibido:", response);
+      this.userProfile = response;
+    }, (error) => {
+      console.error("Error al obtener perfil:", error);
+    });
+  }
+
+  public getUserAppointments(): void {
+    this.service.getAppointments().subscribe((response: Cita[]) => {
+      console.log("Citas recibidas:", response);
+      this.userAppointments = response;
+    }, (error) => {
+      console.error("Error al obtener citas:", error);
+    });
+  }
+
+  public cancelAppointment(id: number): void {
+    if (confirm("¿Estás seguro de que quieres cancelar esta cita?")) {
+      this.service.cancelAppointment(id).subscribe(() => {
+        this.userAppointments = this.userAppointments.filter(app => app.id !== id);
+        alert("Cita cancelada exitosamente");
+      }, (error) => {
+        console.error("Error al cancelar la cita:", error);
+      });
     }
   }
 }

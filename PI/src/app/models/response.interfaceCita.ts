@@ -1,5 +1,6 @@
 import { Cliente } from "./response.interfaceClientes";
 import { Trabajador } from "./response.interfaceTrabajador";
+
 export interface Cita {
     id: number;
     fecha: string; // Formato ISO 8601 (YYYY-MM-DDTHH:MM:SS)

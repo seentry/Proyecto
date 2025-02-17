@@ -33,15 +33,15 @@
       </tr>
     }
     
-    @for (servicio of filteredServicios; track servicio) {
-      <tr>
-        <td>{{ servicio.id }}</td>
-        <td>{{ servicio.fecha }}</td>
-        <td>{{ servicio.precio }}</td>
-        <td>{{ servicio.pagado ? 'Sí' : 'No' }}</td>
-        <td>{{ servicio.cliente.nombre }} {{ servicio.cliente.apellidos }}</td>
-        <td>{{ servicio.cliente.email }}</td>
-      </tr>
-    }
+      @for (servicio of filteredServicios; track servicio) {
+        <tr>
+          <td>{{ servicio.id }}</td>
+          <td>{{ servicio.fecha }}</td>
+          <td>{{ servicio.precio }}</td>
+          <td>{{ servicio.pagado ? 'Sí' : 'No' }}</td>
+          <td>{{ servicio.cliente.nombre }} {{ servicio.cliente.apellidos }}</td>
+          <td>{{ servicio.cliente.email }}</td>
+        </tr>
+      }
   </tbody>
 </table>
