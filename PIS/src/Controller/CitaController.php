@@ -46,7 +46,7 @@ class CitaController extends AbstractController
             return new Response('ERROR: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
         $cita->setPrecio($requestContent['precio']);
-        $cita->setPagado(false);
+        $cita->setPagado($requestContent['pagado']);
         try {
 
             $cita->setCliente($entityManager->getRepository(Usuario::class)->find($requestContent['cliente']));

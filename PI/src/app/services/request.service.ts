@@ -5,7 +5,12 @@ import { Cita, Usuario, Servicio, Opinion, LoginRequest, LoginResponse } from '.
 @Injectable({
   providedIn: 'root',
 })
+
 export class RequestService {
+  
+  private apiUrlProfile = 'http://127.0.0.1:8000/perfil';
+  private apiUrlAppointments = 'http://127.0.0.1:8000/citas';
+
   constructor(private http: HttpClient) {}
 
 

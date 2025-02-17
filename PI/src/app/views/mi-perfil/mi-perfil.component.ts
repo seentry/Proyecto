@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RequestService } from '../../services/request.service';
+import { Usuario } from '../../models/response.interface';
+import { Cita } from '../../models/response.interface';
+
 
 @Component({
   selector: 'app-mi-perfil',

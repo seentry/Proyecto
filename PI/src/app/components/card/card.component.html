@@ -1,9 +1,14 @@
-<div class="card shadow border-0 bg-transparent">
-    <img src="/img/tratamientos_faciales.jpg" class="card-img-top" alt="Tratamientos faciales">
-    <div class="card-body">
-        <h5 class="card-title">Tratamientos faciales</h5>
-        <!-- <h5 class="card-title"> {{nombre}} </h5> -->
-        <p>45,50$</p>
-        <!-- <p> {{precio}} </p> -->
+<div class="card shadow border-0 bg-transparent" style="width: 300px;">
+    <img class="card-img-top object-fit-cover" [src]="img" alt="Producto de la tienda" style="height: 180px;">
+    
+    <div class="card-body text-center">
+      <h5 class="card-title fw-bold text-primary">{{ name }}</h5>
+      <p class="card-text text-muted">{{ description }}</p>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <span class="fw-bold text-success">{{ price }} €</span>
+        <span class="badge bg-warning text-dark">Stock: {{ stock }}</span>
+      </div>
+
     </div>
 </div>
