@@ -7,11 +7,12 @@ import { IniciarSesionComponent } from './views/iniciar-sesion/iniciar-sesion.co
 import { RegistrarseComponent } from './views/registrarse/registrarse.component';
 import { HeaderInicioComponent } from './components/header-inicio/header-inicio.component';
 import { GestionTrabajadoresComponent } from './views/gestion-trabajadores/gestion-trabajadores.component';
+import { GestionProductosComponent } from './views/gestion-productos/gestion-productos.component';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, IniciarSesionComponent, RegistrarseComponent, HeaderInicioComponent, GestionTrabajadoresComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, IniciarSesionComponent, RegistrarseComponent, HeaderInicioComponent, GestionTrabajadoresComponent, GestionProductosComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
