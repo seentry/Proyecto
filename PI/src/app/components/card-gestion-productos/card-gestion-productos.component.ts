@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-card-gestion-productos',
@@ -8,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class CardGestionProductosComponent {
 
+
+  @Input() servicio: string = "";
+  @Input() stock: number = 0;
+  @Input() precio: number = 0;
+  
 }

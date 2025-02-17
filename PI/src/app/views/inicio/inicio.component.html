@@ -17,12 +17,17 @@
   
         @if (servicios_productos == "servicios") {
             <p>estas servicios</p>
-            <app-card></app-card>
+            @for (servicio of array_servicos; track servicio) {
+                <app-card [servicio]="servicio.nombre" [stock]="servicio.nombre" [precio]="servicio.precio"></app-card>
+            }
+            
         }
 
         @if (servicios_productos == "productos") {
             <p>estas productos</p>
-            <app-card></app-card>
+            @for (producto of array_productos; track producto) {
+                <app-card [servicio]="producto.nombre" [stock]="producto.nombre" [precio]="producto.precio"></app-card>
+            }
         }
 
   
