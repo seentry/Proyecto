@@ -24,12 +24,6 @@ jobs:
                   docker build -t ${{ secrets.DOCKER_USERNAME }}/symfony-app:latest -f php/Dockerfile PIS
                   docker push ${{ secrets.DOCKER_USERNAME }}/symfony-app:latest
 
-            # Construir y subir imagen Nginx
-            - name: Construir y subir imagen Nginx
-              run: |
-                  docker build -t ${{ secrets.DOCKER_USERNAME }}/symfony-nginx:latest -f nginx/Dockerfile PIS
-                  docker push ${{ secrets.DOCKER_USERNAME }}/symfony-nginx:latest
-
     deploy:
         runs-on: ubuntu-latest
         needs: build-and-push
