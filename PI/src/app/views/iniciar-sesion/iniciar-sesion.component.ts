@@ -16,8 +16,9 @@ export class IniciarSesionComponent {
 
   constructor(private service: RequestService, private router: Router) { }
 
-  public checkSession(idUser: number): void {
+  public checkSession(idUser: number, rolUser: string): void {
     localStorage.setItem('userId', idUser.toString()); 
+    localStorage.setItem('userRol', rolUser); 
     console.log("Sesion iniciado con el usuario con id: ", idUser);
   }
   
@@ -26,8 +27,9 @@ export class IniciarSesionComponent {
       if (this.dataUserClient[i].rol === "ROL_CLIENTE") {
         if (this.dataUserClient[i].email === this.reactiveForm.value.email && this.dataUserClient[i].contrasena === this.reactiveForm.value.contraseña) {
           let idUser = this.dataUserClient[i].id;
+          let userRol = this.dataUserClient[i].rol;
           if (idUser !== undefined) { 
-            this.checkSession(idUser);
+            this.checkSession(idUser, userRol);
             this.router.navigate(["/inicio"]);
           } else {
             console.error("Error: El usuario encontrado no tiene ID");

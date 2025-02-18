@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RequestService } from '../../services/request.service';
 import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
@@ -6,15 +7,16 @@ import { Servicio, Cita, Usuario } from '../../models/response.interface';
 
 @Component({
   selector: 'app-reserva-cliente',
-  imports: [ReactiveFormsModule,],
+  imports: [CommonModule, ReactiveFormsModule,],
   templateUrl: './reserva-cliente.component.html',
   styleUrl: './reserva-cliente.component.css'
 })
 
 export class ReservaClienteComponent {
 
-  
   constructor(private service: RequestService) { }
+
+  public loginUser = localStorage.getItem('userId')
 
   public servicios: Servicio[] = [];
   private apiUrlCita: string = 'http://localhost:8000/api/cita';
@@ -184,11 +186,16 @@ export class ReservaClienteComponent {
     let selectedHour = this.reactiveForm.value.hora ?? "";
     let fechaCompleta = selectedDate && selectedHour ? `${selectedDate}T${selectedHour}` : "";
     let loginUser = parseInt(localStorage.getItem('userId') || '0', 10); //Es un string, mediante parseInt forzamos a que sea numerico
-
+    let pago: boolean = false;
+    if (this.reactiveForm.value.pagoEfectivo === false) {
+      pago = true;
+    } else {
+      pago = false;
+    }
     const nuevaCita: Cita = {
       fecha: fechaCompleta,
       precio: this.price,
-      pagado: !!this.reactiveForm.value.pagoEfectivo,
+      pagado: pago,
       cliente: loginUser,
       trabajador: this.reactiveForm.value.worker ?? 0
     };
@@ -219,3 +226,4 @@ export class ReservaClienteComponent {
   }
 
 }
+

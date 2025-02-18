@@ -1,1 +1,47 @@
-<p>reserva-trabajador works!</p>
+<h2>Lista de Servicios</h2>
+
+<input type="text" placeholder="Buscar por ID" (input)="updateSearchTerm($event)" />
+<button (click)="searchByButton()">Buscar</button>
+
+<br><br>
+
+<label for="sortType">Ordenar por:</label>
+<select id="sortType" (change)="updateSortOrder($event)">
+  <option value="name">Nombre (A-Z)</option>
+  <option value="dateSoon">Fecha más nueva</option>
+  <option value="dateLate">Fecha más vieja</option>
+  <option value="pay">Pagado</option>
+  <option value="noPay">No Pagado</option>
+</select>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fecha</th>
+      <th>Precio</th>
+      <th>Pagado</th>
+      <th>Cliente</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    @if (filteredServicios.length === 0) {
+      <tr>
+        <td colspan="6">No se encontraron resultados.</td>
+      </tr>
+    }
+    
+      @for (servicio of filteredServicios; track servicio) {
+        <tr>
+          <td>{{ servicio.id }}</td>
+          <td>{{ servicio.fecha }}</td>
+          <td>{{ servicio.precio }}</td>
+          <td>{{ servicio.pagado ? 'Sí' : 'No' }}</td>
+          <td>{{ servicio.cliente.nombre }} {{ servicio.cliente.apellidos }}</td>
+          <td>{{ servicio.cliente.email }}</td>
+        </tr>
+      }
+  </tbody>
+</table>
