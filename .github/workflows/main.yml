@@ -40,7 +40,7 @@ jobs:
                   host: ${{ secrets.REMOTE_HOST }}
                   username: ${{ secrets.REMOTE_USER }}
                   key: ${{ secrets.REMOTE_KEY }}
-                  source: ${{ github.workspace }}/docker-compose.yml
+                  source: ./compose.yml
                   target: ~/deploy/
 
             - name: Desplegar en servidor remoto
