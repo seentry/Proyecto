@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { Usuario } from '../../models/response.interface';
 import { RequestService } from '../../services/request.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrarse',
@@ -11,7 +12,7 @@ import { RequestService } from '../../services/request.service';
 })
 export class RegistrarseComponent {
 
-  constructor(private service: RequestService) { }
+  constructor(private service: RequestService, private router: Router) { }
 
   public apiUrlUsuario: string = 'http://localhost:8000/api/usuario';
   public dataUserClient: Usuario[] = [];
@@ -35,10 +36,14 @@ export class RegistrarseComponent {
     email: new FormControl(''),
     dni: new FormControl(''),
     contraseña: new FormControl(''),
-    });
+  });
 
   public onSubmit(): void {
-    this.createUsuario();
+    if (this.reactiveForm.valid) {
+      this.createUsuario();
+    } else {
+      console.log("Por favor, completa todos los campos correctamente.");
+    }
   }
 
   public createUsuario(): void {
@@ -48,12 +53,14 @@ export class RegistrarseComponent {
       email: this.reactiveForm.value.email ?? '',
       dni: this.reactiveForm.value.dni ?? '',
       rol: "ROL_CLIENTE",
-      contrasena: this.reactiveForm.value.contraseña ?? undefined, 
+      contrasena: this.reactiveForm.value.contraseña ?? undefined,
     };
-    
-    this.service.createUsuario(this.apiUrlUsuario, newUser).subscribe (
+
+    this.service.createUsuario(this.apiUrlUsuario, newUser).subscribe(
       (response) => console.log('Cita creada con éxito:', response),
       (error) => console.error('Error al crear cita:', error)
     )
+
+    this.router.navigate(["/inicio_sesion"]);
   }
 }
