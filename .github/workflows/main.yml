@@ -43,7 +43,9 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.REMOTE_KEY }}
-          source: "./PIS/compose.yml"
+          source: "|
+          ./PIS/compose.yml
+          ./nginx/default.conf"
           target: "~/deploy/symfony"
 
       - name: Ejecutar Docker Compose en el servidor
