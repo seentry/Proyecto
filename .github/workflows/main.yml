@@ -47,7 +47,6 @@ jobs:
           key: ${{ secrets.REMOTE_KEY }}
           source: .
           target: ~/deploy/
-          strip_components: 4
 
       - name: Desplegar en servidor remoto
         uses: appleboy/ssh-action@master
