@@ -21,13 +21,13 @@ jobs:
       # Construir y subir imagen Symfony
       - name: Construir y subir imagen Symfony
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/symfony-app:latest -f ./PIS/docker/php.Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/symfony-app:latest -f ./PIS/docker/php.Dockerfile PIS/
           docker push ${{ secrets.DOCKER_USERNAME }}/symfony-app:latest
 
       # Construir y subir imagen Nginx
       - name: Construir y subir imagen Nginx
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/symfony-nginx:latest -f ./PIS/docker/nginx.Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/symfony-nginx:latest -f ./PIS/docker/nginx.Dockerfile PIS/
           docker push ${{ secrets.DOCKER_USERNAME }}/symfony-nginx:latest
 
   deploy:
