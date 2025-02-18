@@ -181,12 +181,13 @@ export class ReservaComponent {
     let selectedDate = this.reactiveForm.value.fecha ?? "";
     let selectedHour = this.reactiveForm.value.hora ?? "";
     let fechaCompleta = selectedDate && selectedHour ? `${selectedDate}T${selectedHour}` : "";
+    let loginUser = parseInt(localStorage.getItem('userId') || '0', 10); //Es un string, mediante parseInt forzamos a que sea numerico
 
     const nuevaCita: Cita = {
       fecha: fechaCompleta,
       precio: this.price,
       pagado: !!this.reactiveForm.value.pagoEfectivo,
-      cliente: 0,//Modificar con la id del usuario que haya iniciado sesion
+      cliente: loginUser,
       trabajador: this.reactiveForm.value.worker ?? 0
     };
     
