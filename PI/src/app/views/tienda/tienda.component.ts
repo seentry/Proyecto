@@ -17,13 +17,13 @@ export class TiendaComponent {
   public serviciosPaginados: Servicio[] = []; 
   public currentPage: number = 1;  // Página actual
   public itemsPerPage: number = 4; // Elementos por página
-  private apiUrlServicio: string = 'http://localhost:8000/api/servicio';
+  public apiUrlServicio: string = 'http://localhost:8000/api/servicio';
 
-  ngOnInit(): void {  
+  public ngOnInit(): void {  
     this.getServicios();
   }
 
-  private getServicios(): void {
+  public getServicios(): void {
     this.service.getServicios(this.apiUrlServicio).subscribe(
       (response) => {
         console.log("Servicios recibidos:", response);
@@ -37,7 +37,7 @@ export class TiendaComponent {
   }
 
   // Método para actualizar los datos paginados
-  private actualizarPaginacion(): void {
+  public actualizarPaginacion(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.serviciosPaginados = this.servicios.slice(startIndex, endIndex);
