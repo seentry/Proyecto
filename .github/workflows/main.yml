@@ -3,7 +3,7 @@ name: Deploy Symfony App
 on:
   push:
     branches:
-      - main
+      - despliegueDocker
 
 jobs:
   deploy:
