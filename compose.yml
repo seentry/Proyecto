@@ -20,9 +20,7 @@ services:
 
     # php
     php74-service:
-        build:
-            context: .
-            dockerfile: ./PIS/php/Dockerfile
+        image: vitorium14/symfony-app:latest
         container_name: php74-container
         ports:
             - "9000:9000"
