@@ -6,12 +6,11 @@ import { FooterComponent } from './components/footer/footer.component';
 import { IniciarSesionComponent } from './views/iniciar-sesion/iniciar-sesion.component';
 import { RegistrarseComponent } from './views/registrarse/registrarse.component';
 import { HeaderInicioComponent } from './components/header-inicio/header-inicio.component';
-import { ReactiveFormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, IniciarSesionComponent, RegistrarseComponent, HeaderInicioComponent, ReactiveFormsModule],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, IniciarSesionComponent, RegistrarseComponent, HeaderInicioComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

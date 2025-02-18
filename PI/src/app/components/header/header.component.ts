@@ -10,7 +10,9 @@ import { HeaderInicioComponent } from '../header-inicio/header-inicio.component'
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  public userStartSesion: boolean = false;
 
-
-  public inicio: boolean = true;
+  constructor() {
+    this.userStartSesion = localStorage.getItem('userId') !== null;
+  }
 }

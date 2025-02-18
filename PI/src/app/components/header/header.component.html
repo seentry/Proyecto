@@ -17,26 +17,18 @@
                   <li class="nav-item"><a class="nav-link question-link" href="reserva">Reserva</a></li>
                   <li class="nav-item"><a class="nav-link question-link" href="contacto">Contacto</a></li>
 
-                  <li class="nav-item"><a class="nav-link question-link" href="mi_perfil">Perfil</a></li>
+                  <!--<li class="nav-item"><a class="nav-link question-link" href="mi_perfil">Perfil</a></li>-->
 
-                  @if (inicio) {
+                  @if (userStartSesion === true){
+                    <li class="nav-item"><a class="nav-link question-link" href="mi_perfil"><img src="/img/avatar.png" alt="avatar" style="width: 40px;"></a></li>
+                  } @else {
                     <li class="nav-item">
-                        <a class="nav-link question-link btn btn-outline-light px-3 py-1" href="inicio_sesion" style="border-radius: 5px; font-weight: bold;">
-                    Iniciar Sesión
-                        </a>
+                      <a class="nav-link question-link btn btn-outline-light px-3 py-1" href="inicio_sesion"
+                        style="border-radius: 5px; font-weight: bold;">
+                        Iniciar Sesión
+                      </a>
                     </li>
                   }
-            
-                  @if (!inicio) {
-                    <li class="nav-item">
-                        <a class="nav-link question-link px-3 py-1 d-flex align-items-center" href="inicio_sesion" style="border-radius: 5px; font-weight: bold; gap: 8px;">
-                            <img src="/img/avatar.png" alt="Usuario" style="width: 20px; height: 20px; border-radius: 50%;"> 
-                        </a>
-                    </li>
-                  }
-
-                
-                
               </ul>
           </div>
         </div>
@@ -44,22 +36,3 @@
     </div>
   </div>
   
-  <style>
-    .nav-link {
-        font-size: 13px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #fff;
-        transition: transform 0.3s ease, color 0.3s ease;
-    }
-  
-    .nav-link:hover {
-        color: #BFA78A;
-        transform: scale(1.2); 
-    }
-  
-    .navbar-toggler {
-        border: none;
-        background: transparent;
-    }
-  </style>

@@ -39,9 +39,8 @@ export class ReservaComponent {
   public specificOptions: string[] = [];
   public price: number = 0;
   public allWorkers: Usuario[] = [];
-  public currentUser: Usuario | null = null;
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getServicios();
     this.getUsuarios();
     this.getCitas();
@@ -88,8 +87,7 @@ export class ReservaComponent {
 
   public getUsuarios(): void {
     this.service.getUsuarios(this.apiUrlUsuario).subscribe((response) => {
-      this.allWorkers = response.filter(user => user.rol === "ROL_TRABAJADOR");
-      this.currentUser = response.find(user => user.rol === "ROL_CLIENTE") || null;
+      this.allWorkers = response.filter(user => user.rol === "ROL_TRABAJADOR"); //Solo pasan al array los usuarios con el rol de trabajador
       console.log("Usuarios: ", response);
     }, (error) => {
       console.error("Error al obtener usuarios:", error);
@@ -183,12 +181,13 @@ export class ReservaComponent {
     let selectedDate = this.reactiveForm.value.fecha ?? "";
     let selectedHour = this.reactiveForm.value.hora ?? "";
     let fechaCompleta = selectedDate && selectedHour ? `${selectedDate}T${selectedHour}` : "";
+    let loginUser = parseInt(localStorage.getItem('userId') || '0', 10); //Es un string, mediante parseInt forzamos a que sea numerico
 
     const nuevaCita: Cita = {
       fecha: fechaCompleta,
       precio: this.price,
       pagado: !!this.reactiveForm.value.pagoEfectivo,
-      cliente: this.currentUser?.id ?? 0,
+      cliente: loginUser,
       trabajador: this.reactiveForm.value.worker ?? 0
     };
     
