@@ -27,8 +27,11 @@ export class IniciarSesionComponent {
       if (this.dataUserClient[i].rol === "ROL_CLIENTE") {
         if (this.dataUserClient[i].email === this.reactiveForm.value.email && this.dataUserClient[i].contrasena === this.reactiveForm.value.contraseña) {
           let idUser = this.dataUserClient[i].id;
-          this.checkSession(idUser);
-        }
+          if (idUser !== undefined) { 
+            this.checkSession(idUser);
+          } else {
+            console.error("Error: El usuario encontrado no tiene ID");
+          }        }
       }
     }
   }
