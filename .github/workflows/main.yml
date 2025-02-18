@@ -50,6 +50,15 @@ jobs:
           source: "./nginx/default.conf"
           target: "~/deploy/symfony"
 
+      - name: Copiar archivos al servidor
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_KEY }}
+          source: "./PIS/*"
+          target: "~/deploy/symfony"
+
       - name: Ejecutar Docker Compose en el servidor
         uses: appleboy/ssh-action@v0.1.10
         with:
