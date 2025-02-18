@@ -54,6 +54,15 @@ jobs:
           target: ~/deploy/
           strip_components: 4
 
+      - name: Verificar archivos en el servidor remoto
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_KEY }}
+          script: |
+            ls -l /home/${{ secrets.REMOTE_USER }}/deploy/nginx/
+
       - name: Desplegar en servidor remoto
         uses: appleboy/ssh-action@master
         with:
