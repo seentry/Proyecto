@@ -39,9 +39,8 @@ export class ReservaComponent {
   public specificOptions: string[] = [];
   public price: number = 0;
   public allWorkers: Usuario[] = [];
-  public currentUser: Usuario | null = null;
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getServicios();
     this.getUsuarios();
     this.getCitas();
@@ -88,8 +87,7 @@ export class ReservaComponent {
 
   public getUsuarios(): void {
     this.service.getUsuarios(this.apiUrlUsuario).subscribe((response) => {
-      this.allWorkers = response.filter(user => user.rol === "ROL_TRABAJADOR");
-      this.currentUser = response.find(user => user.rol === "ROL_CLIENTE") || null;
+      this.allWorkers = response.filter(user => user.rol === "ROL_TRABAJADOR"); //Solo pasan al array los usuarios con el rol de trabajador
       console.log("Usuarios: ", response);
     }, (error) => {
       console.error("Error al obtener usuarios:", error);
@@ -188,7 +186,7 @@ export class ReservaComponent {
       fecha: fechaCompleta,
       precio: this.price,
       pagado: !!this.reactiveForm.value.pagoEfectivo,
-      cliente: this.currentUser?.id ?? 0,
+      cliente: 0,//Modificar con la id del usuario que haya iniciado sesion
       trabajador: this.reactiveForm.value.worker ?? 0
     };
     
