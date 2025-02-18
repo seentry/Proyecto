@@ -45,7 +45,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.REMOTE_KEY }}
-          source: ./PIS/compose.yml
+          source: ${{ github.workspace }}/PIS/compose.yml
           target: ~/deploy/
           strip_components: 4
 
