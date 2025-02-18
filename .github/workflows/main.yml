@@ -33,18 +33,13 @@ jobs:
               with:
                   ref: despliegueDocker # Asegura que se usa esta rama
 
-            - name: Verificar estructura del repositorio
-              run: |
-                  echo "Directorio actual: $(pwd)"
-                  ls -R
-
             - name: Transferir el archivo compose.yml al servidor remoto
               uses: appleboy/scp-action@master
               with:
                   host: ${{ secrets.REMOTE_HOST }}
                   username: ${{ secrets.REMOTE_USER }}
                   key: ${{ secrets.REMOTE_KEY }}
-                  source: ${{ github.workspace }}/compose.yml
+                  source: ./compose.yml
                   target: ~/deploy/
 
             - name: Desplegar en servidor remoto
