@@ -8,8 +8,8 @@ import { Cita, Usuario, Servicio, Opinion, LoginRequest, LoginResponse } from '.
 
 export class RequestService {
   
-  private apiUrlProfile = 'http://127.0.0.1:8000/perfil';
-  private apiUrlAppointments = 'http://127.0.0.1:8000/citas';
+  private apiUrlProfile = 'http://127.0.0.1:8000/perfil'; //No se usa 
+  private apiUrlAppointments = 'http://127.0.0.1:8000/citas'; //No se usa 
 
   constructor(private http: HttpClient) {}
 
