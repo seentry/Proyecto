@@ -55,6 +55,7 @@ jobs:
                   key: ${{ secrets.REMOTE_KEY }}
                   script: |
                      cd ~/deploy
+                     ls -R
                      sudo chmod 666 /var/run/docker.sock
                      docker compose down || true
                      docker compose pull
