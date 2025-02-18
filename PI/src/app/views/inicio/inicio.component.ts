@@ -7,23 +7,24 @@ import { CardGestionProductosComponent } from '../../components/card-gestion-pro
 
 @Component({
   selector: 'app-inicio',
-  imports: [CardComponent, CarouselComponent],
+  imports: [CardComponent, CarouselComponent, CardGestionProductosComponent],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent {
 
+  constructor(private service: RequestService) { }
 
   public servicios: Servicio[] = [];
+
+  private apiUrlServicio: string = 'http://localhost:8000/api/servicio';
 
   public servicio: string = "";
   public stock: number = 0;
   public precio: string = "";
 
 
-  constructor(private service: RequestService) { }
-
-  private apiUrlServicio: string = 'http://localhost:8000/api/servicio';
+  
 
   public servicios_productos: string = "servicios";
   
@@ -37,30 +38,46 @@ export class InicioComponent {
   public click_productos(){
     this.servicios_productos = "productos"
     console.log("productos");
-  }
+  } 
 
 
-  public getServicios(): void {
-    this.service.getServicios(this.apiUrlServicio).subscribe((response) => {
-      this.servicios = response;
+  /*public getServicios(): void {
+    this.service.getServicios(this.apiUrlServicio).subscribe(
+      (response) => {
+        console.log("Respuesta de la API:", response); // Verifica lo que llega de la API
+        this.servicios = response;
   
-      for (let index = 0; index < this.servicios.length; index++) {
-        if (this.servicios[index].stock == null) {  // Usamos this.servicios en lugar de response
-          this.array_servicos.push(this.servicios[index]);
-          //console.log("Servicio agregado a array_servicos:", this.array_servicos[this.array_servicos.length - 1]);
-        } else {
-          this.array_productos.push(this.servicios[index]);
-          //console.log("Producto agregado a array_productos:", this.array_productos[this.array_productos.length - 1]);
+        for (let index = 0; index < this.servicios.length; index++) {
+          if (this.servicios[index].stock == null) { 
+            this.array_servicos.push(this.servicios[index]);
+          } else {
+            this.array_productos.push(this.servicios[index]);
+          }
         }
+      },
+      (error) => {
+        console.error("Error al obtener servicios:", error);
       }
-    }, (error) => {
-      console.error("Error al obtener servicios:", error);
-    });
-  }
+    );
+  }*/
+
+    ngOnInit(): void {
+      this.getServicios();
+    }
+
+    private getServicios(): void {
+      this.service.getServicios(this.apiUrlServicio).subscribe(
+        (response) => {
+          console.log("Servicios recibidos:", response);
+          this.servicios = response.filter(servicio => servicio.imagen !== null && servicio.imagen !== ''); //Filtra las imagenes que sean null, las elimina del array 
+        },
+        (error) => {
+          console.error("Error al obtener servicios:", error);
+        }
+      );
+    }
   
 
-  ngOnInit(): void {
-    this.getServicios();
-  }
+
 
 }
