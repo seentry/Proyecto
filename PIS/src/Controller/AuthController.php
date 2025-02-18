@@ -22,6 +22,7 @@ class AuthController extends AbstractController
         // Hash password
         $password = md5($password);
 
+
         // Comprobar datos en tabla Usuarios
         $resultado = $entityManager->getRepository(Usuario::class)->findOneBy(['email' => $email, 'contrasenya' => $password]);
         if ($resultado != null) {
