@@ -1,4 +1,4 @@
-name: Deploy Symfony App
+name: Deploy Symfony API with MySQL and Nginx
 
 on:
   push:
@@ -6,12 +6,11 @@ on:
       - despliegueDocker
 
 jobs:
-  deploy:
+  build-and-push:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout código fuente
-        uses: actions/checkout@v3
+      - name: Checkout código
+        uses: actions/checkout@v4
 
       - name: Iniciar sesión en Docker Hub
         uses: docker/login-action@v2
@@ -19,55 +18,47 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      # Construir y subir imagen Symfony
+      - name: Construir y subir imagen Symfony
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/symfony-app:latest -f ./PIS/docker/php.Dockerfile .
+          docker push ${{ secrets.DOCKER_USERNAME }}/symfony-app:latest
+
+      # Construir y subir imagen Nginx
+      - name: Construir y subir imagen Nginx
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/symfony-nginx:latest -f ./PIS/docker/nginx.Dockerfile .
+          docker push ${{ secrets.DOCKER_USERNAME }}/symfony-nginx:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+        with:
+          ref: despliegueDocker # Asegura que se usa esta rama
+
+      - name: Transferir el archivo compose.yml al servidor remoto
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_KEY }}
+          source: ${{ github.workspace }}/PIS/compose.yml
+          target: ~/deploy/
+          strip_components: 4
+
       - name: Desplegar en servidor remoto
-        uses: appleboy/ssh-action@v0.1.10
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.REMOTE_KEY }}
           script: |
-              mkdir -p ~/deploy/symfony
-              cd ~/deploy/symfony
-              
-              # Si ya existe, limpiamos los archivos antiguos
-              rm -rf ~/deploy/symfony/*
-
-      - name: Copiar archivos al servidor
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.REMOTE_KEY }}
-          source: "./PIS/compose.yml"
-          target: "~/deploy/symfony"
-
-      - name: Copiar archivos al servidor
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.REMOTE_KEY }}
-          source: "./nginx/default.conf"
-          target: "~/deploy/symfony"
-
-      - name: Copiar archivos al servidor
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.REMOTE_KEY }}
-          source: "./PIS/*"
-          target: "~/deploy/symfony"
-
-      - name: Ejecutar Docker Compose en el servidor
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.REMOTE_KEY }}
-          script: |
-                cd ~/deploy/symfony
-                sudo docker compose pull
-                sudo docker compose down
-                sudo docker compose up -d --remove-orphans
-                sudo docker system prune -f  # Limpieza de imágenes antiguas
+            sudo chmod 666 /var/run/docker.sock
+            echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+            
+            docker-compose -f /home/${{ secrets.REMOTE_USER }}/deploy/compose.yml pull
+            docker-compose -f /home/${{ secrets.REMOTE_USER }}/deploy/compose.yml down
+            docker-compose -f /home/${{ secrets.REMOTE_USER }}/deploy/compose.yml up -d --force-recreate
