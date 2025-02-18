@@ -59,6 +59,6 @@ jobs:
             sudo chmod 666 /var/run/docker.sock
             echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
             
-            docker compose -f ~/deploy/compose.yml pull
-            docker compose -f ~/deploy/compose.yml down
-            docker compose -f ~/deploy/compose.yml up -d --force-recreate
+            docker compose -f ./deploy/compose.yml pull
+            docker compose -f ./deploy/compose.yml down
+            docker compose -f ./deploy/compose.yml up -d --force-recreate
