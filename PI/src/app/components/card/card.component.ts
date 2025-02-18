@@ -1,9 +1,8 @@
-import { NgStyle } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-card',
-  imports: [NgStyle],
+  imports: [],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })
