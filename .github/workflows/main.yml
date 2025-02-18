@@ -27,9 +27,9 @@ jobs:
       - name: Desplegar en servidor remoto
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_KEY }}
           script: |
               mkdir -p ~/deploy/symfony
               cd ~/deploy/symfony
@@ -40,21 +40,21 @@ jobs:
       - name: Copiar archivos al servidor
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_KEY }}
           source: "./PIS/compose.yml"
           target: "~/deploy/symfony"
 
       - name: Ejecutar Docker Compose en el servidor
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_KEY }}
           script: |
                 cd ~/deploy/symfony
-                docker compose pull
-                docker compose down
-                docker compose up -d --remove-orphans
-                docker system prune -f  # Limpieza de imágenes antiguas
+                sudo docker compose pull
+                sudo docker compose down
+                sudo docker compose up -d --remove-orphans
+                sudo docker system prune -f  # Limpieza de imágenes antiguas
