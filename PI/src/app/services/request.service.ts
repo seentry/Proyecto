@@ -22,6 +22,10 @@ export class RequestService {
     return this.http.get<Usuario[]>(url);
   }
 
+  public createUsuario(url: string, usuario: Usuario): Observable<Usuario> {
+    return this.http.post<Usuario>(url, usuario);
+  }
+
   public getCitas(url: string): Observable<Cita[]> {
     return this.http.get<Cita[]>(url);
   }
