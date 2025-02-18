@@ -21,7 +21,7 @@ jobs:
 
       - name: Construir y subir imagen a Docker Hub
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/symfony-app:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/symfony-app:latest ./PIS
           docker push ${{ secrets.DOCKER_USERNAME }}/symfony-app:latest
 
       - name: Desplegar en servidor remoto
