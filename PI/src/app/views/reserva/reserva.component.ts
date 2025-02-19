@@ -14,6 +14,8 @@ export class ReservaComponent {
 
   constructor(private service: RequestService) { }
 
+  public loginUser = localStorage.getItem('userId')
+
   public servicios: Servicio[] = [];
   private apiUrlCita: string = 'http://localhost:8000/api/cita';
 
@@ -181,12 +183,18 @@ export class ReservaComponent {
     let selectedDate = this.reactiveForm.value.fecha ?? "";
     let selectedHour = this.reactiveForm.value.hora ?? "";
     let fechaCompleta = selectedDate && selectedHour ? `${selectedDate}T${selectedHour}` : "";
-
+    let loginUser = parseInt(localStorage.getItem('userId') || '0', 10); //Es un string, mediante parseInt forzamos a que sea numerico
+    let pago: boolean = false;
+    if (this.reactiveForm.value.pagoEfectivo === false) {
+      pago = true;
+    } else {
+      pago = false;
+    }
     const nuevaCita: Cita = {
       fecha: fechaCompleta,
       precio: this.price,
-      pagado: !!this.reactiveForm.value.pagoEfectivo,
-      cliente: 0,//Modificar con la id del usuario que haya iniciado sesion
+      pagado: pago,
+      cliente: loginUser,
       trabajador: this.reactiveForm.value.worker ?? 0
     };
     

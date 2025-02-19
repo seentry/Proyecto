@@ -8,8 +8,8 @@ import { Cita, Usuario, Servicio, Opinion, LoginRequest, LoginResponse } from '.
 
 export class RequestService {
   
-  private apiUrlProfile = 'http://127.0.0.1:8000/perfil';
-  private apiUrlAppointments = 'http://127.0.0.1:8000/citas';
+  private apiUrlProfile = 'http://127.0.0.1:8000/perfil'; //No se usa 
+  private apiUrlAppointments = 'http://127.0.0.1:8000/citas'; //No se usa 
 
   constructor(private http: HttpClient) {}
 
@@ -20,6 +20,10 @@ export class RequestService {
 
   public getUsuarios(url: string): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(url);
+  }
+
+  public createUsuario(url: string, usuario: Usuario): Observable<Usuario> {
+    return this.http.post<Usuario>(url, usuario);
   }
 
   public getCitas(url: string): Observable<Cita[]> {
