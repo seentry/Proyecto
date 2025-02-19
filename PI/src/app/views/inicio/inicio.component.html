@@ -1,6 +1,10 @@
 <article>
-  
-    <h2 class="text-center mt-5">Texto de prueba</h2>
+
+    <div class="text-center my-5">
+        <h2 class="fw-bold text-uppercase">PRODUCTOS Y SERVICIOS DESTACADOS</h2>
+        <h5 class="text-muted fst-italic">¡Ven Rápido, que se acaban!</h5>
+    </div>
+    
 
     <section class="col-12 text-center mt-5">
         <div class="row justify-content-center">
@@ -15,18 +19,23 @@
         </div>
     </section>
 
+    <section class="col-12 my-4">
+        <div class="row justify-content-center">
     @if (servicios_productos == "servicios") {
         @for ( servicio of array_servicos; track servicio) {
-            <app-card [name]="servicio.nombre" [price]="servicio.precio" ></app-card>
+            <app-card class="col-3" [name]="servicio.nombre" [price]="servicio.precio" ></app-card>
         }
-
+        
     }
 
     @if (servicios_productos == "productos") {
         @for ( producto of array_productos; track producto) {
-            <app-card [name]="producto.nombre" [stock]="producto.stock"></app-card>
+            <app-card class="col-3" [name]="producto.nombre" [stock]="producto.stock"></app-card>
         }
     }
+
+        </div>
+    </section>
 
 
     <app-carousel></app-carousel>
