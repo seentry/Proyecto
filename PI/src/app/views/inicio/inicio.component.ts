@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CardComponent } from '../../components/card/card.component';
 import { RequestService } from '../../services/request.service';
 import { CarouselComponent } from '../../components/carousel/carousel.component';
-import { Servicio } from '../../models/response.interface';
+import { Servicio, Opinion } from '../../models/response.interface';
 import { CardGestionProductosComponent } from '../../components/card-gestion-productos/card-gestion-productos.component';
 
 @Component({
@@ -16,8 +16,11 @@ export class InicioComponent {
   constructor(private service: RequestService) { }
 
   public servicios: Servicio[] = [];
+  public opiniones: Opinion[] = [];
 
-  private apiUrlServicio: string = 'http://localhost:8000/api/servicio';
+  private apiUrlServicio: string = 'http://52.205.151.118/api/servicio';
+  private apiUrlOpinion: string = 'http://52.205.151.118/api/servicio';
+
 
   public servicio: string = "";
   public stock: number = 0;
@@ -64,6 +67,7 @@ export class InicioComponent {
 
     ngOnInit(): void {
       this.getServicios();
+      this.getOpiniones();
       console.log(this.array_servicos)
       console.log("------------------------------------")
       console.log(this.array_productos)
@@ -92,7 +96,17 @@ export class InicioComponent {
 
     //Carrusel<------------------------------------------>
 
-    
+    public getOpiniones(): void {
+      this.service.getOpiniones(this.apiUrlOpinion).subscribe(
+        (response) => {
+          this.opiniones = response;
+          console.log("Opiniones:", response);
+        },
+        (error) => {
+          console.error("Error al obtener servicios:", error);
+        }
+      );
+    }
 
 
 }

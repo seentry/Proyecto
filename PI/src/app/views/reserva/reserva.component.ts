@@ -17,11 +17,11 @@ export class ReservaComponent {
   public loginUser = localStorage.getItem('userId')
 
   public servicios: Servicio[] = [];
-  private apiUrlCita: string = 'http://localhost:8000/api/cita';
+  private apiUrlCita: string = 'http://52.205.151.118/api/cita';
 
-  private apiUrlUsuario: string = 'http://localhost:8000/api/usuario';
+  private apiUrlUsuario: string = 'http://52.205.151.118/api/usuario';
 
-  private apiUrlServicio: string = 'http://localhost:8000/api/servicio';
+  private apiUrlServicio: string = 'http://52.205.151.118/api/servicio';
   private citas: Cita[] = [];
 
   public options: string[][] = [

@@ -41,6 +41,10 @@ export class RequestService {
     return this.http.post<Servicio>(url, servicio);
   }
 
+  public getOpiniones(url: string): Observable<Opinion[]> { 
+    return this.http.get<Opinion[]>(url);
+  }
+
 
   
 
