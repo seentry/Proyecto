@@ -5,10 +5,7 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   id: number;
-  nombre: string;
-  apellidos: string;
   email: string;
-  dni: string;
   rol: "ROL_ADMIN" | "ROL_TRABAJADOR" | "ROL_CLIENTE";
 }
 
