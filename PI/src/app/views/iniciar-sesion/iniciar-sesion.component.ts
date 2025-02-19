@@ -47,7 +47,6 @@ export class IniciarSesionComponent {
     );
   }
   
-
   public onSubmit(): void {
     this.startSesion();
   }
