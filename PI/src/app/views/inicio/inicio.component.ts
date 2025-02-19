@@ -32,6 +32,7 @@ export class InicioComponent {
   public array_productos: Servicio[] = [];
 
   public click_servicios(){
+    this.servicios_productos = "servicios"
     console.log("servicios");
   }
 
