@@ -38,7 +38,8 @@ class UsuarioController extends AbstractController
         $usuario->setApellidos($requestContent['apellidos']);
         $usuario->setDni($requestContent['dni']);
         $usuario->setEmail($requestContent['email']);
-        $usuario->setContrasena($requestContent['contrasena']);
+        $contrasena = md5($requestContent['contrasena']);
+        $usuario->setContrasena($contrasena);
         $usuario->setRol($requestContent['rol']);
 
         $entityManager->persist($usuario);
