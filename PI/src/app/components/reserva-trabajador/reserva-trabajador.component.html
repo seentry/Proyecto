@@ -22,7 +22,7 @@
       <th>Precio</th>
       <th>Pagado</th>
       <th>Cliente</th>
-      <th>Email</th>
+      <th>Trabajador</th>
     </tr>
   </thead>
   <tbody>
@@ -33,15 +33,15 @@
       </tr>
     }
     
-      @for (servicio of filteredServicios; track servicio) {
-        <tr>
-          <td>{{ servicio.id }}</td>
-          <td>{{ servicio.fecha }}</td>
-          <td>{{ servicio.precio }}</td>
-          <td>{{ servicio.pagado ? 'Sí' : 'No' }}</td>
-          <td>{{ servicio.cliente.nombre }} {{ servicio.cliente.apellidos }}</td>
-          <td>{{ servicio.cliente.email }}</td>
-        </tr>
-      }
+    @for (cita of filteredServicios; track cita) {
+      <tr>
+        <td>{{ cita.id }}</td>
+        <td>{{ cita.fecha }}</td>
+        <td>{{ cita.precio }}</td>
+        <td>{{ cita.pagado ? 'Sí' : 'No' }}</td>
+        <td>{{ cita.cliente.nombre }} {{ cita.cliente.apellidos }}</td>
+        <td>{{ cita.trabajador.nombre }}</td>
+      </tr>
+    }
   </tbody>
 </table>

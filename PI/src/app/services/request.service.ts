@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Cita, Usuario, Servicio, Opinion, LoginRequest, LoginResponse } from '../models/response.interface';
+import { Cita, Usuario, Servicio, Opinion, LoginRequest, LoginResponse, CitaNueva } from '../models/response.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -30,7 +30,7 @@ export class RequestService {
   public getCitas(url: string): Observable<Cita[]> {
     return this.http.get<Cita[]>(url);
   }
-  public postCita(url: string, cita: Cita): Observable<any> { 
+  public postCita(url: string, cita: CitaNueva): Observable<any> { 
     return this.http.post<any>(url, cita); 
   }
 

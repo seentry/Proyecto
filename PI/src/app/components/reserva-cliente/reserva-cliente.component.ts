@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RequestService } from '../../services/request.service';
 import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
-import { Servicio, Cita, Usuario } from '../../models/response.interface';
+import { Servicio, Cita, Usuario, CitaNueva } from '../../models/response.interface';
 
 @Component({
   selector: 'app-reserva-cliente',
@@ -81,7 +81,7 @@ export class ReservaClienteComponent {
       this.citasOcupadas = this.citas.map(({ fecha, trabajador }) => ({
         fecha: fecha.split('T')[0], //el split('T')[0] fuerza a que la fecha sea de tipo ISO 8601 para que sea comptible con la API, ademas la posicion 0 coge solo el campo de fecha
         hora: fecha.split('T')[1].slice(0, 5), //La posicion de 1 coge el campos de hora y ademas el .slice(0, 5) elimina los segundos de forma que solo se coge hora y minutos
-        trabajador: (trabajador as { id?: number })?.id ?? trabajador //Para que funcione hay que forzar a que sea de tipo number, ademas de poner interrogantes para que si es un objeto obtener su id y si es un numero usarlo directamente
+        trabajador: (trabajador as { id: number }).id ?? trabajador.id //Para que funcione hay que forzar a que sea de tipo number, ademas de poner interrogantes para que si es un objeto obtener su id y si es un numero usarlo directamente
       }));
       console.log("Citas: ", response);
     }, (error) => {
@@ -192,7 +192,7 @@ export class ReservaClienteComponent {
     } else {
       pago = false;
     }
-    const nuevaCita: Cita = {
+    const nuevaCita: CitaNueva = {
       fecha: fechaCompleta,
       precio: this.price,
       pagado: pago,

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RequestService } from '../../services/request.service';
+import { Cita, Usuario } from '../../models/response.interface';
 
 @Component({
   selector: 'app-reserva-trabajador',
@@ -9,7 +10,9 @@ import { RequestService } from '../../services/request.service';
 })
 export class ReservaTrabajadorComponent {
 
-  public servicios: any[] = []; 
+  public citas: Cita[] = []; 
+  public usuario: Usuario[] = []; 
+
   public filteredServicios: any[] = [];
 
   public searchTerm: string = "";
@@ -17,19 +20,30 @@ export class ReservaTrabajadorComponent {
 
   constructor(private service: RequestService) {}
 
-  private apiUrl = 'http://52.205.151.118/cita';
+  private apiUrl = 'http://52.205.151.118/api/cita';
+  private apiUrlUser = 'http://52.205.151.118/api/usuario';
 
   ngOnInit(): void {
-    this.getServicios();
+    this.getCitas();
+    this.getUsuarios();
   }
 
-  public getServicios(): void {
-    this.service.getServicios(this.apiUrl).subscribe((response) => {
+  public getCitas(): void {
+    this.service.getCitas(this.apiUrl).subscribe((response) => {
       console.log(response); 
-      this.servicios = response; 
+      this.citas = response; 
       this.filteredServicios = response;
     }, (error) => {
-      console.error("Error al obtener servicios:", error);
+      console.error("Error al obtener citas:", error);
+    });
+  }
+
+  public getUsuarios(): void {
+    this.service.getUsuarios(this.apiUrlUser).subscribe((response) => {
+      console.log(response); 
+      this.usuario = response; 
+    }, (error) => {
+      console.error("Error al obtener user:", error);
     });
   }
 
@@ -39,7 +53,7 @@ export class ReservaTrabajadorComponent {
 
   public searchByButton(): void {
     if (!this.searchTerm) {
-      this.filteredServicios = this.servicios;
+      this.filteredServicios = this.citas;
       return;
     }
 
@@ -49,39 +63,60 @@ export class ReservaTrabajadorComponent {
       return;
     }
 
-    let resultado = this.servicios.find(servicio => servicio.id === idBusqueda);
+    let resultado = this.citas.find(cita => cita.id === idBusqueda);
     this.filteredServicios = resultado ? [resultado] : [];
   }
 
   public updateSortOrder(event: Event): void {
     this.sortType = (event.target as HTMLSelectElement).value;
     this.sortServicios();
+    this.addUserData();
   }
+
+  public addUserData(): void {
+    this.filteredServicios.forEach((cita) => {
+      let cliente = this.usuario.find(user => user.id === cita.cliente.id);
+      let trabajador = this.usuario.find(user => user.id === cita.trabajador.id);
+  
+      if (cliente) {
+        cita.cliente.nombre = `${cliente.nombre} ${cliente.apellidos}`;
+      } else {
+        cita.clienteNombre = 'Desconocido';
+      }
+  
+      if (trabajador) {
+        cita.trabajador.nombre = `${trabajador.nombre} ${trabajador.apellidos}`;
+      } else {
+        cita.trabajador.nombre = 'Desconocido';
+      }
+    });
+  }
+  
 
   public sortServicios(): void {
     if (this.sortType === "id") {
-      this.filteredServicios = [...this.servicios].sort((a, b) => a.id - b.id);
+      this.filteredServicios = [...this.citas].sort((a, b) => a.id! - b.id!);
     } else if (this.sortType === "name") {
-      this.filteredServicios = [...this.servicios].sort((a, b) =>
+      this.filteredServicios = [...this.citas].sort((a, b) =>
         a.cliente.nombre.localeCompare(b.cliente.nombre)
       );
     } else if (this.sortType === "dateSoon") {
-      this.filteredServicios = [...this.servicios].sort((a, b) => 
+      this.filteredServicios = [...this.citas].sort((a, b) => 
         new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
       );
     } else if (this.sortType === "dateLate") {
-      this.filteredServicios = [...this.servicios].sort((a, b) => 
+      this.filteredServicios = [...this.citas].sort((a, b) => 
         new Date(a.fecha).getTime() - new Date(b.fecha).getTime()
       );
     } else if (this.sortType === "pay") {
-      this.filteredServicios = [...this.servicios].sort((a, b) => 
+      this.filteredServicios = [...this.citas].sort((a, b) => 
         (b.pagado ? 1 : 0) - (a.pagado ? 1 : 0)
       );
     } else if (this.sortType === "noPay") {
-      this.filteredServicios = [...this.servicios].sort((a, b) => 
+      this.filteredServicios = [...this.citas].sort((a, b) => 
         (a.pagado ? 1 : 0) - (b.pagado ? 1 : 0)
       );
     }
   }
-  
+
 }
