@@ -19,7 +19,7 @@ export class InicioComponent {
   public opiniones: Opinion[] = [];
 
   private apiUrlServicio: string = 'http://52.205.151.118/api/servicio';
-  private apiUrlOpinion: string = 'http://52.205.151.118/api/servicio';
+  private apiUrlOpinion: string = 'http://52.205.151.118/api/opinion';
 
 
   public servicio: string = "";
