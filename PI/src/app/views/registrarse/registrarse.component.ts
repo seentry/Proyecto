@@ -14,7 +14,7 @@ export class RegistrarseComponent {
 
   constructor(private service: RequestService, private router: Router) { }
 
-  public apiUrlUsuario: string = 'http://localhost:8000/api/usuario';
+  public apiUrlUsuario: string = 'http://52.205.151.118/api/usuario';
   public dataUserClient: Usuario[] = [];
 
   public getUsuarios(): void {
