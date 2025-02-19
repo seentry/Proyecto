@@ -16,9 +16,10 @@ export class IniciarSesionComponent {
 
   constructor(private service: RequestService, private router: Router) { }
 
-  public checkSession(idUser: number): void {
+  public checkSession(idUser: number, userRol: string): void {
     localStorage.setItem('userId', idUser.toString());
     console.log("Sesion iniciado con el usuario con id: ", idUser);
+    console.log("Rol: ", userRol);
   }
 
   //Modificado para que permita el inicio de sesion de todos los tipos de usuario
@@ -26,8 +27,9 @@ export class IniciarSesionComponent {
     for (let i = 0; i < this.dataUser.length; i++) {
       if (this.dataUser[i].email === this.reactiveForm.value.email && this.dataUser[i].contrasena === this.reactiveForm.value.contraseña) {
         let idUser = this.dataUser[i].id;
+        let userRol = this.dataUser[i].rol;
         if (idUser !== undefined) {
-          this.checkSession(idUser);
+          this.checkSession(idUser, userRol);
           this.router.navigate(["/inicio"]);
         } else {
           console.error("Error: El usuario encontrado no tiene ID");
