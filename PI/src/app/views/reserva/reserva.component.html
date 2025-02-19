@@ -3,7 +3,7 @@
 
     <section class="row mt-4 justify-content-center">
         <div class="col-md-8">
-            <form (ngSubmit)="onSubmit()" [formGroup]="reactiveForm" class="card p-4 form-container">
+            <form (ngSubmit)="onSubmit()" [formGroup]="reactiveForm" class="card p-4 form-container bg-transparent">
                 <label for="tipoReserva" class="form-label fw-bold text-dark">Selecciona un servicio</label>
                 <select id="tipoReserva" class="form-select mb-3" formControlName="tipoReserva"
                     (change)="actualizarOpciones()">
@@ -36,7 +36,7 @@
                 
 
                 <label for="comentario" class="form-label fw-bold text-dark">¿Algún comentario sobre la reserva?</label>
-                <textarea id="comentario" class="form-control" rows="4" placeholder="Escribe aquí tus comentarios..."
+                <textarea id="comentario" class="form-control mb-3" rows="4" placeholder="Escribe aquí tus comentarios..."
                     formControlName="comentario"></textarea>
 
                 <div class="form-check">
@@ -50,9 +50,9 @@
                 </div>
 
                 @if (loginUser !== null && loginUser !== undefined) {
-                    <button type="submit" class="btn btn-primary mt-3 w-100">Enviar Reserva</button>
+                    <button type="submit" class="btn btn-dark mt-3 w-100">Enviar Reserva</button>
                 } @else {
-                    <button type="button" class="btn btn-secondary mt-3 w-100" disabled>Enviar Reserva</button>
+                    <button type="button" class="btn btn-danger mt-3 w-100" disabled>Enviar Reserva</button>
                     <p class="text-danger mt-2">Inicia sesión para reservar una cita</p>
                 }
             </form>

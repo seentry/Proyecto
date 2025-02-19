@@ -27,3 +27,12 @@
     font-weight: bold;
     margin: 0;
 }
+
+
+input, textarea, select, option{
+    border: 1px solid black;
+}
+
+label{
+    color: black;
+}
