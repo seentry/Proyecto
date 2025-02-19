@@ -15,9 +15,9 @@ export class RequestService {
   constructor(private http: HttpClient) {}
 
 
-  public login(url: string, credentials: LoginRequest): Observable<LoginResponse> {
+  public login(url: string, credentials: any): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(url, credentials);
-  }
+  }  
 
   public getUsuarios(url: string): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(url);

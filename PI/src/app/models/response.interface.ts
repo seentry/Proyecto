@@ -5,10 +5,7 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   id: number;
-  nombre: string;
-  apellidos: string;
   email: string;
-  dni: string;
   rol: "ROL_ADMIN" | "ROL_TRABAJADOR" | "ROL_CLIENTE";
 }
 
@@ -45,5 +42,5 @@ export interface Servicio {
   descripcion: string;
   stock: number|null;
   precio: number;
-  imagen?: string | null;
+  imagen?: string | null; 
 }
