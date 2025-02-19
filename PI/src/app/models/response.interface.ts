@@ -45,5 +45,5 @@ export interface Servicio {
   descripcion: string;
   stock: number|null;
   precio: number;
-  imagen?: string | null; 
+  imagen?: string | null;
 }

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';  
 import { RequestService } from '../../services/request.service';
 import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { Servicio, Cita, Usuario } from '../../models/response.interface';
 import { ReservaClienteComponent } from '../../components/reserva-cliente/reserva-cliente.component';
 import { ReservaTrabajadorComponent } from '../../components/reserva-trabajador/reserva-trabajador.component';
+
 
 @Component({
   selector: 'app-reserva',
@@ -18,6 +19,7 @@ export class ReservaComponent {
 
   public loginUser = localStorage.getItem('userId');
   public rolUser = localStorage.getItem('userRol');
+  
 
   //public userStartSesion: boolean = false;
 
@@ -34,11 +36,15 @@ export class ReservaComponent {
     });
   }
 
-  public ngOnInit(): void {
-    this.getUsuarios();
-    console.log(this.rolUser);
-    console.log(this.loginUser);
+  ngOnInit(): void {
+    this.rolUser = localStorage.getItem('userRol');
+    this.loginUser = localStorage.getItem('userId');
+  
+    console.log("Rol del usuario:", this.rolUser);
+    console.log("ID del usuario:", this.loginUser);
+
   }
+  
 
 }
 
