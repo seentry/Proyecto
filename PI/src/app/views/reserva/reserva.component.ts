@@ -23,8 +23,8 @@ export class ReservaComponent {
 
   //public userStartSesion: boolean = false;
 
-  private apiUrlCita: string = 'http://localhost:8000/api/cita';
-  private apiUrlUsuario: string = 'http://localhost:8000/api/usuario';
+  private apiUrlCita: string = 'http://52.205.151.118/api/cita';
+  private apiUrlUsuario: string = 'http://52.205.151.118/api/usuario';
   public user: Usuario[] = [];
 
   public getUsuarios(): void {

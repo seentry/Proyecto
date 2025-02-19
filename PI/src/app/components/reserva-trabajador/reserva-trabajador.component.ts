@@ -17,7 +17,7 @@ export class ReservaTrabajadorComponent {
 
   constructor(private service: RequestService) {}
 
-  private apiUrl = 'http://127.0.0.1:8000/cita';
+  private apiUrl = 'http://52.205.151.118/cita';
 
   ngOnInit(): void {
     this.getServicios();
