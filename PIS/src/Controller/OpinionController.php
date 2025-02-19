@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Opinion;
 use App\Entity\Usuario;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,15 @@ class OpinionController extends AbstractController
         return $this->json($opinion, 200, [], ['groups' => ['opinion']]);
     }
 
+    #[Route('/api/opinion/by-user', name: 'opinionByUser', methods: 'GET', format: 'json')]
+    public function getOpinionByUser(EntityManagerInterface $entityManager, Request $request): JsonResponse
+    {
+        $requestContent = json_decode($request->getContent(), true);
+        $usuario = $entityManager->getRepository(Usuario::class)->find($requestContent['id']);
+        $opinions = $entityManager->getRepository(Opinion::class)->findBy(['usuario' => $usuario]);
+        return $this->json($opinions, 200, [], ['groups' => ['opinion']]);
+    }
+
     #[Route('/api/opinion', name: 'opinionCreate', methods: 'POST', format: 'json')]
     public function opinionCreate(EntityManagerInterface $entityManager, Request $request): JsonResponse
     {
@@ -35,7 +45,7 @@ class OpinionController extends AbstractController
             $opinion->setDescripcion($requestContent['descripcion']);
             $opinion->setTitulo($requestContent['titulo']);
             $opinion->setValoracion($requestContent['valoracion']);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->json(['error' => $e->getMessage()], 400);
         }
 
@@ -43,7 +53,7 @@ class OpinionController extends AbstractController
             // Conseguimos el usuario por ID
             $usuario = $entityManager->getRepository(Usuario::class)->findBy(['id' => $requestContent['usuario']])[0];
             $opinion->setUsuario($usuario);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->json(['error' => $e->getMessage()], 400);
         }
 

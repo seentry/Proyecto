@@ -14,8 +14,8 @@ class Usuario
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['usuario', 'cita','login'])]//Modificacion para la correcta salida de los datos
-    //#[Groups('usuario')]
+    #[Groups(['usuario', 'cita', 'login'])]//Modificacion para la correcta salida de los datos
+        //#[Groups('usuario')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -31,7 +31,7 @@ class Usuario
     private ?string $dni = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['usuario','login'])]
+    #[Groups(['usuario', 'login'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
@@ -39,7 +39,7 @@ class Usuario
     private ?string $contrasena = null;
 
     #[ORM\Column(type: 'role')]
-    #[Groups(['usuario','login'])]
+    #[Groups(['usuario', 'login'])]
     private ?string $rol = null;
 
     /**
