@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
-import { Usuario, LoginRequest } from '../../models/response.interface';
+import { Usuario, LoginRequest, LoginResponse } from '../../models/response.interface';
 import { RequestService } from '../../services/request.service';
 import { Router } from '@angular/router';
 
