@@ -17,14 +17,14 @@ class AuthController extends AbstractController
         // Get data from body
         $parameters = json_decode($request->getContent(), true);
         $email = $parameters['email'];
-        $password = $parameters['contrasenya'];
+        $password = $parameters['contrasena'];
 
         // Hash password
         $password = md5($password);
 
 
         // Comprobar datos en tabla Usuarios
-        $resultado = $entityManager->getRepository(Usuario::class)->findOneBy(['email' => $email, 'contrasenya' => $password]);
+        $resultado = $entityManager->getRepository(Usuario::class)->findOneBy(['email' => $email, 'contrasena' => $password]);
         if ($resultado != null) {
             return $this->json($resultado, Response::HTTP_OK, [], ['groups' => ['login']]);
         }
