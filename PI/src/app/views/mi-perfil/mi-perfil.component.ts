@@ -28,7 +28,6 @@ export class MiPerfilComponent implements OnInit {
     this.urlUser = this.urlUser + this.mainId;
     this.service.getUsuario(this.urlUser).subscribe((response) => {
       this.user = response;
-      console.log(response);
     })
 
     this.getCitas()
@@ -42,7 +41,6 @@ export class MiPerfilComponent implements OnInit {
         return
       }
       response.map((cita: Cita) => {
-        console.log(cita);
         let date = new Date(cita.fecha);
         cita.fecha = date.toLocaleString("en-GB")
       })
