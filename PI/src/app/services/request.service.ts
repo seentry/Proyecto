@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Cita, CitaNueva, LoginResponse, Servicio, Usuario} from '../models/response.interface';
+import {Cita, CitaNueva, LoginResponse, Servicio, Usuario, Opinion} from '../models/response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -59,12 +59,12 @@ export class RequestService {
     return this.http.delete<void>(url);
   }
 
-}
-
   public createOpinion(url: string, opinion: Opinion): Observable<Opinion> {
     return this.http.post<Opinion>(url, opinion);
   }
   
+}
+
 
   /*
     // --------- USUARIOS (CLIENTES/TRABAJADORES) ---------
@@ -107,4 +107,4 @@ export class RequestService {
 
 
     */
-}
+
