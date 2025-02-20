@@ -17,7 +17,7 @@ export class MiPerfilComponent implements OnInit {
   public citas: Cita[] = [];
   public mainId = localStorage.getItem('userId')
 
-  constructor(private service: RequestService, private router: Router) {
+  constructor(private service: RequestService, protected router: Router) {
   }
 
   // Get user data from Api via LocalStorage
@@ -43,7 +43,7 @@ export class MiPerfilComponent implements OnInit {
       response.map((cita: Cita) => {
         console.log(cita.fecha);
         let date = new Date(cita.fecha);
-        cita.fecha = date.toLocaleString('es-ES')
+        cita.fecha = date.toLocaleDateString();
       })
       this.citas = response;
     })
@@ -56,4 +56,9 @@ export class MiPerfilComponent implements OnInit {
   }
 
   protected readonly Date = Date;
+
+  logout() {
+    localStorage.clear()
+    this.router.navigate(['login'])
+  }
 }
