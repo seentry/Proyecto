@@ -64,7 +64,7 @@ class CitaController extends AbstractController
             } catch (Exception $e) {
                 return new Response('ERROR: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-        } else {
+        }else{
             $cita->setTrabajador(null);
         }
 
@@ -109,10 +109,10 @@ class CitaController extends AbstractController
     }
 
     #[Route('/api/cita/user/{id}', name: 'citaByUser', methods: ['GET'], format: 'json')]
-    public function byUserCita(EntityManagerInterface $entityManager,int $id): Response
+    public function byUserCita(EntityManagerInterface $entityManager, int $id): Response
     {
-        $citas = $entityManager->getRepository(Cita::class)->findBy(['cliente' => $id]);
-        return $this->json($citas, Response::HTTP_OK, [], ['groups' => ['cita']]);
+        $cita = $entityManager->getRepository(Cita::class)->findBy(['cliente' => $id]);
+        return $this->json($cita, Response::HTTP_OK, [], ['groups' => ['cita', 'citaCliente', 'cliente', 'citaTrabajador', 'trabajador', 'servicio']]);
     }
 
 }
