@@ -1,0 +1,33 @@
+<!-- Título centrado -->
+<h1 class="text-center" style="margin-top: 30px; margin-bottom: 20px;">Productos</h1>
+<div class="row justify-content-center">
+  <div class="col-md-10">
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      @for (servicio of serviciosPaginados; track servicio.id) {
+        <app-card-producto
+        [price]="servicio.precio"
+        [stock]="servicio.stock ?? 0"
+        [name]="servicio.nombre"
+        [description]="servicio.descripcion"
+        [img]="servicio.imagen || 'assets/default-image.jpg'"
+        (deleteProduct)="servicio.id ? eliminarProducto(servicio.id) : null">
+      </app-card-producto>
+      
+      }
+    </div>
+
+    <!-- Contenedor de paginación centrado -->
+    <div class="pagination d-flex justify-content-center mt-4">
+      <button class="btn btn-primary me-2" (click)="prevPage()" [disabled]="currentPage === 1">
+        Anterior
+      </button>
+
+      <span class="fs-5 fw-bold mx-3">Página {{ currentPage }} de {{ totalPages() }}</span>
+
+      <button class="btn btn-primary ms-2" (click)="nextPage()" [disabled]="currentPage === totalPages()">
+        Siguiente
+      </button>
+    </div>
+
+  </div>
+</div>

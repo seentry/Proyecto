@@ -3,12 +3,14 @@ import { CardComponent } from '../../components/card/card.component';
 import { RequestService } from '../../services/request.service';
 import { CarouselComponent } from '../../components/carousel/carousel.component';
 import { Servicio } from '../../models/response.interface';
+
 @Component({
   selector: 'app-inicio',
   imports: [CardComponent, CarouselComponent],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
+
 export class InicioComponent {
 
   constructor(private service: RequestService) { }

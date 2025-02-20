@@ -1,63 +1,45 @@
 import { Component } from '@angular/core';
-import { RequestService } from '../../services/request.service';
-import { Servicio } from '../../models/response.interface';
 import { CardComponent } from '../../components/card/card.component';
+import { RequestService } from '../../services/request.service';
+import { Servicio, Usuario } from '../../models/response.interface';
+import { ProductoClienteComponent } from '../../components/producto-cliente/producto-cliente.component';
+import { ProductoTrabajadorComponent } from '../../components/producto-trabajador/producto-trabajador.component';
 
 @Component({
   selector: 'app-tienda',
   templateUrl: './tienda.component.html',
   styleUrls: ['./tienda.component.css'],
-  imports: [CardComponent]
+  imports: [CardComponent, ProductoClienteComponent, ProductoTrabajadorComponent]
 })
 export class TiendaComponent {
 
-  constructor(private service: RequestService) { }
-
-  public servicios: Servicio[] = []; 
-  public serviciosPaginados: Servicio[] = []; 
-  public currentPage: number = 1;  // Página actual
-  public itemsPerPage: number = 4; // Elementos por página
-  public apiUrlServicio: string = 'http://52.205.151.118/api/servicio';
-
-  public ngOnInit(): void {  
-    this.getServicios();
-  }
-
-  public getServicios(): void {
-    this.service.getServicios(this.apiUrlServicio).subscribe(
-      (response) => {
-        console.log("Servicios recibidos:", response);
-        this.servicios = response.filter(servicio => servicio.imagen !== null && servicio.imagen !== ''); // Filtrar imágenes vacías
-        this.actualizarPaginacion(); 
-      },
-      (error) => {
-        console.error("Error al obtener servicios:", error);
-      }
-    );
-  }
-
-  // Método para actualizar los datos paginados
-  public actualizarPaginacion(): void {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    this.serviciosPaginados = this.servicios.slice(startIndex, endIndex);
-  }
-
-  nextPage(): void {
-    if (this.currentPage < this.totalPages()) {
-      this.currentPage++;
-      this.actualizarPaginacion();
-    }
-  }
-
-  prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.actualizarPaginacion();
-    }
-  }
-
-  totalPages(): number {
-    return Math.ceil(this.servicios.length / this.itemsPerPage);
-  }
+ constructor(private service: RequestService) { }
+ 
+   public loginUser = localStorage.getItem('userId');
+   public rolUser = localStorage.getItem('userRol');
+   
+ 
+   //public userStartSesion: boolean = false;
+ 
+   private apiUrlCita: string = 'http://52.205.151.118/api/cita';
+   private apiUrlUsuario: string = 'http://52.205.151.118/api/usuario';
+   public user: Usuario[] = [];
+ 
+   public getUsuarios(): void {
+     this.service.getUsuarios(this.apiUrlUsuario).subscribe((response) => {
+       this.user = response;
+       console.log("Usuarios: ", response);
+     }, (error) => {
+       console.error("Error al obtener usuarios:", error);
+     });
+   }
+ 
+   ngOnInit(): void {
+     this.rolUser = localStorage.getItem('userRol');
+     this.loginUser = localStorage.getItem('userId');
+   
+     console.log("Rol del usuario:", this.rolUser);
+     console.log("ID del usuario:", this.loginUser);
+ 
+   }
 }

@@ -146,7 +146,6 @@ export class ReservaTrabajadorComponent {
         
       }
     );
-    this.router.navigate(["/reserva"]);
   }
   
 }

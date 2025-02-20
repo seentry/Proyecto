@@ -49,14 +49,17 @@ export class RequestService {
     return this.http.post<Servicio>(url, servicio);
   }
 
-  deleteCita(url: string) {
+  public deleteCita(url: string) {
     return this.http.delete(url);
   }
 
-  updateCita(url: string, body: any) {
-    return this.http.put(url, body);
+  public deleteProducto(url: string): Observable<void> {
+    return this.http.delete<void>(url);
   }
 
+}
+  
+  
 
   /*
     // --------- USUARIOS (CLIENTES/TRABAJADORES) ---------
@@ -101,4 +104,4 @@ export class RequestService {
       return this.http.post<Opinion>(url, opinion);
     }
       */
-}
+
