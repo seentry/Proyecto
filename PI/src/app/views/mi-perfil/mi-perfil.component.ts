@@ -41,8 +41,9 @@ export class MiPerfilComponent implements OnInit {
         return
       }
       response.map((cita: Cita) => {
+        console.log(cita.fecha);
         let date = new Date(cita.fecha);
-        cita.fecha = date.toLocaleString("en-GB")
+        cita.fecha = date.toLocaleString('es-ES')
       })
       this.citas = response;
     })

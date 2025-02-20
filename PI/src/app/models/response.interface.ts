@@ -36,6 +36,7 @@ export interface CitaNueva {
   pagado: boolean;
   cliente: number;
   trabajador: number;
+  servicio: number;
 }
 
 export interface Opinion {
