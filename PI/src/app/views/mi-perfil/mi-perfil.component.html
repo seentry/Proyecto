@@ -22,10 +22,7 @@
   <table>
     <thead>
     <tr>
-      <th>ID</th>
       <th>Fecha</th>
-      <th>Hora</th>
-      <th>Servicio</th>
       <th>Estado</th>
       <th>Acciones</th>
     </tr>
@@ -38,7 +35,6 @@
       }
       @for (cita of citas; track $index) {
         <tr>
-          <td>{{ cita.id }}</td>
           <td>{{ cita.fecha }}</td>
           <td>{{ cita.pagado ? 'Sí' : 'No' }}</td>
           <td>

@@ -15,17 +15,17 @@ export class MiPerfilComponent implements OnInit {
   public urlCitas: string = 'http://52.205.151.118/api/cita/';
   public user: Usuario | null = null;
   public citas: Cita[] = [];
+  public mainId = localStorage.getItem('userId')
 
   constructor(private service: RequestService, private router: Router) {
   }
 
   // Get user data from Api via LocalStorage
   ngOnInit() {
-    let id = localStorage.getItem('userId')
-    if (id == null) {
+    if (this.mainId == null) {
       this.router.navigate(['login']);
     }
-    this.urlUser = this.urlUser + id;
+    this.urlUser = this.urlUser + this.mainId;
     this.service.getUsuario(this.urlUser).subscribe((response) => {
       this.user = response;
       console.log(response);
@@ -35,7 +35,19 @@ export class MiPerfilComponent implements OnInit {
   }
 
   getCitas() {
-    // GET CITAS FROM THIS USER
+    let url = this.urlCitas + 'user/' + this.mainId;
+    this.service.getCitas(url).subscribe((response) => {
+      if (this.citas.length == response.length) {
+        this.getCitas()
+        return
+      }
+      response.map((cita: Cita) => {
+        console.log(cita);
+        let date = new Date(cita.fecha);
+        cita.fecha = date.toLocaleString("en-GB")
+      })
+      this.citas = response;
+    })
   }
 
   cancelCita(id: number) {
@@ -43,4 +55,6 @@ export class MiPerfilComponent implements OnInit {
     this.service.deleteCita(url).subscribe()
     this.getCitas()
   }
+
+  protected readonly Date = Date;
 }
