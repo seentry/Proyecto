@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cita;
+use App\Entity\Servicio;
 use App\Entity\Usuario;
 use DateMalformedStringException;
 use DateTime;
@@ -24,14 +25,14 @@ class CitaController extends AbstractController
             $citas,
             200,
             [],
-            ['groups' => ['cita', 'citaCliente', 'cliente', 'citaTrabajador', 'trabajador']]
+            ['groups' => ['cita', 'citaCliente', 'cliente', 'citaTrabajador', 'trabajador', 'servicio']]
         );
     }
 
     #[Route('/api/cita/{id}', name: 'cita', methods: 'GET', format: 'json')]
     public function getCita(Cita $cita): JsonResponse
     {
-        return $this->json($cita, Response::HTTP_OK, [], ['groups' => ['cita', 'citaCliente', 'cliente', 'citaTrabajador', 'trabajador']]);
+        return $this->json($cita, Response::HTTP_OK, [], ['groups' => ['cita', 'citaCliente', 'cliente', 'citaTrabajador', 'trabajador', 'servicio']]);
     }
 
     #[Route('/api/cita', name: 'citaCreate', methods: 'POST', format: 'json')]
@@ -65,6 +66,15 @@ class CitaController extends AbstractController
             }
         } else {
             $cita->setTrabajador(null);
+        }
+
+        try {
+            $cita->setServicio($entityManager->getRepository(Servicio::class)->find($requestContent['servicio']));
+            if ($cita->getServicio() == null) {
+                return new Response('ERROR: ' . 'El servicio no existe', Response::HTTP_NOT_FOUND);
+            }
+        } catch (Exception $e) {
+            return new Response('ERROR: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
         $entityManager->persist($cita);

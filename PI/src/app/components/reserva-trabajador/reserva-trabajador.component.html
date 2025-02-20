@@ -1,0 +1,51 @@
+<h2>Gestion de Citas</h2>
+
+<input type="text" placeholder="Buscar por ID" (input)="updateSearchTerm($event)" />
+<button (click)="searchByButton()">Buscar</button>
+
+<br><br>
+
+<label for="sortType">Ordenar por:</label>
+<select id="sortType" (change)="updateSortOrder($event)">
+  <option value="name">Nombre (A-Z)</option>
+  <option value="dateSoon">Fecha más nueva</option>
+  <option value="dateLate">Fecha más vieja</option>
+  <option value="pay">Pagado</option>
+  <option value="noPay">No Pagado</option>
+</select>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fecha</th>
+      <th>Precio</th>
+      <th>Pagado</th>
+      <th>Cliente</th>
+      <th>Trabajador</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    @if (filteredServicios.length === 0) {
+      <tr>
+        <td colspan="6">No se encontraron resultados.</td>
+      </tr>
+    }
+    
+    @for (cita of filteredServicios; track cita) {
+      <tr>
+        <td>{{ cita.id }}</td>
+        <td>{{ cita.fecha }}</td>
+        <td>{{ cita.precio }}</td>
+        <td>{{ cita.pagado ? 'Sí' : 'No' }}</td>
+        <td>{{ cita.cliente.nombre }} {{ cita.cliente.apellidos }}</td>
+        <td>{{ cita.trabajador.nombre }}</td>
+        <td>
+          <button class="btn-delete" (click)="eliminarCita(cita.id)">🗑️</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

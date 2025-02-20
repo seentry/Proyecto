@@ -40,6 +40,11 @@ class Cita
     #[Groups('cita')]
     private ?Usuario $trabajador = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups('cita')]
+    private ?Servicio $servicio = null;
+
     /* //Datos que se han modificado
     #[ORM\ManyToOne(inversedBy: 'citas')]
     #[ORM\JoinColumn(nullable: false)]
@@ -113,6 +118,18 @@ class Cita
     public function setTrabajador(?Usuario $trabajador): static
     {
         $this->trabajador = $trabajador;
+        return $this;
+    }
+
+    public function getServicio(): ?Servicio
+    {
+        return $this->servicio;
+    }
+
+    public function setServicio(?Servicio $servicio): static
+    {
+        $this->servicio = $servicio;
+
         return $this;
     }
 

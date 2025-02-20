@@ -5,10 +5,7 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   id: number;
-  nombre: string;
-  apellidos: string;
   email: string;
-  dni: string;
   rol: "ROL_ADMIN" | "ROL_TRABAJADOR" | "ROL_CLIENTE";
 }
 
@@ -23,6 +20,15 @@ export interface Usuario {
 }
 
 export interface Cita {
+  id?: number;
+  fecha: string;
+  precio: number;
+  pagado: boolean;
+  cliente: Usuario;
+  trabajador: Usuario;
+}
+
+export interface CitaNueva {
   id?: number;
   fecha: string;
   precio: number;
