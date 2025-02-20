@@ -13,21 +13,45 @@
                     <option value="uñas">Uñas</option>
                 </select>
 
-                <label for="opcionAdicional" class="form-label fw-bold text-dark">Selecciona servicio específico</label>
+                
+                @if (specificOptions.length == 0) {
+                    <label for="opcionAdicional" class="form-label fw-bold text-danger">Selecciona servicio específico</label>
+                } @else {
+                    <label for="opcionAdicional" class="form-label fw-bold text-dark">Selecciona servicio específico</label>
+                }
+                
                 <select id="opcionAdicional" class="form-select mb-3" formControlName="opcionAdicional" (change)="generatePrice()">
                     @for (specificOption of specificOptions; track specificOption) {
                     <option [value]="specificOption">{{ specificOption }}</option>
                     }
                 </select>
 
+
+                @if (specificOptions.length == 0) {
+                    <label for="opcionAdicional" class="form-label fw-bold text-danger">Horario</label>
+                } @else {
+                    <label for="opcionAdicional" class="form-label fw-bold text-dark">Horario</label>
+                }
                 <select id="worker" class="form-select mb-3" formControlName="worker" (change)="selectTime()">
                     @for (worker of allWorkers; track worker) {
                     <option [value]="worker.id">{{ worker.nombre }}</option>
                     }
                 </select>
                 
+                @if (specificOptions.length == 0) {
+                    <label for="opcionAdicional" class="form-label fw-bold text-danger">Dia y Mes</label>
+                } @else {
+                    <label for="opcionAdicional" class="form-label fw-bold text-dark">Dia y Mes</label>
+                }
                 <input type="date" id="fecha" class="form-control mb-3" formControlName="fecha" (change)="selectTime()">
-                
+
+
+
+                @if (specificOptions.length == 0) {
+                    <label for="opcionAdicional" class="form-label fw-bold text-danger">Horario</label>
+                } @else {
+                    <label for="opcionAdicional" class="form-label fw-bold text-dark">Horario</label>
+                }
                 <select id="hours" class="form-select mb-3" formControlName="hora">
                     @for (hour of hours; track hour) {
                     <option [value]="hour">{{ hour }}</option> 
