@@ -28,7 +28,15 @@
         }
     }
 
+    <!--
+    <app-carousel>
+        @for (opinion of opiniones; track opinion) {
+        <app-carousel [title]="opinion.titulo" [description]="opinion.descripcion"
+            [assessment]="opinion.valoracion" [user]="opinion.usuario"></app-carousel> 
+        }
+    </app-carousel>
+    -->
 
-    <app-carousel></app-carousel>
-    
+    <app-carousel [opiniones]="opiniones"></app-carousel>
+
 </article>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-carousel',
@@ -8,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class CarouselComponent {
   
+  /*
+  @Input() title: string = '';
+  @Input() description: string = '';
+  @Input() assessment: number = 0;
+  @Input() user: any = '';
+  */
+
+  @Input() opiniones: any[] = [];
+
 }

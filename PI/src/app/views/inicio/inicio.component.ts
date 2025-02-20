@@ -21,7 +21,6 @@ export class InicioComponent {
   private apiUrlServicio: string = 'http://52.205.151.118/api/servicio';
   private apiUrlOpinion: string = 'http://52.205.151.118/api/opinion';
 
-
   public servicio: string = "";
   public stock: number = 0;
   public precio: string = "";
