@@ -1,12 +1,12 @@
 <h2>Gestion de Citas</h2>
 
-<input type="text" placeholder="Buscar por ID" (input)="updateSearchTerm($event)" />
+<input (input)="updateSearchTerm($event)" placeholder="Buscar por ID" type="text"/>
 <button (click)="searchByButton()">Buscar</button>
 
 <br><br>
 
 <label for="sortType">Ordenar por:</label>
-<select id="sortType" (change)="updateSortOrder($event)">
+<select (change)="updateSortOrder($event)" id="sortType">
   <option value="name">Nombre (A-Z)</option>
   <option value="dateSoon">Fecha más nueva</option>
   <option value="dateLate">Fecha más vieja</option>
@@ -16,15 +16,15 @@
 
 <table border="1">
   <thead>
-    <tr>
-      <th>ID</th>
-      <th>Fecha</th>
-      <th>Precio</th>
-      <th>Pagado</th>
-      <th>Cliente</th>
-      <th>Trabajador</th>
-      <th>Acciones</th>
-    </tr>
+  <tr>
+    <th>ID</th>
+    <th>Fecha</th>
+    <th>Precio</th>
+    <th>Pagado</th>
+    <th>Cliente</th>
+    <th>Trabajador</th>
+    <th>Acciones</th>
+  </tr>
   </thead>
   <tbody>
 
@@ -33,7 +33,7 @@
         <td colspan="6">No se encontraron resultados.</td>
       </tr>
     }
-    
+
     @for (cita of filteredServicios; track cita) {
       <tr>
         <td>{{ cita.id }}</td>

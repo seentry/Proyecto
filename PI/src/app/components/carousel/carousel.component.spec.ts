@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CarouselComponent } from './carousel.component';
+import {CarouselComponent} from './carousel.component';
 
 describe('CarouselComponent', () => {
   let component: CarouselComponent;
@@ -10,7 +10,7 @@ describe('CarouselComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CarouselComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CarouselComponent);
     component = fixture.componentInstance;

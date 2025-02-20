@@ -10,7 +10,7 @@
     } @else {
       <p>Cargando perfil...</p>
     }
-    <button class="cancel-btn" (click)="logout()">Cerrar Sesion</button>
+    <button (click)="logout()" class="cancel-btn">Cerrar Sesion</button>
   </div>
 
 
@@ -37,7 +37,7 @@
       }
       @for (cita of citas; track $index) {
         <tr>
-          <td>{{cita.servicio.nombre}}</td>
+          <td>{{ cita.servicio.nombre }}</td>
           <td>{{ cita.fecha }}</td>
           <td>{{ cita.pagado ? 'Sí' : 'No' }}</td>
           <td>

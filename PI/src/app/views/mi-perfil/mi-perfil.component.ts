@@ -16,6 +16,7 @@ export class MiPerfilComponent implements OnInit {
   public user: Usuario | null = null;
   public citas: Cita[] = [];
   public mainId = localStorage.getItem('userId')
+  protected readonly Date = Date;
 
   constructor(private service: RequestService, protected router: Router) {
   }
@@ -54,8 +55,6 @@ export class MiPerfilComponent implements OnInit {
     this.service.deleteCita(url).subscribe()
     this.getCitas()
   }
-
-  protected readonly Date = Date;
 
   logout() {
     localStorage.clear()

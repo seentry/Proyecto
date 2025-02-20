@@ -1,8 +1,8 @@
 <article class="container mt-5">
-    @if (loginUser !== null && rolUser === "ROL_TRABAJADOR" ){
-        <app-reserva-trabajador></app-reserva-trabajador>
+  @if (loginUser !== null && rolUser === "ROL_TRABAJADOR") {
+    <app-reserva-trabajador></app-reserva-trabajador>
 
-    } @else {
-        <app-reserva-cliente></app-reserva-cliente>
-    }
+  } @else {
+    <app-reserva-cliente></app-reserva-cliente>
+  }
 </article>
