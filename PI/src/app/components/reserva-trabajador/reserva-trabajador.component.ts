@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { RequestService } from '../../services/request.service';
-import { Cita, Usuario } from '../../models/response.interface';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {RequestService} from '../../services/request.service';
+import {Cita, Usuario} from '../../models/response.interface';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -12,18 +12,18 @@ import { Router } from '@angular/router';
 })
 export class ReservaTrabajadorComponent {
 
-  public citas: Cita[] = []; 
-  public usuario: Usuario[] = []; 
+  public citas: Cita[] = [];
+  public usuario: Usuario[] = [];
 
   public filteredServicios: any[] = [];
 
   public searchTerm: string = "";
   public sortType: string = "id";
-
-  constructor(private service: RequestService,  private router: Router) {}
-
   private apiUrl = 'http://52.205.151.118/api/cita';
   private apiUrlUser = 'http://52.205.151.118/api/usuario';
+
+  constructor(private service: RequestService, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.getCitas();
@@ -32,8 +32,8 @@ export class ReservaTrabajadorComponent {
 
   public getCitas(): void {
     this.service.getCitas(this.apiUrl).subscribe((response) => {
-      console.log(response); 
-      this.citas = response; 
+      console.log(response);
+      this.citas = response;
       this.filteredServicios = response;
       this.addUserData();
     }, (error) => {
@@ -43,8 +43,8 @@ export class ReservaTrabajadorComponent {
 
   public getUsuarios(): void {
     this.service.getUsuarios(this.apiUrlUser).subscribe((response) => {
-      console.log(response); 
-      this.usuario = response; 
+      console.log(response);
+      this.usuario = response;
     }, (error) => {
       console.error("Error al obtener user:", error);
     });
@@ -55,23 +55,23 @@ export class ReservaTrabajadorComponent {
   }
 
   public searchByButton(): void {
-  if (!this.searchTerm) {
-    this.filteredServicios = this.citas;
+    if (!this.searchTerm) {
+      this.filteredServicios = this.citas;
+      this.addUserData();
+      return;
+    }
+
+    let idBusqueda = Number(this.searchTerm);
+    if (isNaN(idBusqueda)) {
+      alert("Por favor ingrese un ID válido.");
+      return;
+    }
+
+    let resultado = this.citas.find(cita => cita.id === idBusqueda);
+    this.filteredServicios = resultado ? [resultado] : [];
+
     this.addUserData();
-    return;
   }
-
-  let idBusqueda = Number(this.searchTerm);
-  if (isNaN(idBusqueda)) {
-    alert("Por favor ingrese un ID válido.");
-    return;
-  }
-
-  let resultado = this.citas.find(cita => cita.id === idBusqueda);
-  this.filteredServicios = resultado ? [resultado] : [];
-
-  this.addUserData();
-}
 
 
   public updateSortOrder(event: Event): void {
@@ -84,13 +84,13 @@ export class ReservaTrabajadorComponent {
     this.filteredServicios.forEach((cita) => {
       let cliente = this.usuario.find(user => user.id === cita.cliente.id);
       let trabajador = this.usuario.find(user => user.id === cita.trabajador.id);
-  
+
       if (cliente) {
         cita.cliente.nombre = `${cliente.nombre} ${cliente.apellidos}`;
       } else {
         cita.clienteNombre = 'Desconocido';
       }
-  
+
       if (trabajador) {
         cita.trabajador.nombre = `${trabajador.nombre} ${trabajador.apellidos}`;
       } else {
@@ -98,7 +98,7 @@ export class ReservaTrabajadorComponent {
       }
     });
   }
-  
+
 
   public sortServicios(): void {
     if (this.sortType === "id") {
@@ -108,19 +108,19 @@ export class ReservaTrabajadorComponent {
         a.cliente.nombre.localeCompare(b.cliente.nombre)
       );
     } else if (this.sortType === "dateSoon") {
-      this.filteredServicios = [...this.citas].sort((a, b) => 
+      this.filteredServicios = [...this.citas].sort((a, b) =>
         new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
       );
     } else if (this.sortType === "dateLate") {
-      this.filteredServicios = [...this.citas].sort((a, b) => 
+      this.filteredServicios = [...this.citas].sort((a, b) =>
         new Date(a.fecha).getTime() - new Date(b.fecha).getTime()
       );
     } else if (this.sortType === "pay") {
-      this.filteredServicios = [...this.citas].sort((a, b) => 
+      this.filteredServicios = [...this.citas].sort((a, b) =>
         (b.pagado ? 1 : 0) - (a.pagado ? 1 : 0)
       );
     } else if (this.sortType === "noPay") {
-      this.filteredServicios = [...this.citas].sort((a, b) => 
+      this.filteredServicios = [...this.citas].sort((a, b) =>
         (a.pagado ? 1 : 0) - (b.pagado ? 1 : 0)
       );
     }
@@ -131,9 +131,9 @@ export class ReservaTrabajadorComponent {
     if (!confirm("¿Estás seguro de que deseas eliminar esta cita?")) {
       return;
     }
-  
+
     const apiUrlDelete = `http://52.205.151.118/api/cita/${id}`;
-  
+
     this.service.deleteCita(apiUrlDelete).subscribe(
       () => {
         this.citas = this.citas.filter(cita => cita.id !== id);
@@ -143,9 +143,9 @@ export class ReservaTrabajadorComponent {
       (error) => {
         console.error("Cita eliminada con exito");
         alert("Cita eliminada con éxito.");
-        
+
       }
     );
   }
-  
+
 }

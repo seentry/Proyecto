@@ -1,117 +1,116 @@
 <div class="container py-5">
-    <div id="customCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="0" class="active"
-          aria-current="true" aria-label="Slide 1"></button>
+  <div class="carousel slide" data-bs-ride="carousel" id="customCarousel">
+    <div class="carousel-indicators">
+      <button aria-current="true" aria-label="Slide 1" class="active" data-bs-slide-to="0"
+              data-bs-target="#customCarousel" type="button"></button>
 
-          @if (opiniones.length >= 5) {
-          <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      @if (opiniones.length >= 5) {
+        <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      }
+
+      @if (opiniones.length >= 8) {
+        <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      }
+    </div>
+
+    <div class="carousel-inner">
+      @if (opiniones.length !== 0) {
+        @if (opiniones.length >= 3) {
+          <div class="carousel-item active">
+            <div class="row">
+              @for (opinion of opiniones; track opinion) {
+                @if ($index <= 2) {
+                  <div class="col-md-4">
+                    <div class="card">
+                      <h5>{{ opinion.titulo }}</h5>
+                      <div class="text-center">
+                        @for (color of getStarColors(opinion.valoracion); track color) {
+                          <span class="bi bi-star-fill"
+                                [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
+                              </span>
+                        }
+                      </div>
+                      <p>{{ opinion.descripcion }}</p>
+                      <p>Usuario: {{ opinion.usuario.nombre }}</p>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+        }
+
+        @if (opiniones.length >= 5) {
+          <div class="carousel-item">
+            <div class="row">
+              @for (opinion of opiniones; track opinion) {
+                @if ($index >= 2 && $index <= 4) {
+                  <div class="col-md-4">
+                    <div class="card">
+                      <h5>{{ opinion.titulo }}</h5>
+                      <div class="text-center">
+                        @for (color of getStarColors(opinion.valoracion); track color) {
+                          <span class="bi bi-star-fill"
+                                [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
+                              </span>
+                        }
+                      </div>
+                      <p>{{ opinion.descripcion }}</p>
+                      <p>Usuario: {{ opinion.usuario.nombre }}</p>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+          </div>
         }
 
         @if (opiniones.length >= 8) {
-          <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        }
-      </div>
-
-      <div class="carousel-inner">
-        @if (opiniones.length !== 0) {
-          @if (opiniones.length >= 3) {
-            <div class="carousel-item active">
-              <div class="row">
-                @for (opinion of opiniones; track opinion) {
-                  @if ($index <= 2) {
-                    <div class="col-md-4">
-                      <div class="card">
-                        <h5>{{ opinion.titulo }}</h5>
-                        <div class="text-center">
-                            @for (color of getStarColors(opinion.valoracion); track color) {
-                              <span class="bi bi-star-fill" 
-                                    [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
-                              </span>
-                            }
-                          </div>                
-                        <p>{{ opinion.descripcion }}</p>
-                        <p>Usuario: {{ opinion.usuario.nombre }}</p>
-                      </div>
-                    </div>
-                  }
-                }
-              </div>
-            </div>
-          }
-  
-          @if (opiniones.length >= 5) {
-            <div class="carousel-item">
-              <div class="row">
-                @for (opinion of opiniones; track opinion) {
-                  @if ($index >= 2 && $index <= 4) {
-                    <div class="col-md-4">
-                      <div class="card">
-                        <h5>{{ opinion.titulo }}</h5>
-                        <div class="text-center">
-                            @for (color of getStarColors(opinion.valoracion); track color) {
-                              <span class="bi bi-star-fill" 
-                                    [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
-                              </span>
-                            }
-                          </div>  
-                        <p>{{ opinion.descripcion }}</p>
-                        <p>Usuario: {{ opinion.usuario.nombre }}</p>
-                      </div>
-                    </div>
-                  }
-                }
-              </div>
-            </div>
-          }
-  
-          @if (opiniones.length >= 8) {
-            <div class="carousel-item">
-              <div class="row">
-                @for (opinion of opiniones; track opinion) {
-                  @if ($index >= 5 && $index <= 7) {
-                    <div class="col-md-4">
-                      <div class="card">
-                        <h5>{{ opinion.titulo }}</h5>
-                        <div class="text-center">
-                            @for (color of getStarColors(opinion.valoracion); track color) {
-                              <span class="bi bi-star-fill" 
-                                    [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
-                              </span>
-                            }
-                          </div>  
-                        <p>{{ opinion.descripcion }}</p>
-                        <p>Usuario: {{ opinion.usuario.nombre }}</p>
-                      </div>
-                    </div>
-                  }
-                }
-              </div>
-            </div>
-          }
-        } @else {
-          <div class="carousel-item active">
+          <div class="carousel-item">
             <div class="row">
-              <div class="col-md">
-                <div class="card">
-                  <div class="text-center">
-                    <h3>NO HAY NINGUNA OPINION</h3>
+              @for (opinion of opiniones; track opinion) {
+                @if ($index >= 5 && $index <= 7) {
+                  <div class="col-md-4">
+                    <div class="card">
+                      <h5>{{ opinion.titulo }}</h5>
+                      <div class="text-center">
+                        @for (color of getStarColors(opinion.valoracion); track color) {
+                          <span class="bi bi-star-fill"
+                                [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
+                              </span>
+                        }
+                      </div>
+                      <p>{{ opinion.descripcion }}</p>
+                      <p>Usuario: {{ opinion.usuario.nombre }}</p>
+                    </div>
                   </div>
+                }
+              }
+            </div>
+          </div>
+        }
+      } @else {
+        <div class="carousel-item active">
+          <div class="row">
+            <div class="col-md">
+              <div class="card">
+                <div class="text-center">
+                  <h3>NO HAY NINGUNA OPINION</h3>
                 </div>
               </div>
             </div>
           </div>
-        }
-      </div>
-  
-      <button class="carousel-control-prev" type="button" data-bs-target="#customCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#customCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Siguiente</span>
-      </button>
+        </div>
+      }
     </div>
+
+    <button class="carousel-control-prev" data-bs-slide="prev" data-bs-target="#customCarousel" type="button">
+      <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" data-bs-slide="next" data-bs-target="#customCarousel" type="button">
+      <span aria-hidden="true" class="carousel-control-next-icon"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
   </div>
-  
+</div>

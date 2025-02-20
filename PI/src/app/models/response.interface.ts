@@ -26,7 +26,7 @@ export interface Cita {
   pagado: boolean;
   cliente: Usuario;
   trabajador: Usuario;
-  servicio:Servicio
+  servicio: Servicio
 }
 
 export interface CitaNueva {
@@ -51,7 +51,7 @@ export interface Servicio {
   id?: number;
   nombre: string;
   descripcion: string;
-  stock: number|null;
+  stock: number | null;
   precio: number;
   imagen?: string | null;
 }
