@@ -57,6 +57,11 @@ export class RequestService {
     return this.http.delete<void>(url);
   }
 
+  public postProducto(url: string, producto: any): Observable<any> {
+    return this.http.post<any>(url, producto);
+  }
+  
+
 }
   
   
