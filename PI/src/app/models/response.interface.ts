@@ -26,6 +26,7 @@ export interface Cita {
   pagado: boolean;
   cliente: Usuario;
   trabajador: Usuario;
+  servicio:Servicio
 }
 
 export interface CitaNueva {
@@ -35,6 +36,7 @@ export interface CitaNueva {
   pagado: boolean;
   cliente: number;
   trabajador: number;
+  servicio: number;
 }
 
 export interface Opinion {
@@ -51,5 +53,5 @@ export interface Servicio {
   descripcion: string;
   stock: number|null;
   precio: number;
-  imagen?: string | null; 
+  imagen?: string | null;
 }

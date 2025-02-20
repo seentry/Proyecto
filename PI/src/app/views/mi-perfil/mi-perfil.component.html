@@ -22,8 +22,9 @@
   <table>
     <thead>
     <tr>
+      <th>Servicio</th>
       <th>Fecha</th>
-      <th>Estado</th>
+      <th>Pagado?</th>
       <th>Acciones</th>
     </tr>
     </thead>
@@ -35,6 +36,7 @@
       }
       @for (cita of citas; track $index) {
         <tr>
+          <td>{{cita.servicio.nombre}}</td>
           <td>{{ cita.fecha }}</td>
           <td>{{ cita.pagado ? 'Sí' : 'No' }}</td>
           <td>

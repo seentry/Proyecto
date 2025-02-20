@@ -6,10 +6,11 @@ import { Servicio } from '../../models/response.interface';
 
 @Component({
   selector: 'app-inicio',
-  imports: [CardComponent, CarouselComponent, ],
+  imports: [CardComponent, CarouselComponent],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
+
 export class InicioComponent {
 
   constructor(private service: RequestService) { }
@@ -23,10 +24,10 @@ export class InicioComponent {
   public precio: string = "";
 
 
-  
+
 
   public servicios_productos: string = "servicios";
-  
+
   public array_servicos: Servicio[] = [];
   public array_productos: Servicio[] = [];
 
@@ -38,7 +39,7 @@ export class InicioComponent {
   public click_productos(){
     this.servicios_productos = "productos"
     console.log("productos");
-  } 
+  }
 
 
   /*public getServicios(): void {
@@ -46,9 +47,9 @@ export class InicioComponent {
       (response) => {
         console.log("Respuesta de la API:", response); // Verifica lo que llega de la API
         this.servicios = response;
-  
+
         for (let index = 0; index < this.servicios.length; index++) {
-          if (this.servicios[index].stock == null) { 
+          if (this.servicios[index].stock == null) {
             this.array_servicos.push(this.servicios[index]);
           } else {
             this.array_productos.push(this.servicios[index]);
@@ -75,7 +76,7 @@ export class InicioComponent {
           this.servicios = response;
 
           for (let index = 0; index < this.servicios.length; index++) {
-            if (this.servicios[index].stock == null) { 
+            if (this.servicios[index].stock == null) {
               this.array_servicos.push(this.servicios[index]);
             } else {
               this.array_productos.push(this.servicios[index]);
@@ -87,11 +88,11 @@ export class InicioComponent {
         }
       );
     }
-  
+
 
     //Carrusel<------------------------------------------>
 
-    
+
 
 
 }
