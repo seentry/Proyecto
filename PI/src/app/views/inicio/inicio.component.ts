@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { CardComponent } from '../../components/card/card.component';
 import { RequestService } from '../../services/request.service';
 import { CarouselComponent } from '../../components/carousel/carousel.component';
-import { Servicio, Opinion } from '../../models/response.interface';
-import { CardGestionProductosComponent } from '../../components/card-gestion-productos/card-gestion-productos.component';
+import { Servicio, Opinion, Usuario } from '../../models/response.interface';
+import { NgStyle } from '@angular/common';
+import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-inicio',
-  imports: [CardComponent, CarouselComponent, CardGestionProductosComponent],
+  imports: [CardComponent, CarouselComponent, ReactiveFormsModule],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
@@ -25,8 +26,7 @@ export class InicioComponent {
   public stock: number = 0;
   public precio: string = "";
 
-
-  
+  public show: boolean = false;
 
   public servicios_productos: string = "servicios";
   
@@ -42,6 +42,16 @@ export class InicioComponent {
     this.servicios_productos = "productos"
     console.log("productos");
   } 
+
+  reactiveForm = new FormGroup({
+    titulo: new FormControl(''),
+    descripcion: new FormControl(''),
+    valoracion: new FormControl(''),
+  });
+
+  public onSubmit(): void {
+    console.log(this.reactiveForm.value);
+  }
 
 
   /*public getServicios(): void {
@@ -92,9 +102,6 @@ export class InicioComponent {
       );
     }
   
-
-    //Carrusel<------------------------------------------>
-
     public getOpiniones(): void {
       this.service.getOpiniones(this.apiUrlOpinion).subscribe(
         (response) => {
@@ -107,5 +114,51 @@ export class InicioComponent {
       );
     }
 
+    public showForm(): void {
+      if (this.show === true) {
+        this.show = false;
+      } else {
+        this.show = true;
+      }
+    }
+
+    public createOpinion(): void {
+      let usuarioJSON = localStorage.getItem('usuario');
+      let usuario: Usuario = usuarioJSON ? JSON.parse(usuarioJSON) : null;
+      
+      let assessment: number = 0;
+
+      switch (this.reactiveForm.value.valoracion) {
+        case '⭐️':
+          assessment = 1;
+          break;
+        case '⭐️⭐️':
+          assessment = 2;
+          break;
+        case '⭐️⭐️⭐️':
+          assessment = 3;
+          break;
+        case '⭐️⭐️⭐️⭐️':
+          assessment = 4;
+          break;
+        case '⭐️⭐️⭐️⭐️⭐️':
+          assessment = 5;
+          break;
+        default:
+          assessment = 0;
+      }
+      
+      const newOpinion: Opinion = {
+        titulo: this.reactiveForm.value.titulo ?? '',
+        descripcion: this.reactiveForm.value.descripcion ?? '',
+        valoracion: assessment,
+        usuario: usuario
+      };
+      
+      this.service.createOpinion(this.apiUrlOpinion, newOpinion).subscribe(
+        (response) => console.log('Cita creada con éxito:', response),
+        (error) => console.error('Error al crear cita:', error)
+      )
+    }
 
 }

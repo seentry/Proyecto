@@ -29,7 +29,7 @@ export interface Cita {
 }
 
 export interface Opinion {
-  id: number;
+  id?: number;
   titulo: string;
   descripcion: string;
   valoracion: number;

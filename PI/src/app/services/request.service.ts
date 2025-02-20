@@ -45,6 +45,10 @@ export class RequestService {
     return this.http.get<Opinion[]>(url);
   }
 
+  public createOpinion(url: string, opinion: Opinion): Observable<Opinion> {
+    return this.http.post<Opinion>(url, opinion);
+  }
+
 
 /*
   // --------- USUARIOS (CLIENTES/TRABAJADORES) ---------
@@ -85,8 +89,6 @@ export class RequestService {
     return this.http.get<Opinion[]>(url);
   }
 
-  public createOpinion(url: string, opinion: Opinion): Observable<Opinion> {
-    return this.http.post<Opinion>(url, opinion);
-  }
+
     */
 }
