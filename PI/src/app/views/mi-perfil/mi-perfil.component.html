@@ -1,52 +1,51 @@
 <div class="profile-container">
-    <h2>Mi Perfil</h2>
-  <!--
-    <div class="profile-info">
-      @if (userProfile) {
-        <p><strong>Nombre:</strong> {{ userProfile.nombre }}</p>
-        <p><strong>Apellidos:</strong> {{ userProfile.apellidos }}</p>
-        <p><strong>Email:</strong> {{ userProfile.email }}</p>
-        <p><strong>DNI:</strong> {{ userProfile.dni }}</p>
-      } @else {
-        <p>Cargando perfil...</p>
-      }
-    </div>
-  
+  <h2>Mi Perfil</h2>
 
+  <div class="profile-info">
+    @if (user) {
+      <p><strong>Nombre:</strong> {{ user.nombre }}</p>
+      <p><strong>Apellidos:</strong> {{ user.apellidos }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>DNI:</strong> {{ user.dni }}</p>
+    } @else {
+      <p>Cargando perfil...</p>
+    }
   </div>
-  
 
-  <h1>Mis citas:</h1>
-  <br>
-  <div class="appointments-container">
-    <table>
-      <thead>
+
+</div>
+
+
+<h1>Mis citas:</h1>
+<br>
+<div class="appointments-container">
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fecha</th>
+      <th>Hora</th>
+      <th>Servicio</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+      @if (citas?.length === 0) {
         <tr>
-          <th>ID</th>
-          <th>Fecha</th>
-          <th>Hora</th>
-          <th>Servicio</th>
-          <th>Estado</th>
-          <th>Acciones</th>
+          <td colspan="6">No tienes citas programadas.</td>
         </tr>
-      </thead>
-      <tbody>
-        @if (userAppointments.length === 0) {
-          <tr>
-            <td colspan="6">No tienes citas programadas.</td>
-          </tr>
-        }
-        @for (appointment of userAppointments; track appointment) {
-          <tr>
-            <td>{{ appointment.id }}</td>
-            <td>{{ appointment.fecha }}</td>
-            <td>{{ appointment.pagado ? 'Sí' : 'No' }}</td>
-            <td>
-              <button class="cancel-btn" (click)="cancelAppointment(appointment.id)">Cancelar</button>
-            </td>
-          </tr>
-        } 
-      </tbody>
-    </table>
-  -->
-  </div>
+      }
+      @for (cita of citas; track $index) {
+        <tr>
+          <td>{{ cita.id }}</td>
+          <td>{{ cita.fecha }}</td>
+          <td>{{ cita.pagado ? 'Sí' : 'No' }}</td>
+          <td>
+            <button class="cancel-btn" (click)="cancelCita(cita.id!)">Cancelar</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
