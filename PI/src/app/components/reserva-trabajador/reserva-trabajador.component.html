@@ -1,4 +1,4 @@
-<h2>Lista de Servicios</h2>
+<h2>Gestion de Citas</h2>
 
 <input type="text" placeholder="Buscar por ID" (input)="updateSearchTerm($event)" />
 <button (click)="searchByButton()">Buscar</button>
@@ -23,6 +23,7 @@
       <th>Pagado</th>
       <th>Cliente</th>
       <th>Trabajador</th>
+      <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
@@ -41,6 +42,9 @@
         <td>{{ cita.pagado ? 'Sí' : 'No' }}</td>
         <td>{{ cita.cliente.nombre }} {{ cita.cliente.apellidos }}</td>
         <td>{{ cita.trabajador.nombre }}</td>
+        <td>
+          <button (click)="eliminarCita(cita.id)">Eliminar</button>
+        </td>
       </tr>
     }
   </tbody>

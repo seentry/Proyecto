@@ -33,6 +33,7 @@ export class ReservaTrabajadorComponent {
       console.log(response); 
       this.citas = response; 
       this.filteredServicios = response;
+      this.addUserData();
     }, (error) => {
       console.error("Error al obtener citas:", error);
     });
@@ -52,20 +53,24 @@ export class ReservaTrabajadorComponent {
   }
 
   public searchByButton(): void {
-    if (!this.searchTerm) {
-      this.filteredServicios = this.citas;
-      return;
-    }
-
-    let idBusqueda = Number(this.searchTerm);
-    if (isNaN(idBusqueda)) {
-      alert("Por favor ingrese un ID válido.");
-      return;
-    }
-
-    let resultado = this.citas.find(cita => cita.id === idBusqueda);
-    this.filteredServicios = resultado ? [resultado] : [];
+  if (!this.searchTerm) {
+    this.filteredServicios = this.citas;
+    this.addUserData();
+    return;
   }
+
+  let idBusqueda = Number(this.searchTerm);
+  if (isNaN(idBusqueda)) {
+    alert("Por favor ingrese un ID válido.");
+    return;
+  }
+
+  let resultado = this.citas.find(cita => cita.id === idBusqueda);
+  this.filteredServicios = resultado ? [resultado] : [];
+
+  this.addUserData();
+}
+
 
   public updateSortOrder(event: Event): void {
     this.sortType = (event.target as HTMLSelectElement).value;
@@ -119,4 +124,24 @@ export class ReservaTrabajadorComponent {
     }
   }
 
+
+  public eliminarCita(id: number): void {
+    if (!confirm("¿Estás seguro de que deseas eliminar esta cita?")) {
+      return;
+    }
+  
+    const apiUrlDelete = `http://52.205.151.118/api/cita/${id}`;
+  
+    this.service.deleteCita(apiUrlDelete).subscribe(
+      () => {
+        this.citas = this.citas.filter(cita => cita.id !== id);
+        this.filteredServicios = this.filteredServicios.filter(cita => cita.id !== id);
+        alert("Cita eliminada con éxito.");
+      },
+      (error) => {
+        console.error("Cita eliminada con exito");
+        alert("Hubo un error al eliminar la cita.");
+      }
+    );
+  }
 }

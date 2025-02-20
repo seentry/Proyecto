@@ -42,7 +42,9 @@ export class RequestService {
     return this.http.post<Servicio>(url, servicio);
   }
 
-
+  deleteCita(url: string) {
+    return this.http.delete(url);
+  }
   
 
 
