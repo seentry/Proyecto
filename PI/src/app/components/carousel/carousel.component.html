@@ -1,80 +1,117 @@
 <div class="container py-5">
     <div id="customCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        </div>
-        <div class="carousel-inner">
-            <!-- Slide 1 -->
-            <div class="carousel-item active">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <h5>Título 1</h5>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrElxk_tQHCqRxPdky794T-0GDV7I3VJhxyw&s" alt="Imagen">
-                            <p>Descripción de la primera diapositiva.</p>
-                            <p><strong>Usuario:</strong> usuario_1</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <h5>Título 2</h5>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrElxk_tQHCqRxPdky794T-0GDV7I3VJhxyw&s" alt="Imagen">
-                            <p>Descripción de la segunda diapositiva.</p>
-                            <p><strong>Usuario:</strong> usuario_2</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <h5>Título 3</h5>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrElxk_tQHCqRxPdky794T-0GDV7I3VJhxyw&s" alt="Imagen">
-                            <p>Descripción de la tercera diapositiva.</p>
-                            <p><strong>Usuario:</strong> usuario_3</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Slide 2 -->
-            <div class="carousel-item">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <h5>Título 4</h5>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrElxk_tQHCqRxPdky794T-0GDV7I3VJhxyw&s" alt="Imagen">
-                            <p>Descripción de la cuarta diapositiva.</p>
-                            <p><strong>Usuario:</strong> usuario_4</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <h5>Título 5</h5>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrElxk_tQHCqRxPdky794T-0GDV7I3VJhxyw&s" alt="Imagen">
-                            <p>Descripción de la quinta diapositiva.</p>
-                            <p><strong>Usuario:</strong> usuario_5</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <h5>Título 6</h5>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrElxk_tQHCqRxPdky794T-0GDV7I3VJhxyw&s" alt="Imagen">
-                            <p>Descripción de la sexta diapositiva.</p>
-                            <p><strong>Usuario:</strong> usuario_6</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Controles de navegación -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#customCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#customCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Siguiente</span>
-        </button>
-    </div>
-</div>
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+          @if (opiniones.length >= 5) {
+          <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        }
+
+        @if (opiniones.length >= 8) {
+          <button type="button" data-bs-target="#customCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        }
+      </div>
+
+      <div class="carousel-inner">
+        @if (opiniones.length !== 0) {
+          @if (opiniones.length >= 3) {
+            <div class="carousel-item active">
+              <div class="row">
+                @for (opinion of opiniones; track opinion) {
+                  @if ($index <= 2) {
+                    <div class="col-md-4">
+                      <div class="card">
+                        <h5>{{ opinion.titulo }}</h5>
+                        <div class="text-center">
+                            @for (color of getStarColors(opinion.valoracion); track color) {
+                              <span class="bi bi-star-fill" 
+                                    [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
+                              </span>
+                            }
+                          </div>                
+                        <p>{{ opinion.descripcion }}</p>
+                        <p>Usuario: {{ opinion.usuario.nombre }}</p>
+                      </div>
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          }
+  
+          @if (opiniones.length >= 5) {
+            <div class="carousel-item">
+              <div class="row">
+                @for (opinion of opiniones; track opinion) {
+                  @if ($index >= 2 && $index <= 4) {
+                    <div class="col-md-4">
+                      <div class="card">
+                        <h5>{{ opinion.titulo }}</h5>
+                        <div class="text-center">
+                            @for (color of getStarColors(opinion.valoracion); track color) {
+                              <span class="bi bi-star-fill" 
+                                    [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
+                              </span>
+                            }
+                          </div>  
+                        <p>{{ opinion.descripcion }}</p>
+                        <p>Usuario: {{ opinion.usuario.nombre }}</p>
+                      </div>
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          }
+  
+          @if (opiniones.length >= 8) {
+            <div class="carousel-item">
+              <div class="row">
+                @for (opinion of opiniones; track opinion) {
+                  @if ($index >= 5 && $index <= 7) {
+                    <div class="col-md-4">
+                      <div class="card">
+                        <h5>{{ opinion.titulo }}</h5>
+                        <div class="text-center">
+                            @for (color of getStarColors(opinion.valoracion); track color) {
+                              <span class="bi bi-star-fill" 
+                                    [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
+                              </span>
+                            }
+                          </div>  
+                        <p>{{ opinion.descripcion }}</p>
+                        <p>Usuario: {{ opinion.usuario.nombre }}</p>
+                      </div>
+                    </div>
+                  }
+                }
+              </div>
+            </div>
+          }
+        } @else {
+          <div class="carousel-item active">
+            <div class="row">
+              <div class="col-md">
+                <div class="card">
+                  <div class="text-center">
+                    <h3>NO HAY NINGUNA OPINION</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+  
+      <button class="carousel-control-prev" type="button" data-bs-target="#customCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#customCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
+    </div>
+  </div>
+  

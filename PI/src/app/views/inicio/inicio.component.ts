@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { CardComponent } from '../../components/card/card.component';
 import { RequestService } from '../../services/request.service';
 import { CarouselComponent } from '../../components/carousel/carousel.component';
-import { Servicio } from '../../models/response.interface';
+import { Servicio, Opinion, Usuario } from '../../models/response.interface';
+import { NgStyle } from '@angular/common';
+import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-inicio',
-  imports: [CardComponent, CarouselComponent],
+  imports: [CardComponent, CarouselComponent, ReactiveFormsModule],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
@@ -16,15 +18,16 @@ export class InicioComponent {
   constructor(private service: RequestService) { }
 
   public servicios: Servicio[] = [];
+  public opiniones: Opinion[] = [];
 
-  private apiUrlServicio: string = 'http://localhost:8000/api/servicio';
+  private apiUrlServicio: string = 'http://52.205.151.118/api/servicio';
+  private apiUrlOpinion: string = 'http://52.205.151.118/api/opinion';
 
   public servicio: string = "";
   public stock: number = 0;
   public precio: string = "";
 
-
-
+  public show: boolean = false;
 
   public servicios_productos: string = "servicios";
 
@@ -39,6 +42,16 @@ export class InicioComponent {
   public click_productos(){
     this.servicios_productos = "productos"
     console.log("productos");
+  } 
+
+  reactiveForm = new FormGroup({
+    titulo: new FormControl(''),
+    descripcion: new FormControl(''),
+    valoracion: new FormControl(''),
+  });
+
+  public onSubmit(): void {
+    console.log(this.reactiveForm.value);
   }
 
 
@@ -64,6 +77,7 @@ export class InicioComponent {
 
     ngOnInit(): void {
       this.getServicios();
+      this.getOpiniones();
       console.log(this.array_servicos)
       console.log("------------------------------------")
       console.log(this.array_productos)
@@ -88,11 +102,64 @@ export class InicioComponent {
         }
       );
     }
+  
+    public getOpiniones(): void {
+      this.service.getOpiniones(this.apiUrlOpinion).subscribe(
+        (response) => {
+          this.opiniones = response;
+          console.log("Opiniones:", response);
+        },
+        (error) => {
+          console.error("Error al obtener servicios:", error);
+        }
+      );
+    }
 
+    public showForm(): void {
+      if (this.show === true) {
+        this.show = false;
+      } else {
+        this.show = true;
+      }
+    }
 
-    //Carrusel<------------------------------------------>
+    public createOpinion(): void {
+      let usuarioJSON = localStorage.getItem('usuario');
+      let usuario: Usuario = usuarioJSON ? JSON.parse(usuarioJSON) : null;
+      
+      let assessment: number = 0;
 
-
-
+      switch (this.reactiveForm.value.valoracion) {
+        case '⭐️':
+          assessment = 1;
+          break;
+        case '⭐️⭐️':
+          assessment = 2;
+          break;
+        case '⭐️⭐️⭐️':
+          assessment = 3;
+          break;
+        case '⭐️⭐️⭐️⭐️':
+          assessment = 4;
+          break;
+        case '⭐️⭐️⭐️⭐️⭐️':
+          assessment = 5;
+          break;
+        default:
+          assessment = 0;
+      }
+      
+      const newOpinion: Opinion = {
+        titulo: this.reactiveForm.value.titulo ?? '',
+        descripcion: this.reactiveForm.value.descripcion ?? '',
+        valoracion: assessment,
+        usuario: usuario
+      };
+      
+      this.service.createOpinion(this.apiUrlOpinion, newOpinion).subscribe(
+        (response) => console.log('Cita creada con éxito:', response),
+        (error) => console.error('Error al crear cita:', error)
+      )
+    }
 
 }

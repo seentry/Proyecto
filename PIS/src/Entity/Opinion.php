@@ -29,6 +29,7 @@ class Opinion
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('opinionUsuario')]
     private ?Usuario $usuario = null;
 
     public function getId(): ?int

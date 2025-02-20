@@ -1,5 +1,5 @@
-<article>
-  
+<article class="container">
+
     <h2 class="text-center mt-5">Texto de prueba</h2>
 
     <section class="col-12 text-center mt-5">
@@ -16,19 +16,55 @@
     </section>
 
     @if (servicios_productos == "servicios") {
-        @for ( servicio of array_servicos; track servicio) {
-            <app-card [name]="servicio.nombre" [price]="servicio.precio" ></app-card>
-        }
+    @for ( servicio of array_servicos; track servicio) {
+    <app-card [name]="servicio.nombre" [price]="servicio.precio"></app-card>
+    }
 
     }
 
     @if (servicios_productos == "productos") {
-        @for ( producto of array_productos; track producto) {
-            <app-card [name]="producto.nombre" [stock]="producto.stock"></app-card>
-        }
+    @for ( producto of array_productos; track producto) {
+    <app-card [name]="producto.nombre" [stock]="producto.stock"></app-card>
+    }
     }
 
+    <app-carousel [opiniones]="opiniones"></app-carousel>
 
-    <app-carousel></app-carousel>
-    
+    <div class="d-flex justify-content-center">
+        @if (show === true) {
+            <button type="button" class="btn btn-primary" (click)="showForm()">Ocultar formulario</button>
+        } @else {
+            <button type="button" class="btn btn-primary" (click)="showForm()">Añadir una opinion</button>
+        }
+    </div>
+      
+    @if (show === true) {
+        <div class="row mt-4">
+            <div class="col-md-6 offset-md-3">
+                <form action=""(ngSubmit)="onSubmit()" [formGroup]="reactiveForm">
+                    <div class="mb-3 mt-3">
+                        <label for="title" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="title" placeholder="Introduzca un título" name="title" formControlName="titulo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="description" placeholder="Introduzca una descripción"
+                            name="description" formControlName="descripcion">
+                    </div>
+                    <div class="mb-3">
+                        <label for="puntuacion" class="form-label">Puntuación</label>
+                        <select id="puntuacion" class="form-select" name="puntuacion" formControlName="valoracion">
+                            <option value="" disabled selected>Seleccione una puntuación</option>
+                            <option value="1">⭐️</option>
+                            <option value="2">⭐️⭐️</option>
+                            <option value="3">⭐️⭐️⭐️</option>
+                            <option value="4">⭐️⭐️⭐️⭐️</option>
+                            <option value="5">⭐️⭐️⭐️⭐️⭐️</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Enviar</button>
+                </form>
+            </div>
+        </div>
+    }
 </article>

@@ -64,7 +64,7 @@ class CitaController extends AbstractController
             } catch (Exception $e) {
                 return new Response('ERROR: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
-        }else{
+        } else {
             $cita->setTrabajador(null);
         }
 

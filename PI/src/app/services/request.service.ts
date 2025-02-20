@@ -49,7 +49,9 @@ export class RequestService {
     return this.http.post<Servicio>(url, servicio);
   }
 
-  public deleteCita(url: string) {
+  public getOpiniones(url: string): Observable<Opinion[]> { 
+    return this.http.get<Opinion[]>(url);
+  }  public deleteCita(url: string) {
     return this.http.delete(url);
   }
 
@@ -58,7 +60,10 @@ export class RequestService {
   }
 
 }
-  
+
+  public createOpinion(url: string, opinion: Opinion): Observable<Opinion> {
+    return this.http.post<Opinion>(url, opinion);
+  }
   
 
   /*
@@ -100,8 +105,6 @@ export class RequestService {
       return this.http.get<Opinion[]>(url);
     }
 
-    public createOpinion(url: string, opinion: Opinion): Observable<Opinion> {
-      return this.http.post<Opinion>(url, opinion);
-    }
-      */
 
+    */
+}

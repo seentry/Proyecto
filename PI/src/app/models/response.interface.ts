@@ -40,7 +40,7 @@ export interface CitaNueva {
 }
 
 export interface Opinion {
-  id: number;
+  id?: number;
   titulo: string;
   descripcion: string;
   valoracion: number;
