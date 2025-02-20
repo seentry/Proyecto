@@ -98,4 +98,11 @@ class CitaController extends AbstractController
         return new Response('CITA ELIMINADA', Response::HTTP_OK);
     }
 
+    #[Route('/api/cita/user/{id}', name: 'citaByUser', methods: ['GET'], format: 'json')]
+    public function byUserCita(EntityManagerInterface $entityManager,int $id): Response
+    {
+        $citas = $entityManager->getRepository(Cita::class)->findBy(['cliente' => $id]);
+        return $this->json($citas, Response::HTTP_OK, [], ['groups' => ['cita']]);
+    }
+
 }
