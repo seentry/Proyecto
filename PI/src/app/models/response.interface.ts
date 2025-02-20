@@ -24,6 +24,15 @@ export interface Cita {
   fecha: string;
   precio: number;
   pagado: boolean;
+  cliente: Usuario;
+  trabajador: Usuario;
+}
+
+export interface CitaNueva {
+  id?: number;
+  fecha: string;
+  precio: number;
+  pagado: boolean;
   cliente: number;
   trabajador: number;
 }

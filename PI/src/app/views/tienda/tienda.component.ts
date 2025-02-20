@@ -17,7 +17,7 @@ export class TiendaComponent {
   public serviciosPaginados: Servicio[] = []; 
   public currentPage: number = 1;  // Página actual
   public itemsPerPage: number = 4; // Elementos por página
-  public apiUrlServicio: string = 'http://localhost:8000/api/servicio';
+  public apiUrlServicio: string = 'http://52.205.151.118/api/servicio';
 
   public ngOnInit(): void {  
     this.getServicios();
