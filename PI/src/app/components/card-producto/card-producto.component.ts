@@ -15,9 +15,10 @@ export class CardProductoComponent {
   @Input() img: string = '';
   @Input() id: number = 0;
 
-  @Output() delete = new EventEmitter<number>();
+  @Output() deleteProduct = new EventEmitter<void>();
 
-  onDelete(): void {
-    this.delete.emit(this.id);
+  onDelete() {
+    this.deleteProduct.emit();
   }
+  
 }

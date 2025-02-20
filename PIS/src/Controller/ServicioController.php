@@ -35,4 +35,19 @@ class ServicioController extends AbstractController
         $entityManager->flush();
         return $this->json($servicio, 200, [], ['groups' => ['servicio']]);
     }
+
+    #[Route('/api/servicio/{id}', name: 'servicioDelete', methods: 'DELETE', format: 'json')]
+    public function deleteServicio(EntityManagerInterface $entityManager, int $id): JsonResponse
+    {
+        $servicio = $entityManager->getRepository(Servicio::class)->find($id);
+
+        if (!$servicio) {
+            return $this->json(['message' => 'Servicio no encontrado'], 404);
+        }
+
+        $entityManager->remove($servicio);
+        $entityManager->flush();
+
+        return $this->json(['message' => 'Servicio eliminado correctamente'],200);
+    }
 }

@@ -49,8 +49,12 @@ export class RequestService {
     return this.http.post<Servicio>(url, servicio);
   }
 
-  deleteCita(url: string) {
+  public deleteCita(url: string) {
     return this.http.delete(url);
+  }
+
+  public deleteProducto(url: string): Observable<void> {
+    return this.http.delete<void>(url);
   }
 
 }

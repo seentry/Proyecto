@@ -61,5 +61,21 @@ export class ProductoTrabajadorComponent {
     return Math.ceil(this.servicios.length / this.itemsPerPage);
   }
 
+  eliminarProducto(id: number ) {
+    if (id === undefined) return;
+  
+    const deleteUrl = `${this.apiUrlServicio}/${id}`;
+  
+    this.service.deleteProducto(deleteUrl).subscribe({
+      next: () => {
+        this.servicios = this.servicios.filter(servicio => servicio.id !== id);
+        this.actualizarPaginacion();
+      },
+      error: (err) => {
+        console.error('Error eliminando el producto:', err);
+        alert('Hubo un error al eliminar el producto.');
+      }
+    });
+  }
 
 }

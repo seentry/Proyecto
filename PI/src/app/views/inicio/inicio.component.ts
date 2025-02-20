@@ -3,11 +3,10 @@ import { CardComponent } from '../../components/card/card.component';
 import { RequestService } from '../../services/request.service';
 import { CarouselComponent } from '../../components/carousel/carousel.component';
 import { Servicio } from '../../models/response.interface';
-import { CardGestionProductosComponent } from '../../components/card-gestion-productos/card-gestion-productos.component';
 
 @Component({
   selector: 'app-inicio',
-  imports: [CardComponent, CarouselComponent, CardGestionProductosComponent],
+  imports: [CardComponent, CarouselComponent, ],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
