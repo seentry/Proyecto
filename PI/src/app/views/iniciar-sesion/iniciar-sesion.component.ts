@@ -17,7 +17,7 @@ export class IniciarSesionComponent {
   public apiSesion: string = 'http://52.205.151.118/auth/login';
 
 
-  public apiUrlUsuario: string = 'http://localhost:8000/api/usuario';
+  public apiUrlUsuario: string = 'http://52.205.151.118/api/usuario';
   public dataUser: Usuario[] = [];
 
   public getUsuarios(): void {

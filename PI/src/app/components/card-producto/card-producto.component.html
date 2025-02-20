@@ -1,0 +1,14 @@
+<div class="card shadow border-0 bg-transparent" style="width: 300px;">
+    <img class="card-img-top object-fit-cover" [src]="img" alt="Producto de la tienda" style="height: 180px;">
+    
+    <div class="card-body text-center">
+      <h5 class="card-title fw-bold text-primary">{{ name }}</h5>
+      <p class="card-text text-muted">{{ description }}</p>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <span class="fw-bold text-success">{{ price }} €</span>
+        <span class="badge bg-warning text-dark">Stock: {{ stock }}</span>
+      </div>
+      <button class="btn btn-danger" (click)="onDelete()">Eliminar</button>
+    </div>
+</div>
