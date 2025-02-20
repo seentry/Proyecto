@@ -43,7 +43,7 @@
         <td>{{ cita.cliente.nombre }} {{ cita.cliente.apellidos }}</td>
         <td>{{ cita.trabajador.nombre }}</td>
         <td>
-          <button (click)="eliminarCita(cita.id)">Eliminar</button>
+          <button class="btn-delete" (click)="eliminarCita(cita.id)">🗑️</button>
         </td>
       </tr>
     }

@@ -45,6 +45,10 @@ export class RequestService {
   deleteCita(url: string) {
     return this.http.delete(url);
   }
+
+  updateCita(url: string, body: any) {
+    return this.http.put(url, body);
+  }  
   
 
 

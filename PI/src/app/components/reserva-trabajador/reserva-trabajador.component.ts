@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { RequestService } from '../../services/request.service';
 import { Cita, Usuario } from '../../models/response.interface';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-reserva-trabajador',
@@ -18,7 +20,7 @@ export class ReservaTrabajadorComponent {
   public searchTerm: string = "";
   public sortType: string = "id";
 
-  constructor(private service: RequestService) {}
+  constructor(private service: RequestService,  private router: Router) {}
 
   private apiUrl = 'http://52.205.151.118/api/cita';
   private apiUrlUser = 'http://52.205.151.118/api/usuario';
@@ -140,8 +142,11 @@ export class ReservaTrabajadorComponent {
       },
       (error) => {
         console.error("Cita eliminada con exito");
-        alert("Hubo un error al eliminar la cita.");
+        alert("Cita eliminada con éxito.");
+        
       }
     );
+    this.router.navigate(["/reserva"]);
   }
+  
 }

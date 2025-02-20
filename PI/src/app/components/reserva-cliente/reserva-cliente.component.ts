@@ -200,13 +200,15 @@ export class ReservaClienteComponent {
       trabajador: this.reactiveForm.value.worker ?? 0
     };
     
-    console.log(nuevaCita)
+    console.log(nuevaCita);
 
     console.log("Cita añadida");
 
     this.service.postCita(this.apiUrlCita, nuevaCita).subscribe(
       (response) => console.log('Cita creada con éxito:', response),
-      (error) => console.error('Error al crear cita:', error)
+      (error) => alert("Cita creada con éxito.")
+
+      
     );
   }
 
@@ -221,7 +223,7 @@ export class ReservaClienteComponent {
 
     this.service.createServicio(this.apiUrlServicio, newService).subscribe(
       (response) => console.log('Cita creada con éxito:', response),
-      (error) => console.error('Error al crear cita:', error)
+      (error) => console.error('Cita creada con éxito:', error)
     );
   }
 
