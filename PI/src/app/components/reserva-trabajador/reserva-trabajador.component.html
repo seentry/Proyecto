@@ -55,25 +55,23 @@
   <div class="edit-form">
     <h3>Editar Cita</h3>
 
-    <label>Fecha:</label>
-    <input type="datetime-local" [value]="citaEditando?.fecha || ''" 
-           (input)="updateFecha($event)"/>
+    <form [formGroup]="citaForm">
+      <label>Fecha:</label>
+      <input type="datetime-local" formControlName="fecha"/>
 
-    <label>Precio:</label>
-    <input type="number" [value]="citaEditando?.precio || ''" 
-           (input)="updatePrecio($event)"/>
+      <label>Precio:</label>
+      <input type="number" formControlName="precio"/>
 
-    <label>Pagado:</label>
-    <select [value]="citaEditando?.pagado ? 'true' : 'false'" 
-            (change)="updatePagado($event)">
-      <option value="true">Sí</option>
-      <option value="false">No</option>
-    </select>
+      <label>Pagado:</label>
+      <select formControlName="pagado">
+        <option value="true">Sí</option>
+        <option value="false">No</option>
+      </select>
 
-    <br><br>
-    <button (click)="guardarEdicion()">Guardar</button>
-    <button (click)="cancelarEdicion()">Cancelar</button>
+      <br><br>
+      <button type="button" (click)="guardarEdicion()">Guardar</button>
+      <button type="button" (click)="cancelarEdicion()">Cancelar</button>
+    </form>
   </div>
 }
-
 

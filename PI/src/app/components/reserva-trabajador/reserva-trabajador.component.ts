@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import {RequestService} from '../../services/request.service';
 import {Cita, Usuario} from '../../models/response.interface';
 import {Router} from '@angular/router';
@@ -6,7 +8,7 @@ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-reserva-trabajador',
-  imports: [],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './reserva-trabajador.component.html',
   styleUrl: './reserva-trabajador.component.css'
 })
@@ -50,6 +52,7 @@ export class ReservaTrabajadorComponent {
     });
   }
 
+  //FILTROS
   public updateSearchTerm(event: Event): void {
     this.searchTerm = (event.target as HTMLInputElement).value.trim();
   }
@@ -124,7 +127,7 @@ export class ReservaTrabajadorComponent {
     }
   }
 
-
+  //ELIMINAR
   public eliminarCita(id: number): void {
     if (!confirm("¿Estás seguro de que deseas eliminar esta cita?")) {
       return;
@@ -146,45 +149,65 @@ export class ReservaTrabajadorComponent {
     );
   }
 
+  //EDITAR
   public citaEditando: Cita | null = null;
+
+  public citaForm = new FormGroup({
+    fecha: new FormControl<string | null>(''),
+    precio: new FormControl<number | null>(null), 
+    pagado: new FormControl<string | null>('') 
+  });
+  
 
   public editarCita(id: number): void {
     this.citaEditando = this.citas.find(cita => cita.id === id) || null;
+    
+    if (this.citaEditando) {
+      this.citaForm.setValue({
+        fecha: this.citaEditando.fecha,
+        precio: this.citaEditando.precio,
+        pagado: this.citaEditando.pagado ? 'true' : 'false'
+      });
+    }
   }
   
+
   public guardarEdicion(): void {
     if (!this.citaEditando) return;
   
-    const index = this.citas.findIndex(cita => cita.id === this.citaEditando!.id);
-    if (index !== -1) {
-      this.citas[index] = { ...this.citaEditando };
+    if (!confirm("¿Estás seguro de que deseas guardar los cambios en esta cita?")) {
+      return;
     }
   
-    this.citaEditando = null;
-    alert("Cita actualizada con éxito.");
+    const apiUrlUpdate = `http://52.205.151.118/api/cita/${this.citaEditando.id}`;
+  
+    const citaActualizada: Cita = {
+      ...this.citaEditando,
+      fecha: this.citaForm.value.fecha!,
+      precio: this.citaForm.value.precio ?? 0,  // Si es null, asigna 0
+      pagado: this.citaForm.value.pagado === 'true'
+    };
+  
+    this.service.updateCita(apiUrlUpdate, citaActualizada).subscribe(
+      (response) => {
+        const index = this.citas.findIndex(cita => cita.id === this.citaEditando!.id);
+        if (index !== -1) {
+          this.citas[index] = { ...response };
+        }
+        this.filteredServicios = [...this.citas];
+        this.citaEditando = null;
+        alert("Cita actualizada con éxito.");
+      },
+      (error) => {
+        console.error("Error al actualizar la cita:", error);
+        alert("Hubo un error al actualizar la cita. Inténtalo de nuevo.");
+      }
+    );
   }
   
 
   public cancelarEdicion(): void {
     this.citaEditando = null;
+    this.citaForm.reset();
   }
-
-  public updateFecha(event: Event): void {
-    if (this.citaEditando) {
-      this.citaEditando.fecha = (event.target as HTMLInputElement).value;
-    }
-  }
-  
-  public updatePrecio(event: Event): void {
-    if (this.citaEditando) {
-      this.citaEditando.precio = Number((event.target as HTMLInputElement).value);
-    }
-  }
-  
-  public updatePagado(event: Event): void {
-    if (this.citaEditando) {
-      this.citaEditando.pagado = (event.target as HTMLSelectElement).value === 'true';
-    }
-  }
-  
 }
