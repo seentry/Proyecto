@@ -1,19 +1,24 @@
 .carousel-item {
-  padding: 20px;
+  padding: 40px;
 }
 
-.card {
-  background-color: rgba(255, 255, 255, 0.8); /* Fondo translúcido */
-  border-radius: 15px;
-  text-align: center;
-  padding: 20px;
-  height: 100%;
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: auto;
+  right: auto;
+  width: 40px;
+  height: 40px;
+  background-color: #343a40; /*COLOR*/
+  border-radius: 50%;
 }
 
-.card img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 15px;
+.carousel-control-prev {
+  left: -50px; 
+}
+
+.carousel-control-next {
+  right: -50px;
 }
