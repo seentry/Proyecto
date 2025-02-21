@@ -48,7 +48,7 @@ class UsuarioController extends AbstractController
         // Modificacion de usuarios a usuario
         return $this->json($usuario, Response::HTTP_CREATED, [], ['groups' => ['usuario']]);
     }
-    #[Route('/api/usuario/{id}', name: 'usuarioDelete', methods: 'DELETE', format: 'json')]
+    #[Route('/api/usuario/{id}', name: 'usuarioDelete', methods: ['DELETE'], format: 'json')]
     public function deleteUsuario(Usuario $usuario, EntityManagerInterface $entityManager): JsonResponse
     {
         $entityManager->remove($usuario);
