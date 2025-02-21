@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MiPerfilComponent } from './mi-perfil.component';
+import {MiPerfilComponent} from './mi-perfil.component';
 
 describe('MiPerfilComponent', () => {
   let component: MiPerfilComponent;
@@ -10,7 +10,7 @@ describe('MiPerfilComponent', () => {
     await TestBed.configureTestingModule({
       imports: [MiPerfilComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(MiPerfilComponent);
     component = fixture.componentInstance;

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Usuario, LoginRequest, LoginResponse } from '../../models/response.interface';
-import { RequestService } from '../../services/request.service';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {LoginResponse, Usuario} from '../../models/response.interface';
+import {RequestService} from '../../services/request.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -12,12 +12,16 @@ import { Router } from '@angular/router';
 })
 export class IniciarSesionComponent {
 
-  constructor(private service: RequestService, private router: Router) { }
-
   public apiSesion: string = 'http://52.205.151.118/auth/login';
-
   public apiUrlUsuario: string = 'http://52.205.151.118/api/usuario';
   public dataUser: Usuario[] = [];
+  reactiveForm = new FormGroup({
+    email: new FormControl('', [Validators.required]),
+    contraseña: new FormControl('', [Validators.required])
+  });
+
+  constructor(private service: RequestService, private router: Router) {
+  }
 
   public getUsuarios(): void {
     this.service.getUsuarios(this.apiUrlUsuario).subscribe((response) => {
@@ -32,11 +36,6 @@ export class IniciarSesionComponent {
     this.getUsuarios();
   }
 
-  reactiveForm = new FormGroup({
-    email: new FormControl('', [Validators.required]),
-    contraseña: new FormControl('', [Validators.required])
-  });
-
   public checkSession(idUser: number, rol: string): void {
     localStorage.setItem('userId', idUser.toString());
     localStorage.setItem('userRol', rol);
@@ -44,12 +43,16 @@ export class IniciarSesionComponent {
     console.log("Rol:", rol);
   }
 
+  public onSubmit(): void {
+    this.startSesion();
+  }
+
   private startSesion(): void {
     const takeData = {
       email: this.reactiveForm.value.email ?? '',
-      contrasena: this.reactiveForm.value.contraseña ?? '' 
+      contrasena: this.reactiveForm.value.contraseña ?? ''
     };
-  
+
     this.service.login(this.apiSesion, takeData).subscribe(
       (response: LoginResponse) => {
         console.log("Inicio de sesión exitoso:", response);
@@ -61,9 +64,5 @@ export class IniciarSesionComponent {
         alert("Correo o contraseña incorrectos. Inténtalo de nuevo.");
       }
     );
-  }
-  
-  public onSubmit(): void {
-    this.startSesion();
   }
 }

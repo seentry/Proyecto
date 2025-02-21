@@ -1,11 +1,8 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { InicioComponent } from '../../views/inicio/inicio.component';
-import { HeaderInicioComponent } from '../header-inicio/header-inicio.component';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-header',
-  imports: [InicioComponent, RouterLink, RouterLinkActive,HeaderInicioComponent],
+  imports: [],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

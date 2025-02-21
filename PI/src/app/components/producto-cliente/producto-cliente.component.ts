@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { CardComponent } from '../card/card.component';
-import { RequestService } from '../../services/request.service';
-import { Servicio } from '../../models/response.interface';
+import {Component} from '@angular/core';
+import {CardComponent} from '../card/card.component';
+import {RequestService} from '../../services/request.service';
+import {Servicio} from '../../models/response.interface';
 
 @Component({
   selector: 'app-producto-cliente',
@@ -11,15 +11,16 @@ import { Servicio } from '../../models/response.interface';
 })
 export class ProductoClienteComponent {
 
-  constructor(private service: RequestService) { }
-
-  public servicios: Servicio[] = []; 
-  public serviciosPaginados: Servicio[] = []; 
+  public servicios: Servicio[] = [];
+  public serviciosPaginados: Servicio[] = [];
   public currentPage: number = 1;  // Página actual
   public itemsPerPage: number = 4; // Elementos por página
   public apiUrlServicio: string = 'http://52.205.151.118/api/servicio';
 
-  public ngOnInit(): void {  
+  constructor(private service: RequestService) {
+  }
+
+  public ngOnInit(): void {
     this.getServicios();
   }
 
@@ -28,7 +29,7 @@ export class ProductoClienteComponent {
       (response) => {
         console.log("Servicios recibidos:", response);
         this.servicios = response.filter(servicio => servicio.imagen !== null && servicio.imagen !== ''); // Filtrar imágenes vacías
-        this.actualizarPaginacion(); 
+        this.actualizarPaginacion();
       },
       (error) => {
         console.error("Error al obtener servicios:", error);

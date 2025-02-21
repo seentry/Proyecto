@@ -1,8 +1,8 @@
 <article class="container">
-  @if (loginUser !== null && rolUser === "ROL_TRABAJADOR" ){
+  @if (loginUser !== null && rolUser === "ROL_TRABAJADOR") {
     <app-producto-trabajador></app-producto-trabajador>
 
-} @else {
+  } @else {
     <app-producto-cliente></app-producto-cliente>
-}
+  }
 </article>

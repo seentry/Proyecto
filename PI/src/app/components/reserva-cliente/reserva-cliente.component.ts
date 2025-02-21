@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RequestService } from '../../services/request.service';
-import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
-import { Servicio, Cita, Usuario, CitaNueva } from '../../models/response.interface';
+import {CommonModule} from '@angular/common';
+import {RequestService} from '../../services/request.service';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {Cita, CitaNueva, Servicio, Usuario} from '../../models/response.interface';
 
 @Component({
   selector: 'app-reserva-cliente',
@@ -13,27 +13,30 @@ import { Servicio, Cita, Usuario, CitaNueva } from '../../models/response.interf
 
 export class ReservaClienteComponent implements OnInit {
 
-  constructor(private service: RequestService) { }
-
   public loginUser = localStorage.getItem('userId')
-  public price:number = 0;
-
+  public price: number = 0;
   public servicios: Servicio[] = [];
-  private apiUrlCita: string = 'http://52.205.151.118/api/cita';
-
-  private apiUrlUsuario: string = 'http://52.205.151.118/api/usuario';
-
-  private apiUrlServicio: string = 'http://52.205.151.118/api/servicio';
-  private citas: Cita[] = [];
-
   public hours: string[] = [
     "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00",
     "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00"
   ];
-
   public citasOcupadas: { fecha: string; hora: string; trabajador: number }[] = [];
-
   public allWorkers: Usuario[] = [];
+  reactiveForm = new FormGroup({
+    tipoReserva: new FormControl(0),
+    worker: new FormControl(null),
+    fecha: new FormControl(''),
+    hora: new FormControl(''),
+    comentario: new FormControl(''),
+    pagoEfectivo: new FormControl(false)
+  });
+  private apiUrlCita: string = 'http://52.205.151.118/api/cita';
+  private apiUrlUsuario: string = 'http://52.205.151.118/api/usuario';
+  private apiUrlServicio: string = 'http://52.205.151.118/api/servicio';
+  private citas: Cita[] = [];
+
+  constructor(private service: RequestService) {
+  }
 
   public ngOnInit(): void {
     this.getServicios();
@@ -52,7 +55,7 @@ export class ReservaClienteComponent implements OnInit {
   public getCitas(): void {
     this.service.getCitas(this.apiUrlCita).subscribe((response) => {
       this.citas = response;
-      this.citasOcupadas = this.citas.map(({ fecha, trabajador }) => ({
+      this.citasOcupadas = this.citas.map(({fecha, trabajador}) => ({
         fecha: fecha.split('T')[0], //el split('T')[0] fuerza a que la fecha sea de tipo ISO 8601 para que sea comptible con la API, ademas la posicion 0 coge solo el campo de fecha
         hora: fecha.split('T')[1].slice(0, 5), //La posicion de 1 coge el campos de hora y ademas el .slice(0, 5) elimina los segundos de forma que solo se coge hora y minutos
         trabajador: (trabajador as { id: number }).id ?? trabajador.id //Para que funcione hay que forzar a que sea de tipo number, ademas de poner interrogantes para que si es un objeto obtener su id y si es un numero usarlo directamente
@@ -69,15 +72,6 @@ export class ReservaClienteComponent implements OnInit {
       console.error("Error al obtener usuarios:", error);
     });
   }
-
-  reactiveForm = new FormGroup({
-    tipoReserva: new FormControl(0),
-    worker: new FormControl(null),
-    fecha: new FormControl(''),
-    hora: new FormControl(''),
-    comentario: new FormControl(''),
-    pagoEfectivo: new FormControl(false)
-  });
 
   public onSubmit(): void {
     this.crearCita();
@@ -128,8 +122,6 @@ export class ReservaClienteComponent implements OnInit {
     this.service.postCita(this.apiUrlCita, nuevaCita).subscribe(
       (response) => console.log('Cita creada con éxito:', response),
       (error) => alert("Cita creada con éxito.")
-
-
     );
   }
 

@@ -10,7 +10,7 @@
     } @else {
       <p>Cargando perfil...</p>
     }
-    <button class="cancel-btn" (click)="logout()">Cerrar Sesion</button>
+    <button (click)="logout()" class="cancel-btn">Cerrar Sesion</button>
   </div>
 
 
@@ -30,14 +30,14 @@
     </tr>
     </thead>
     <tbody>
-      @if (citas?.length === 0) {
+      @if (citas.length === 0) {
         <tr>
           <td colspan="6">No tienes citas programadas.</td>
         </tr>
       }
       @for (cita of citas; track $index) {
         <tr>
-          <td>{{cita.servicio.nombre}}</td>
+          <td>{{ cita.servicio.nombre }}</td>
           <td>{{ cita.fecha }}</td>
           <td>{{ cita.pagado ? 'Sí' : 'No' }}</td>
           <td>

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HeaderInicioComponent } from './header-inicio.component';
+import {HeaderInicioComponent} from './header-inicio.component';
 
 describe('HeaderInicioComponent', () => {
   let component: HeaderInicioComponent;
@@ -10,7 +10,7 @@ describe('HeaderInicioComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HeaderInicioComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(HeaderInicioComponent);
     component = fixture.componentInstance;
