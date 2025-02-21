@@ -38,18 +38,17 @@ input[type="radio"]:checked~label {
     color: orange;
 }
 
-  /*BUTTON*/
+/*BUTTON*/
 
-  button.btn.btn-primary {
+button.btn.btn-primary {
     background-color: #343a40;
     color: #fff;
     border: none;
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  button.btn.btn-primary:hover {
+}
+
+button.btn.btn-primary:hover {
     background-color: #1d2124;
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
+}

@@ -1,0 +1,8 @@
+button.btn.btn-primary.ms-2 {
+    background-color: #343a40;
+}
+
+button.btn.btn-primary.ms-2:hover {
+    background-color: #1d2124;
+
+}
