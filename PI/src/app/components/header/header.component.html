@@ -1,29 +1,33 @@
-<div style="width: 100vw;">
-  <div class="d-flex justify-content-between align-items-center ms-3">
-    <a class="justify-content-start" href="inicio" style="z-index: 15px;">
+<div class="container-fluid px-0">
+  <div class="d-flex justify-content-between align-items-center px-3">
+    <!-- Logo alineado a la izquierda -->
+    <a href="inicio" style="z-index: 15;">
       <img alt="Logo" src="/img/logo.png" style="width: 100px; height: auto;">
     </a>
 
-    <nav class="navbar navbar-expand-lg navbar-dark me-3">
-      <div class="container">
-        <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
-                data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
+    <!-- Menú de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <!-- Botón del menú hamburguesa -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
+
+        <!-- Menú de navegación -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
             <li class="nav-item"><a class="nav-link question-link" href="inicio">Inicio</a></li>
             <li class="nav-item"><a class="nav-link question-link" href="centro">Centro</a></li>
             <li class="nav-item"><a class="nav-link question-link" href="tienda">Tienda</a></li>
             <li class="nav-item"><a class="nav-link question-link" href="reserva">Reserva</a></li>
             <li class="nav-item"><a class="nav-link question-link" href="contacto">Contacto</a></li>
 
-            <!--<li class="nav-item"><a class="nav-link question-link" href="mi_perfil">Perfil</a></li>-->
-
             @if (userStartSesion === true) {
-              <li class="nav-item"><a class="nav-link question-link" href="mi_perfil"><img src="/img/avatar.png"
-                                                                                           alt="avatar"
-                                                                                           style="width: 40px;"></a>
+              <li class="nav-item">
+                <a class="nav-link question-link" href="mi_perfil">
+                  <img src="/img/avatar.png" alt="avatar" style="width: 40px; border-radius: 50%;">
+                </a>
               </li>
             } @else {
               <li class="nav-item">
@@ -39,4 +43,3 @@
     </nav>
   </div>
 </div>
-
