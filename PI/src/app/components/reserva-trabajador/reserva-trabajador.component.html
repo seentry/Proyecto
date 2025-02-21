@@ -1,21 +1,23 @@
-<h2>Gestion de Citas</h2>
+<h2 class="text-center mt-4 mb-4">Gestión de Citas</h2>
 
-<input (input)="updateSearchTerm($event)" placeholder="Buscar por Nombre" type="text"/>
-<button (click)="searchByButton()">Buscar</button>
+<div class="input-group mb-3">
+  <input (input)="updateSearchTerm($event)" class="form-control" placeholder="Buscar por Nombre" type="text"/>
+  <button (click)="searchByButton()" class="btn btn-primary">Buscar</button>
+</div>
 
-<br><br>
+<div class="mb-3">
+  <label class="form-label" for="sortType">Ordenar por:</label>
+  <select (change)="updateSortOrder($event)" class="form-select" id="sortType">
+    <option value="name">Nombre (A-Z)</option>
+    <option value="dateSoon">Fecha más nueva</option>
+    <option value="dateLate">Fecha más vieja</option>
+    <option value="pay">Pagado</option>
+    <option value="noPay">No Pagado</option>
+  </select>
+</div>
 
-<label for="sortType">Ordenar por:</label>
-<select (change)="updateSortOrder($event)" id="sortType">
-  <option value="name">Nombre (A-Z)</option>
-  <option value="dateSoon">Fecha más nueva</option>
-  <option value="dateLate">Fecha más vieja</option>
-  <option value="pay">Pagado</option>
-  <option value="noPay">No Pagado</option>
-</select>
-
-<table border="1" class="tabla">
-  <thead>
+<table class="table table-bordered table-hover text-center">
+  <thead class="table-dark">
   <tr>
     <th>ID</th>
     <th>Fecha</th>
@@ -27,14 +29,13 @@
   </tr>
   </thead>
   <tbody>
-
     @if (filteredServicios.length === 0) {
       <tr>
-        <td colspan="6">No se encontraron resultados.</td>
+        <td colspan="7" class="text-center">No se encontraron resultados.</td>
       </tr>
     }
 
-    @for (cita of filteredServicios; track cita) {
+    @for (cita of filteredServicios; track $index) {
       <tr>
         <td>{{ cita.id }}</td>
         <td>{{ cita.fecha }}</td>
@@ -43,11 +44,9 @@
         <td>{{ cita.cliente.nombre }} {{ cita.cliente.apellidos }}</td>
         <td>{{ cita.trabajador.nombre }}</td>
         <td>
-          <button class="btn-delete" (click)="eliminarCita(cita.id)">🗑️</button>
+          <button class="btn btn-danger btn-sm" (click)="eliminarCita(cita.id!)">🗑️</button>
         </td>
       </tr>
     }
   </tbody>
 </table>
-
-

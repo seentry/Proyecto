@@ -1,9 +1,8 @@
-import {Component} from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 import {RequestService} from '../../services/request.service';
 import {Cita, Usuario} from '../../models/response.interface';
-import {Router} from '@angular/router';
 
 
 @Component({
@@ -12,19 +11,19 @@ import {Router} from '@angular/router';
   templateUrl: './reserva-trabajador.component.html',
   styleUrl: './reserva-trabajador.component.css'
 })
-export class ReservaTrabajadorComponent {
+export class ReservaTrabajadorComponent implements OnInit {
 
   public citas: Cita[] = [];
   public usuario: Usuario[] = [];
 
-  public filteredServicios: any[] = [];
+  public filteredServicios: Cita[] = [];
 
   public searchTerm: string = "";
   public sortType: string = "id";
   private apiUrl = 'http://52.205.151.118/api/cita';
   private apiUrlUser = 'http://52.205.151.118/api/usuario';
 
-  constructor(private service: RequestService, private router: Router) {
+  constructor(private service: RequestService) {
   }
 
   ngOnInit(): void {
@@ -34,7 +33,6 @@ export class ReservaTrabajadorComponent {
 
   public getCitas(): void {
     this.service.getCitas(this.apiUrl).subscribe((response) => {
-      console.log(response);
       this.citas = response;
       this.filteredServicios = response;
       this.addUserData();
@@ -45,7 +43,6 @@ export class ReservaTrabajadorComponent {
 
   public getUsuarios(): void {
     this.service.getUsuarios(this.apiUrlUser).subscribe((response) => {
-      console.log(response);
       this.usuario = response;
     }, (error) => {
       console.error("Error al obtener user:", error);
@@ -63,16 +60,15 @@ export class ReservaTrabajadorComponent {
       this.addUserData();
       return;
     }
-  
+
     const searchTermLower = this.searchTerm.toLowerCase();
-  
+
     this.filteredServicios = this.citas.filter(cita =>
       cita.cliente.nombre.toLowerCase().includes(searchTermLower)
     );
-  
+
     this.addUserData();
   }
-  
 
 
   public updateSortOrder(event: Event): void {
@@ -89,7 +85,7 @@ export class ReservaTrabajadorComponent {
       if (cliente) {
         cita.cliente.nombre = `${cliente.nombre} ${cliente.apellidos}`;
       } else {
-        cita.clienteNombre = 'Desconocido';
+        cita.cliente.nombre = 'Desconocido';
       }
 
       if (trabajador) {
@@ -136,17 +132,12 @@ export class ReservaTrabajadorComponent {
     const apiUrlDelete = `http://52.205.151.118/api/cita/${id}`;
 
     this.service.deleteCita(apiUrlDelete).subscribe(
-      () => {
-        this.citas = this.citas.filter(cita => cita.id !== id);
-        this.filteredServicios = this.filteredServicios.filter(cita => cita.id !== id);
-        alert("Cita eliminada con éxito.");
-      },
-      (error) => {
-        console.error("Cita eliminada con exito");
-        alert("Cita eliminada con éxito.");
-
+      {
+        next: (v) => console.log(v),
+        error: (v) => this.getCitas(),
+        complete: () => {console.log('complete')}
       }
-    );
+    )
   }
 
 }
