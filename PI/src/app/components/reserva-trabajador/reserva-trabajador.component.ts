@@ -55,23 +55,21 @@ export class ReservaTrabajadorComponent {
   }
 
   public searchByButton(): void {
-    if (!this.searchTerm) {
+    if (!this.searchTerm.trim()) {
       this.filteredServicios = this.citas;
       this.addUserData();
       return;
     }
-
-    let idBusqueda = Number(this.searchTerm);
-    if (isNaN(idBusqueda)) {
-      alert("Por favor ingrese un ID válido.");
-      return;
-    }
-
-    let resultado = this.citas.find(cita => cita.id === idBusqueda);
-    this.filteredServicios = resultado ? [resultado] : [];
-
+  
+    const searchTermLower = this.searchTerm.toLowerCase();
+  
+    this.filteredServicios = this.citas.filter(cita =>
+      cita.cliente.nombre.toLowerCase().includes(searchTermLower)
+    );
+  
     this.addUserData();
   }
+  
 
 
   public updateSortOrder(event: Event): void {
