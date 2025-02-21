@@ -18,6 +18,6 @@ export class AppComponent {
   }
 
   get isHomePage(): boolean {
-    return this.router.url === '/inicio' || this.router.url === '/';
+    return this.router.url === '/inicio' || this.router.url === '/' || this.router.url === '/inicio#startPage';
   }
 }

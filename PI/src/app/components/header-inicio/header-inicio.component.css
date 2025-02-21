@@ -1,23 +1,38 @@
 .nav-link {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #fff;
-    transition: transform 0.3s ease, color 0.3s ease;
-  }
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
 
-  .nav-link:hover {
-    color: #BFA78A;
-    transform: scale(1.2);
-  }
+.nav-link:hover {
+  color: #BFA78A;
+  transform: scale(1.2);
+}
 
-  .navbar-toggler {
-    border: none;
-    background: transparent;
+.navbar-toggler {
+  border: none;
+  background: transparent;
+}
+
+.arrow:hover {
+  top: 110px;
+  transform: scale(1.1);
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
   }
-  
-  #arrow:hover {
-    top: 110px;
-    transform: scale(1.1); 
+  50% {
+    transform: translateY(-10px);
   }
+}
+
+/* Aplicar la animación a la flecha */
+.arrow {
+  animation: bounce 1s infinite;
+  color: white;
+}
 
