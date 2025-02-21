@@ -52,6 +52,7 @@ export class InicioComponent {
 
   public onSubmit(): void {
     console.log(this.reactiveForm.value);
+    this.createOpinion();
   }
 
 
@@ -124,9 +125,9 @@ export class InicioComponent {
     }
 
     public createOpinion(): void {
-      let usuarioJSON = localStorage.getItem('usuario');
-      let usuario: Usuario = usuarioJSON ? JSON.parse(usuarioJSON) : null;
-      
+      const usuarioString: string | null = localStorage.getItem('userId');
+    
+      const usuario: number = Number(usuarioString);      
       let assessment: number = 0;
 
       switch (this.reactiveForm.value.valoracion) {

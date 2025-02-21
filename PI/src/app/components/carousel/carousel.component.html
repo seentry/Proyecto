@@ -24,7 +24,7 @@
                       <div class="card">
                         <h5>{{ opinion.titulo }}</h5>
                         <div class="text-center">
-                            @for (color of getStarColors(opinion.valoracion); track color) {
+                            @for (color of getStarColors(opinion.valoracion); track $index) {
                               <span class="bi bi-star-fill" 
                                     [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
                               </span>
@@ -49,7 +49,7 @@
                       <div class="card">
                         <h5>{{ opinion.titulo }}</h5>
                         <div class="text-center">
-                            @for (color of getStarColors(opinion.valoracion); track color) {
+                            @for (color of getStarColors(opinion.valoracion); track $index) {
                               <span class="bi bi-star-fill" 
                                     [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
                               </span>
@@ -74,7 +74,7 @@
                       <div class="card">
                         <h5>{{ opinion.titulo }}</h5>
                         <div class="text-center">
-                            @for (color of getStarColors(opinion.valoracion); track color) {
+                            @for (color of getStarColors(opinion.valoracion); track $index) {
                               <span class="bi bi-star-fill" 
                                     [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
                               </span>
