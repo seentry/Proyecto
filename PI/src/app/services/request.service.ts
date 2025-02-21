@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Cita, CitaNueva, LoginResponse, Servicio, Usuario} from '../models/response.interface';
+import {Cita, CitaNueva, LoginResponse, Opinion, Servicio, Usuario} from '../models/response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -49,56 +49,74 @@ export class RequestService {
     return this.http.post<Servicio>(url, servicio);
   }
 
-  deleteCita(url: string) {
+  public getOpiniones(url: string): Observable<Opinion[]> {
+    return this.http.get<Opinion[]>(url);
+  }
+
+  public deleteCita(url: string) {
     return this.http.delete(url);
   }
 
-  updateCita(url: string, body: any) {
-    return this.http.put(url, body);
+  public deleteProducto(url: string): Observable<void> {
+    return this.http.delete<void>(url);
+  }
+
+  public postProducto(url: string, producto: any): Observable<any> {
+    return this.http.post<any>(url, producto);
   }
 
 
-  /*
-    // --------- USUARIOS (CLIENTES/TRABAJADORES) ---------
+  public createOpinion(url: string, opinion: Opinion): Observable<Opinion> {
+    return this.http.post<Opinion>(url, opinion);
+  }
+  
+  public updateCita(url: string, cita: Cita): Observable<Cita> {
+    return this.http.put<Cita>(url, cita);
+  }
+  
 
-
-    public getUsuarioById(url: string): Observable<Usuario> {
-      return this.http.get<Usuario>(url);
-    }
-
-    public createUsuario(url: string, usuario: Usuario): Observable<Usuario> {
-      return this.http.post<Usuario>(url, usuario);
-    }
-
-    // --------- CITAS ---------
-
-    public getCitaById(url: string): Observable<Cita> {
-      return this.http.get<Cita>(url);
-    }
-
-    public postCita(url: string, cita: Cita): Observable<Cita> { //ya usado
-      return this.http.post<Cita>(url, cita);
-    }
-
-    public updateCitaFecha(url: string, id: number, fecha: string): Observable<Cita> {
-      return this.http.post<Cita>(url, { id, fecha });
-    }
-
-    // --------- SERVICIOS ---------
-
-
-    public createServicio(url: string, servicio: Servicio): Observable<Servicio> {
-      return this.http.post<Servicio>(url, servicio);
-    }
-
-    // --------- OPINIONES ---------
-
-    public getOpiniones(url: string): Observable<Opinion[]> { //Falta crear opiniones
-      return this.http.get<Opinion[]>(url);
-    }
-
-    public createOpinion(url: string, opinion: Opinion): Observable<Opinion> {
-      return this.http.post<Opinion>(url, opinion);
-    }
-      */
 }
+
+
+/*
+  // --------- USUARIOS (CLIENTES/TRABAJADORES) ---------
+
+
+  public getUsuarioById(url: string): Observable<Usuario> {
+    return this.http.get<Usuario>(url);
+  }
+
+  public createUsuario(url: string, usuario: Usuario): Observable<Usuario> {
+    return this.http.post<Usuario>(url, usuario);
+  }
+
+  // --------- CITAS ---------
+
+  public getCitaById(url: string): Observable<Cita> {
+    return this.http.get<Cita>(url);
+  }
+
+  public postCita(url: string, cita: Cita): Observable<Cita> { //ya usado
+    return this.http.post<Cita>(url, cita);
+  }
+
+  public updateCitaFecha(url: string, id: number, fecha: string): Observable<Cita> {
+    return this.http.post<Cita>(url, { id, fecha });
+  }
+
+  // --------- SERVICIOS ---------
+
+
+  public createServicio(url: string, servicio: Servicio): Observable<Servicio> {
+    return this.http.post<Servicio>(url, servicio);
+  }
+
+  // --------- OPINIONES ---------
+
+  public getOpiniones(url: string): Observable<Opinion[]> { //Falta crear opiniones
+    return this.http.get<Opinion[]>(url);
+  }
+
+
+  */
+

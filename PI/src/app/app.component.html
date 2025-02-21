@@ -1,19 +1,19 @@
 <div class="container-fluid p-0">
   @if (isHomePage) {
-    <header class="d-flex flex-column align-items-center py-3 justify-content-center" 
+    <header class="d-flex flex-column align-items-center py-3 justify-content-center"
             style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('../img/fondo2.jpg'); height: 100vh; background-size: cover;">
-              <app-header-inicio></app-header-inicio>
+      <app-header-inicio></app-header-inicio>
     </header>
   }
-  
 
-  @if (!isHomePage){ 
-    <header class="d-flex flex-column align-items-center py-3 justify-content-center" 
+
+  @if (!isHomePage) {
+    <header class="d-flex flex-column align-items-center py-3 justify-content-center"
             style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), url('../img/fondo2.jpg'); height: 15vh; width: auto; background-size: cover;">
-              <app-header></app-header>
+      <app-header></app-header>
     </header>
   }
-   
+
 
   <router-outlet></router-outlet>
 
@@ -22,6 +22,6 @@
   </footer>
 </div>
 
-  
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 

@@ -9,6 +9,7 @@ use DateMalformedStringException;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -114,5 +115,25 @@ class CitaController extends AbstractController
         $cita = $entityManager->getRepository(Cita::class)->findBy(['cliente' => $id]);
         return $this->json($cita, Response::HTTP_OK, [], ['groups' => ['cita', 'citaCliente', 'cliente', 'citaTrabajador', 'trabajador', 'servicio']]);
     }
+    #[Route('/api/cita/{id}', name: 'citaByUser', methods: ['PATCH'], format: 'json')]
+    public function modificarCita(EntityManagerInterface $entityManager, Request $request, Cita $cita): JsonResponse
+    {
+        $dataRequest = json_decode($request->getContent(), true);
+        if ($dataRequest['fecha'] != null) {
+            try {
+                $cita->setFecha(new DateTime($dataRequest['fecha']));
+            } catch (DateMalformedStringException $e) {
+                return $this->json('ERROR: ' . $e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+        }
+        if ($dataRequest['pagado'] != null) {
+            $cita->setPagado($dataRequest['pagado']);
+        }
+        if ($dataRequest['precio'] != null) {
+            $cita->setPrecio($dataRequest['precio']);
+        }
 
+        return $this->json($cita, Response::HTTP_OK);
+
+    }
 }

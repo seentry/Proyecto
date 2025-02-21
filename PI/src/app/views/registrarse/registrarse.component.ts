@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
-import { Usuario } from '../../models/response.interface';
-import { RequestService } from '../../services/request.service';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {Usuario} from '../../models/response.interface';
+import {RequestService} from '../../services/request.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-registrarse',
@@ -12,10 +12,18 @@ import { Router } from '@angular/router';
 })
 export class RegistrarseComponent {
 
-  constructor(private service: RequestService, private router: Router) { }
-
   public apiUrlUsuario: string = 'http://52.205.151.118/api/usuario';
   public dataUserClient: Usuario[] = [];
+  reactiveForm = new FormGroup({
+    nombre: new FormControl(''),
+    apellidos: new FormControl(''),
+    email: new FormControl(''),
+    dni: new FormControl(''),
+    contraseña: new FormControl(''),
+  });
+
+  constructor(private service: RequestService, private router: Router) {
+  }
 
   public getUsuarios(): void {
     this.service.getUsuarios(this.apiUrlUsuario).subscribe((response) => {
@@ -29,14 +37,6 @@ export class RegistrarseComponent {
   public ngOnInit(): void {
     this.getUsuarios();
   }
-
-  reactiveForm = new FormGroup({
-    nombre: new FormControl(''),
-    apellidos: new FormControl(''),
-    email: new FormControl(''),
-    dni: new FormControl(''),
-    contraseña: new FormControl(''),
-  });
 
   public onSubmit(): void {
     if (this.reactiveForm.valid) {
