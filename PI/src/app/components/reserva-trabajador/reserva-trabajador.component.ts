@@ -146,4 +146,45 @@ export class ReservaTrabajadorComponent {
     );
   }
 
+  public citaEditando: Cita | null = null;
+
+  public editarCita(id: number): void {
+    this.citaEditando = this.citas.find(cita => cita.id === id) || null;
+  }
+  
+  public guardarEdicion(): void {
+    if (!this.citaEditando) return;
+  
+    const index = this.citas.findIndex(cita => cita.id === this.citaEditando!.id);
+    if (index !== -1) {
+      this.citas[index] = { ...this.citaEditando };
+    }
+  
+    this.citaEditando = null;
+    alert("Cita actualizada con éxito.");
+  }
+  
+
+  public cancelarEdicion(): void {
+    this.citaEditando = null;
+  }
+
+  public updateFecha(event: Event): void {
+    if (this.citaEditando) {
+      this.citaEditando.fecha = (event.target as HTMLInputElement).value;
+    }
+  }
+  
+  public updatePrecio(event: Event): void {
+    if (this.citaEditando) {
+      this.citaEditando.precio = Number((event.target as HTMLInputElement).value);
+    }
+  }
+  
+  public updatePagado(event: Event): void {
+    if (this.citaEditando) {
+      this.citaEditando.pagado = (event.target as HTMLSelectElement).value === 'true';
+    }
+  }
+  
 }
