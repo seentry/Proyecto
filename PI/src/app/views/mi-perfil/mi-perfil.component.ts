@@ -58,6 +58,6 @@ export class MiPerfilComponent implements OnInit {
 
   logout() {
     localStorage.clear()
-    this.router.navigate(['login'])
+    this.router.navigateByUrl('/inicio')
   }
 }
