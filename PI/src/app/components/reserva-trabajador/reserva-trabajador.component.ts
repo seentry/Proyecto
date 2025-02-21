@@ -154,21 +154,25 @@ export class ReservaTrabajadorComponent {
 
   public citaForm = new FormGroup({
     fecha: new FormControl<string | null>(''),
-    precio: new FormControl<number | null>(null), 
-    pagado: new FormControl<string | null>('') 
+    precio: new FormControl<number | null>(null),
+    pagado: new FormControl<string | null>('')
   });
+  
   
 
   public editarCita(id: number): void {
     this.citaEditando = this.citas.find(cita => cita.id === id) || null;
     
-    if (this.citaEditando) {
-      this.citaForm.setValue({
-        fecha: this.citaEditando.fecha,
-        precio: this.citaEditando.precio,
-        pagado: this.citaEditando.pagado ? 'true' : 'false'
-      });
+    if (!this.citaEditando) {
+      console.error("Cita no encontrada");
+      return;
     }
+  
+    this.citaForm.setValue({
+      fecha: this.citaEditando.fecha || '',
+      precio: this.citaEditando.precio ?? 0,
+      pagado: this.citaEditando.pagado ? 'true' : 'false'
+    });
   }
   
 
@@ -179,23 +183,17 @@ export class ReservaTrabajadorComponent {
       return;
     }
   
-    const apiUrlUpdate = `http://52.205.151.118/api/cita/${this.citaEditando.id}`;
+    const apiUrlUpdate = `http://52.205.151.118/api/cita/${this.citaEditando!.id}`;
   
     const citaActualizada: Cita = {
-      ...this.citaEditando,
-      fecha: this.citaForm.value.fecha!,
-      precio: this.citaForm.value.precio ?? 0,  // Si es null, asigna 0
+      ...this.citaEditando!,
+      fecha: this.citaForm.value.fecha ?? this.citaEditando?.fecha ?? '',
+      precio: this.citaForm.value.precio ?? this.citaEditando?.precio ?? 0,
       pagado: this.citaForm.value.pagado === 'true'
-    };
+    };    
   
     this.service.updateCita(apiUrlUpdate, citaActualizada).subscribe(
       (response) => {
-        const index = this.citas.findIndex(cita => cita.id === this.citaEditando!.id);
-        if (index !== -1) {
-          this.citas[index] = { ...response };
-        }
-        this.filteredServicios = [...this.citas];
-        this.citaEditando = null;
         alert("Cita actualizada con éxito.");
       },
       (error) => {

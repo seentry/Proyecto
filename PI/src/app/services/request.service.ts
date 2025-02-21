@@ -70,9 +70,9 @@ export class RequestService {
     return this.http.post<Opinion>(url, opinion);
   }
   
-  public updateCita(url: string, cita: Cita): Observable<Cita> {
-    return this.http.put<Cita>(url, cita);
-  }
+  public updateCita(url: string, cita: Partial<Cita>): Observable<Cita> {
+    return this.http.patch<Cita>(url, cita);
+  }  
   
 
 }
