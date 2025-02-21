@@ -30,13 +30,23 @@
 
   <app-carousel [opiniones]="opiniones"></app-carousel>
 
+  @if (user !== null) {
   <div class="d-flex justify-content-center">
     @if (show === true) {
-      <button type="button" class="btn btn-primary" (click)="showForm()">Ocultar formulario</button>
+    <button type="button" class="btn btn-primary" (click)="showForm()">Ocultar formulario</button>
     } @else {
-      <button type="button" class="btn btn-primary" (click)="showForm()">Añadir una opinion</button>
+    <button type="button" class="btn btn-primary" (click)="showForm()">Añadir una opinion</button>
     }
   </div>
+  } @else {
+  <div class="d-flex flex-column align-items-center">
+    <button type="button" class="btn btn-primary" disabled>
+      Añadir una opinion
+    </button>
+    <p class="mt-2 text-muted">Inicia sesión para añadir una opinion</p>
+  </div>
+  }
+
 
   @if (show === true) {
     <div class="row mt-4">

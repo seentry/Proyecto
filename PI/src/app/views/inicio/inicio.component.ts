@@ -23,6 +23,9 @@ export class InicioComponent {
   public servicios_productos: string = "servicios";
   public array_servicos: Servicio[] = [];
   public array_productos: Servicio[] = [];
+
+  public user = localStorage.getItem('userId');
+
   reactiveForm = new FormGroup({
     titulo: new FormControl(''),
     descripcion: new FormControl(''),
