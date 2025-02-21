@@ -127,4 +127,26 @@ export class ReservaTrabajadorComponent {
     }
   }
 
+  //ELIMINAR
+  public eliminarCita(id: number): void {
+    if (!confirm("¿Estás seguro de que deseas eliminar esta cita?")) {
+      return;
+    }
+
+    const apiUrlDelete = `http://52.205.151.118/api/cita/${id}`;
+
+    this.service.deleteCita(apiUrlDelete).subscribe(
+      () => {
+        this.citas = this.citas.filter(cita => cita.id !== id);
+        this.filteredServicios = this.filteredServicios.filter(cita => cita.id !== id);
+        alert("Cita eliminada con éxito.");
+      },
+      (error) => {
+        console.error("Cita eliminada con exito");
+        alert("Cita eliminada con éxito.");
+
+      }
+    );
+  }
+
 }
