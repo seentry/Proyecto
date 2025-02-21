@@ -49,11 +49,11 @@ class UsuarioController extends AbstractController
         return $this->json($usuario, Response::HTTP_CREATED, [], ['groups' => ['usuario']]);
     }
     #[Route('/api/usuario/{id}', name: 'usuarioDelete', methods: ['DELETE'], format: 'json')]
-    public function deleteUsuario(Usuario $usuario, EntityManagerInterface $entityManager): JsonResponse
+    public function deleteUsuario(Usuario $usuario, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($usuario);
         $entityManager->flush();
-        return $this->json(null, Response::HTTP_NO_CONTENT);
+        return new Response('USUARIO ELIMINADO', Response::HTTP_OK);
     }
 
 }
