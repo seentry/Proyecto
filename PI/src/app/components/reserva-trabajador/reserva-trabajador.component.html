@@ -1,23 +1,21 @@
-<h2 class="mb-4 text-center">Gestión de Citas</h2>
+<h2>Gestion de Citas</h2>
 
-<div class="input-group mb-3">
-  <input (input)="updateSearchTerm($event)" class="form-control" placeholder="Buscar por Nombre" type="text"/>
-  <button (click)="searchByButton()" class="btn btn-primary">Buscar</button>
-</div>
+<input (input)="updateSearchTerm($event)" placeholder="Buscar por Nombre" type="text"/>
+<button (click)="searchByButton()">Buscar</button>
 
-<div class="mb-3">
-  <label for="sortType" class="form-label">Ordenar por:</label>
-  <select (change)="updateSortOrder($event)" id="sortType" class="form-select">
-    <option value="name">Nombre (A-Z)</option>
-    <option value="dateSoon">Fecha más nueva</option>
-    <option value="dateLate">Fecha más vieja</option>
-    <option value="pay">Pagado</option>
-    <option value="noPay">No Pagado</option>
-  </select>
-</div>
+<br><br>
 
-<table class="table table-bordered table-hover text-center">
-  <thead class="table-dark">
+<label for="sortType">Ordenar por:</label>
+<select (change)="updateSortOrder($event)" id="sortType">
+  <option value="name">Nombre (A-Z)</option>
+  <option value="dateSoon">Fecha más nueva</option>
+  <option value="dateLate">Fecha más vieja</option>
+  <option value="pay">Pagado</option>
+  <option value="noPay">No Pagado</option>
+</select>
+
+<table border="1" class="tabla">
+  <thead>
   <tr>
     <th>ID</th>
     <th>Fecha</th>
@@ -29,9 +27,10 @@
   </tr>
   </thead>
   <tbody>
+
     @if (filteredServicios.length === 0) {
       <tr>
-        <td colspan="7">No se encontraron resultados.</td>
+        <td colspan="6">No se encontraron resultados.</td>
       </tr>
     }
 
@@ -44,9 +43,37 @@
         <td>{{ cita.cliente.nombre }} {{ cita.cliente.apellidos }}</td>
         <td>{{ cita.trabajador.nombre }}</td>
         <td>
-          <button class="btn btn-danger btn-sm" (click)="eliminarCita(cita.id)">🗑️</button>
+          <button class="btn-edit" (click)="editarCita(cita.id)">✏️</button>
+          <button class="btn-delete" (click)="eliminarCita(cita.id)">🗑️</button>
         </td>
       </tr>
     }
   </tbody>
 </table>
+
+@if (citaEditando !== null) {
+  <div class="edit-form">
+    <h3>Editar Cita</h3>
+
+    <label>Fecha:</label>
+    <input type="datetime-local" [value]="citaEditando?.fecha || ''" 
+           (input)="updateFecha($event)"/>
+
+    <label>Precio:</label>
+    <input type="number" [value]="citaEditando?.precio || ''" 
+           (input)="updatePrecio($event)"/>
+
+    <label>Pagado:</label>
+    <select [value]="citaEditando?.pagado ? 'true' : 'false'" 
+            (change)="updatePagado($event)">
+      <option value="true">Sí</option>
+      <option value="false">No</option>
+    </select>
+
+    <br><br>
+    <button (click)="guardarEdicion()">Guardar</button>
+    <button (click)="cancelarEdicion()">Cancelar</button>
+  </div>
+}
+
+
