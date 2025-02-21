@@ -43,7 +43,6 @@
         <td>{{ cita.cliente.nombre }} {{ cita.cliente.apellidos }}</td>
         <td>{{ cita.trabajador.nombre }}</td>
         <td>
-          <button class="btn-edit" (click)="editarCita(cita.id)">✏️</button>
           <button class="btn-delete" (click)="eliminarCita(cita.id)">🗑️</button>
         </td>
       </tr>
@@ -51,27 +50,4 @@
   </tbody>
 </table>
 
-@if (citaEditando !== null) {
-  <div class="edit-form">
-    <h3>Editar Cita</h3>
-
-    <form [formGroup]="citaForm">
-      <label>Fecha:</label>
-      <input type="datetime-local" formControlName="fecha"/>
-
-      <label>Precio:</label>
-      <input type="number" formControlName="precio"/>
-
-      <label>Pagado:</label>
-      <select formControlName="pagado">
-        <option value="true">Sí</option>
-        <option value="false">No</option>
-      </select>
-
-      <br><br>
-      <button type="button" (click)="guardarEdicion()">Guardar</button>
-      <button type="button" (click)="cancelarEdicion()">Cancelar</button>
-    </form>
-  </div>
-}
 
