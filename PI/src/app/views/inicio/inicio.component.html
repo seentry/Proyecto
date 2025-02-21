@@ -1,6 +1,6 @@
 <article class="container">
 
-  <h2 class="text-center mt-5">Texto de prueba</h2>
+  <h2 id="startPage" class="text-center mt-5">Texto de prueba</h2>
 
   <section class="col-12 text-center mt-5">
     <div class="row justify-content-center">
@@ -24,7 +24,7 @@
       }
     </div>
   }
-  
+
   @if (servicios_productos == "productos") {
     <div class="row justify-content-center">
       @for (producto of array_productos.slice(0, 3); track producto) {
@@ -34,8 +34,8 @@
       }
     </div>
   }
-  
-  
+
+
   <app-carousel [opiniones]="opiniones"></app-carousel>
 
   @if (user !== null) {
