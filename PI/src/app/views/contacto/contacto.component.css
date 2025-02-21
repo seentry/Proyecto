@@ -5,3 +5,16 @@ input, textarea {
 label {
   color: black;
 }
+
+input.btn.btn-warning {
+  background-color: #343a40;
+  color: #fff;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+input.btn.btn-warning:hover {
+  background-color: #1d2124;
+  transform: scale(1.01);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
