@@ -1,21 +1,23 @@
-<h2>Gestion de Citas</h2>
+<h2 class="mb-4 text-center">Gestión de Citas</h2>
 
-<input (input)="updateSearchTerm($event)" placeholder="Buscar por Nombre" type="text"/>
-<button (click)="searchByButton()">Buscar</button>
+<div class="input-group mb-3">
+  <input (input)="updateSearchTerm($event)" class="form-control" placeholder="Buscar por Nombre" type="text"/>
+  <button (click)="searchByButton()" class="btn btn-primary">Buscar</button>
+</div>
 
-<br><br>
+<div class="mb-3">
+  <label for="sortType" class="form-label">Ordenar por:</label>
+  <select (change)="updateSortOrder($event)" id="sortType" class="form-select">
+    <option value="name">Nombre (A-Z)</option>
+    <option value="dateSoon">Fecha más nueva</option>
+    <option value="dateLate">Fecha más vieja</option>
+    <option value="pay">Pagado</option>
+    <option value="noPay">No Pagado</option>
+  </select>
+</div>
 
-<label for="sortType">Ordenar por:</label>
-<select (change)="updateSortOrder($event)" id="sortType">
-  <option value="name">Nombre (A-Z)</option>
-  <option value="dateSoon">Fecha más nueva</option>
-  <option value="dateLate">Fecha más vieja</option>
-  <option value="pay">Pagado</option>
-  <option value="noPay">No Pagado</option>
-</select>
-
-<table border="1" class="tabla">
-  <thead>
+<table class="table table-bordered table-hover text-center">
+  <thead class="table-dark">
   <tr>
     <th>ID</th>
     <th>Fecha</th>
@@ -27,10 +29,9 @@
   </tr>
   </thead>
   <tbody>
-
     @if (filteredServicios.length === 0) {
       <tr>
-        <td colspan="6">No se encontraron resultados.</td>
+        <td colspan="7">No se encontraron resultados.</td>
       </tr>
     }
 
@@ -43,7 +44,7 @@
         <td>{{ cita.cliente.nombre }} {{ cita.cliente.apellidos }}</td>
         <td>{{ cita.trabajador.nombre }}</td>
         <td>
-          <button class="btn-delete" (click)="eliminarCita(cita.id)">🗑️</button>
+          <button class="btn btn-danger btn-sm" (click)="eliminarCita(cita.id)">🗑️</button>
         </td>
       </tr>
     }
