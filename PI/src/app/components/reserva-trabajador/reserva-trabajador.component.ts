@@ -158,7 +158,6 @@ export class ReservaTrabajadorComponent {
     pagado: new FormControl<string | null>('')
   });
   
-  
 
   public editarCita(id: number): void {
     this.citaEditando = this.citas.find(cita => cita.id === id) || null;
