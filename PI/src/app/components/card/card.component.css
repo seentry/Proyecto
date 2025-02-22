@@ -36,14 +36,3 @@
   text-align: center;
 }
 
-
-button.btn-prev,
-button.btn-next {
-  background-color: #0080ff;
-
-}
-
-button.btn-prev:hover,
-button.btn-next:hover {
-  background-color: #0091ff;
-}
