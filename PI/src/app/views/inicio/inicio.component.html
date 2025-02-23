@@ -19,7 +19,7 @@
     <div class="row justify-content-center mb-5">
       @for (servicio of array_servicos.slice(0, 3); track servicio) {
         <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mb-4">
-          <app-card [name]="servicio.nombre" [price]="servicio.precio"></app-card>
+          <app-card [name]="servicio.nombre" [price]="servicio.precio" [img]="servicio.imagen ?? null"></app-card>
         </div>
       }
     </div>
@@ -31,16 +31,20 @@
     <div class="row justify-content-center mb-5">
       @for (producto of array_productos.slice(0, 3); track producto) {
         <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mb-4">
-          <app-card [name]="producto.nombre" [stock]="producto.stock"></app-card>
+          <app-card [name]="producto.nombre" [stock]="producto.stock" [img]="producto.imagen ?? null"></app-card>
         </div>
       }
     </div>
   }
 
-  <div class="jumbotron rounded d-flex align-items-center justify-content-center">
-    <a class="btn-reserva" href="reserva">Reservar</a>
+  <div class="row my-4">
+    <div class="col-12">
+      <div class="jumbotron rounded d-flex align-items-center justify-content-center py-4">
+        <a class="btn-reserva btn btn-primary" href="reserva">Reservar</a>
+      </div>
+    </div>
   </div>
-
+  
   <app-carousel [opiniones]="opiniones"></app-carousel>
 
   @if (user !== null) {

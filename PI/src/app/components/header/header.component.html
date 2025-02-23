@@ -12,7 +12,7 @@
         </button>
         <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel"> <a href="inicio"><img src="/img/logo.png" alt="" style="width: 200px;"></a></h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
@@ -22,17 +22,17 @@
               <li class="nav-item"><a class="nav-link text-white" href="tienda">Tienda</a></li>
               <li class="nav-item"><a class="nav-link text-white" href="reserva">Reserva</a></li>
               <li class="nav-item"><a class="nav-link text-white" href="contacto">Contacto</a></li>
-              @if (!userStartSesion) {
+              @if (userStartSesion) {
                 <li class="nav-item">
-                  <a class="nav-link text-white btn btn-outline-light" href="inicio_sesion" style="border-radius: 5px; font-weight: bold;">
-                    Iniciar Sesión
+                  <a class="nav-link question-link px-3 py-1 d-flex fs-4" href="mi_perfil"
+                     style="border-radius: 5px; font-weight: bold; gap: 8px;">
+                    <i class="bi bi-person-circle"></i>
                   </a>
                 </li>
-              }
-              @if (!userStartSesion) {
+              } @else {
                 <li class="nav-item">
-                  <a class="nav-link text-white btn btn-outline-light" href="inicio_sesion"
-                     style="border-radius: 5px; font-weight: bold; border: 1px solid white;">
+                  <a class="nav-link question-link btn btn-outline-light d-flex fs-6" href="inicio_sesion"
+                     style="border-radius: 5px; font-weight: bold;">
                     Iniciar Sesión
                   </a>
                 </li>
