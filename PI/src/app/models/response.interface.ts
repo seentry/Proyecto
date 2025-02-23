@@ -44,7 +44,7 @@ export interface Opinion {
   titulo: string;
   descripcion: string;
   valoracion: number;
-  usuario: number; 
+  usuario: number;
 }
 
 export interface Servicio {

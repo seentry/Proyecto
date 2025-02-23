@@ -135,7 +135,9 @@ export class ReservaTrabajadorComponent implements OnInit {
       {
         next: (v) => console.log(v),
         error: (v) => this.getCitas(),
-        complete: () => {console.log('complete')}
+        complete: () => {
+          console.log('complete')
+        }
       }
     )
   }
