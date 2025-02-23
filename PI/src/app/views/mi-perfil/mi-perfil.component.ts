@@ -44,7 +44,7 @@ export class MiPerfilComponent implements OnInit {
       response.map((cita: Cita) => {
         console.log(cita.fecha);
         let date = new Date(cita.fecha);
-        cita.fecha = date.toLocaleDateString();
+        cita.fecha = date.toLocaleString("es-ES", {timeZone: 'UTC'});
       })
       this.citas = response;
     })

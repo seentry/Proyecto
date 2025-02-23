@@ -93,6 +93,9 @@ export class ReservaTrabajadorComponent implements OnInit {
       } else {
         cita.trabajador.nombre = 'Desconocido';
       }
+
+      let date = new Date(cita.fecha);
+      cita.fecha = date.toLocaleString("es-ES", {timeZone: 'UTC'});
     });
   }
 
