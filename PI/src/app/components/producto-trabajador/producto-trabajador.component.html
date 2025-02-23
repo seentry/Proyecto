@@ -56,7 +56,7 @@
           [stock]="servicio.stock ?? 0"
           [name]="servicio.nombre"
           [description]="servicio.descripcion"
-          [img]="servicio.imagen || 'assets/default-image.jpg'"
+          [img]="servicio.imagen == ''?'https://picsum.photos/600/600':servicio.imagen!">
           (deleteProduct)="servicio.id ? eliminarProducto(servicio.id) : null">
         </app-card-producto>
       }
