@@ -1,6 +1,7 @@
 body {
     background-color: #e7dfdf;
     font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
 }
 
 #form {

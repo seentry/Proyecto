@@ -28,7 +28,7 @@ export class ProductoClienteComponent {
     this.service.getServicios(this.apiUrlServicio).subscribe(
       (response) => {
         console.log("Servicios recibidos:", response);
-        this.servicios = response.filter(servicio => servicio.imagen !== null && servicio.imagen !== ''); // Filtrar imágenes vacías
+        this.servicios = response.filter(servicio => servicio.stock !== null);
         this.actualizarPaginacion();
       },
       (error) => {
