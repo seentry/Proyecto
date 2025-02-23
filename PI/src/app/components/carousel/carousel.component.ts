@@ -15,7 +15,7 @@ export class CarouselComponent {
     const colors: string[] = [];
     for (let i = 0; i < 5; i++) {
       if (i < valoracion) {
-        colors.push('yellow');
+        colors.push('#FFEA00');
       } else {
         colors.push('grey');
       }

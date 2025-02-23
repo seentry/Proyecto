@@ -1,0 +1,29 @@
+.jumbotron {
+    background-image: url('/img/reserva3.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    height: 300px;
+    margin-top: 90px;
+    width: 1190px;           
+    margin-left: auto;      
+    margin-right: auto;     
+  }
+
+  .btn-reserva {
+    background-color: #343a40;
+    text-align: center;
+    padding: 10px;
+    width: 150px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .btn-reserva:hover {
+    background-color: #1d2124;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }

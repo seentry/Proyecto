@@ -101,11 +101,11 @@ export class InicioComponent {
     }
   }
 
-    public createOpinion(): void {
-      const usuarioString: string | null = localStorage.getItem('userId');
-    
-      const usuario: number = Number(usuarioString);      
-      let assessment: number = 0;
+  public createOpinion(): void {
+    const usuarioString: string | null = localStorage.getItem('userId');
+
+    const usuario: number = Number(usuarioString);
+    let assessment: number = 0;
 
     switch (this.reactiveForm.value.valoracion) {
       case '⭐️':
