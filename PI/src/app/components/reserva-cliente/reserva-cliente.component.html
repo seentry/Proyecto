@@ -1,7 +1,7 @@
 <article class="container mt-5">
   <h2 class="text-center fw-bold title">Reserva tu Cita</h2>
 
-  <section class="row mt-4 justify-content-center">
+  <section class="row mt-5 justify-content-center">
     <div class="col-md-8">
       <form (ngSubmit)="onSubmit()" [formGroup]="reactiveForm" class="card p-4 form-container">
         <label class="form-label fw-bold text-dark" for="tipoReserva">Selecciona un servicio</label>
@@ -11,14 +11,17 @@
           }
         </select>
 
+        <label class="form-label fw-bold text-dark" for="trabajador">Selecciona un Trabajador</label>
         <select (change)="selectTime()" class="form-select mb-3" formControlName="worker" id="worker">
           @for (worker of allWorkers; track worker) {
             <option [value]="worker.id">{{ worker.nombre }}</option>
           }
         </select>
 
+        <label class="form-label fw-bold text-dark" for="fecha">Selecciona una Fecha</label>
         <input (change)="selectTime()" class="form-control mb-3" formControlName="fecha" id="fecha" type="date">
 
+        <label class="form-label fw-bold text-dark" for="tipoReserva">Selecciona una Hora</label>
         <select class="form-select mb-3" formControlName="hora" id="hours">
           @for (hour of hours; track hour) {
             <option [value]="hour">{{ hour }}</option>
