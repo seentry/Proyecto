@@ -61,4 +61,4 @@ jobs:
             docker compose -f ./deploy/PIS/compose.yml pull
             docker compose -f ./deploy/PIS/compose.yml down
             docker compose -f ./deploy/PIS/compose.yml up -d --force-recreate
-            docker images prune || y
+            docker image prune || y
