@@ -17,14 +17,14 @@
             <li class="nav-item"><a class="nav-link question-link" href="tienda">Tienda</a></li>
             <li class="nav-item"><a class="nav-link question-link" href="reserva">Reserva</a></li>
             <li class="nav-item"><a class="nav-link question-link" href="contacto">Contacto</a></li>
-            @if (userStartSesion) {
+            @if (!userStartSesion) {
               <li class="nav-item">
-                <a class="nav-link question-link px-3 py-1 d-flex align-items-center" href="mi_perfil"
-                   style="border-radius: 5px; font-weight: bold; gap: 8px;">
-                  <i class="bi bi-person-circle"></i>
+                <a class="nav-link question-link btn btn-outline-light" href="inicio_sesion" style="border-radius: 5px; font-weight: bold;">
+                  Iniciar Sesión
                 </a>
               </li>
-            } @else {
+            }
+            @if (!userStartSesion) {
               <li class="nav-item">
                 <a class="nav-link question-link btn btn-outline-light" href="inicio_sesion"
                    style="border-radius: 5px; font-weight: bold; border: 1px solid white;">
