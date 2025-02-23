@@ -12,7 +12,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="productoModalLabel">Nuevo Producto</h5>
+        <h5 class="modal-title" id="productoModalLabel">Nuevo Producto o Servicio</h5>
         <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
       </div>
       <div class="modal-body">
@@ -32,6 +32,12 @@
           <div class="mb-3">
             <label class="form-label">Stock</label>
             <input class="form-control" formControlName="stock" required type="number">
+          </div>
+          <div class="form-check">
+            <label class="form-check-label" for="servicioCheck">
+              Es un servicio?
+            </label>
+            <input class="form-check-input" formControlName="servicio" type="checkbox" value="" id="servicioCheck" (change)="changedServicio()">
           </div>
           <div class="mb-3">
             <label class="form-label">Imagen URL</label>
@@ -56,7 +62,7 @@
           [stock]="servicio.stock ?? 0"
           [name]="servicio.nombre"
           [description]="servicio.descripcion"
-          [img]="servicio.imagen || 'assets/default-image.jpg'"
+          [img]="servicio.imagen == ''?'https://picsum.photos/600/600':servicio.imagen!">
           (deleteProduct)="servicio.id ? eliminarProducto(servicio.id) : null">
         </app-card-producto>
       }

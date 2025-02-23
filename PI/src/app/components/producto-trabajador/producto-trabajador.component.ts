@@ -90,7 +90,6 @@ export class ProductoTrabajadorComponent {
   }
 
   cerrarFormulario(): void {
-    this.mostrarFormulario = false;
     this.productoForm.reset();
   }
 
@@ -101,9 +100,13 @@ export class ProductoTrabajadorComponent {
 
     const nuevoProducto: Servicio = this.productoForm.value;
 
+    if (this.productoForm.controls['servicio'].value === true){
+      nuevoProducto.stock = null
+    }
+
     this.service.postProducto(this.apiUrlServicio, nuevoProducto).subscribe({
-      next: (productoCreado) => {
-        this.servicios.push(productoCreado);
+      next: () => {
+        this.getServicios();
         this.actualizarPaginacion();
         this.cerrarFormulario();
       },
@@ -120,8 +123,19 @@ export class ProductoTrabajadorComponent {
       descripcion: ['', Validators.required],
       precio: [0, [Validators.required, Validators.min(0)]],
       stock: [0, [Validators.required, Validators.min(0)]],
+      servicio:[false],
       imagen: ['']
     });
   }
 
+  changedServicio() {
+    if (this.productoForm.controls['servicio'].value === true){
+      this.productoForm.controls['stock'].disable();
+      return;
+    }
+
+    if (this.productoForm.controls['servicio'].value === false){
+      this.productoForm.controls['stock'].enable();
+    }
+  }
 }
