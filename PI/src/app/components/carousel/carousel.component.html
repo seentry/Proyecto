@@ -17,7 +17,7 @@
       @if (opiniones.length !== 0) {
         @if (opiniones.length >= 3) {
           <div class="carousel-item active">
-            <div class="row">
+            <div class="row g-3">
               @for (opinion of opiniones; track opinion) {
                 @if ($index <= 2) {
                   <div class="col-md-4">
@@ -42,7 +42,7 @@
 
         @if (opiniones.length >= 5) {
           <div class="carousel-item">
-            <div class="row">
+            <div class="row g-3">
               @for (opinion of opiniones; track opinion) {
                 @if ($index >= 2 && $index <= 4) {
                   <div class="col-md-4">
@@ -67,7 +67,7 @@
 
         @if (opiniones.length >= 8) {
           <div class="carousel-item">
-            <div class="row">
+            <div class="row g-3">
               @for (opinion of opiniones; track opinion) {
                 @if ($index >= 5 && $index <= 7) {
                   <div class="col-md-4">
