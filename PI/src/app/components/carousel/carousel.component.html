@@ -13,70 +13,70 @@
       }
     </div>
 
-      <div class="carousel-inner">
-        @if (opiniones.length !== 0) {
-          @if (opiniones.length >= 3) {
-            <div class="carousel-item active">
-              <div class="row">
-                @for (opinion of opiniones; track opinion) {
-                  @if ($index <= 2) {
-                    <div class="col-md-4">
-                      <div class="card">
-                        <h5>{{ opinion.titulo }}</h5>
-                        <div class="text-center">
-                            @for (color of getStarColors(opinion.valoracion); track $index) {
-                              <span class="bi bi-star-fill" 
-                                    [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
+    <div class="carousel-inner">
+      @if (opiniones.length !== 0) {
+        @if (opiniones.length >= 3) {
+          <div class="carousel-item active">
+            <div class="row">
+              @for (opinion of opiniones; track opinion) {
+                @if ($index <= 2) {
+                  <div class="col-md-4">
+                    <div class="card">
+                      <h5>{{ opinion.titulo }}</h5>
+                      <div class="text-center">
+                        @for (color of getStarColors(opinion.valoracion); track $index) {
+                          <span class="bi bi-star-fill"
+                                [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
                               </span>
-                            }
-                          </div>                
-                        <p>{{ opinion.descripcion }}</p>
-                        <p>Usuario: {{ opinion.usuario.nombre }}</p>
+                        }
                       </div>
+                      <p>{{ opinion.descripcion }}</p>
+                      <p>Usuario: {{ opinion.usuario.nombre }}</p>
                     </div>
-                  }
+                  </div>
                 }
-              </div>
+              }
             </div>
-          }
-  
-          @if (opiniones.length >= 5) {
-            <div class="carousel-item">
-              <div class="row">
-                @for (opinion of opiniones; track opinion) {
-                  @if ($index >= 2 && $index <= 4) {
-                    <div class="col-md-4">
-                      <div class="card">
-                        <h5>{{ opinion.titulo }}</h5>
-                        <div class="text-center">
-                            @for (color of getStarColors(opinion.valoracion); track $index) {
-                              <span class="bi bi-star-fill" 
-                                    [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
+          </div>
+        }
+
+        @if (opiniones.length >= 5) {
+          <div class="carousel-item">
+            <div class="row">
+              @for (opinion of opiniones; track opinion) {
+                @if ($index >= 2 && $index <= 4) {
+                  <div class="col-md-4">
+                    <div class="card">
+                      <h5>{{ opinion.titulo }}</h5>
+                      <div class="text-center">
+                        @for (color of getStarColors(opinion.valoracion); track $index) {
+                          <span class="bi bi-star-fill"
+                                [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
                               </span>
-                            }
-                          </div>  
-                        <p>{{ opinion.descripcion }}</p>
-                        <p>Usuario: {{ opinion.usuario.nombre }}</p>
+                        }
                       </div>
+                      <p>{{ opinion.descripcion }}</p>
+                      <p>Usuario: {{ opinion.usuario.nombre }}</p>
                     </div>
-                  }
+                  </div>
                 }
-              </div>
+              }
             </div>
-          }
-  
-          @if (opiniones.length >= 8) {
-            <div class="carousel-item">
-              <div class="row">
-                @for (opinion of opiniones; track opinion) {
-                  @if ($index >= 5 && $index <= 7) {
-                    <div class="col-md-4">
-                      <div class="card">
-                        <h5>{{ opinion.titulo }}</h5>
-                        <div class="text-center">
-                            @for (color of getStarColors(opinion.valoracion); track $index) {
-                              <span class="bi bi-star-fill" 
-                                    [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
+          </div>
+        }
+
+        @if (opiniones.length >= 8) {
+          <div class="carousel-item">
+            <div class="row">
+              @for (opinion of opiniones; track opinion) {
+                @if ($index >= 5 && $index <= 7) {
+                  <div class="col-md-4">
+                    <div class="card">
+                      <h5>{{ opinion.titulo }}</h5>
+                      <div class="text-center">
+                        @for (color of getStarColors(opinion.valoracion); track $index) {
+                          <span class="bi bi-star-fill"
+                                [ngStyle]="{'color': color, 'font-size': '1.3rem'}">
                               </span>
                         }
                       </div>
