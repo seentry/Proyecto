@@ -18,7 +18,7 @@
   @if (servicios_productos == "servicios") {
     <div class="row justify-content-center mb-5">
       @for (servicio of array_servicos.slice(0, 3); track servicio) {
-        <div class="col-md-4 d-flex justify-content-center">
+        <div class="col-md-4 my-sm-4 col-sm-12 d-flex justify-content-center">
           <app-card [name]="servicio.nombre" [price]="servicio.precio"></app-card>
         </div>
       }
@@ -28,7 +28,7 @@
   @if (servicios_productos == "productos") {
     <div class="row justify-content-center">
       @for (producto of array_productos.slice(0, 3); track producto) {
-        <div class="col-md-4 d-flex justify-content-center">
+        <div class="col-md-4 my-4 d-flex justify-content-center">
           <app-card [name]="producto.nombre" [stock]="producto.stock"></app-card>
         </div>
       }
