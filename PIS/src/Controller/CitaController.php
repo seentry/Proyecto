@@ -114,7 +114,7 @@ class CitaController extends AbstractController
         $cita = $entityManager->getRepository(Cita::class)->findBy(['cliente' => $id]);
         return $this->json($cita, Response::HTTP_OK, [], ['groups' => ['cita', 'citaCliente', 'cliente', 'citaTrabajador', 'trabajador', 'servicio']]);
     }
-    #[Route('/api/cita/{id}', name: 'citaByUser', methods: ['PATCH'], format: 'json')]
+    #[Route('/api/cita/{id}', name: 'citaModify', methods: ['PATCH'], format: 'json')]
     public function modificarCita(EntityManagerInterface $entityManager, Request $request, Cita $cita): JsonResponse
     {
         $dataRequest = json_decode($request->getContent(), true);
