@@ -50,6 +50,7 @@ export class InicioComponent {
   public onSubmit(): void {
     console.log(this.reactiveForm.value);
     this.createOpinion();
+    this.show = false;
   }
 
 
@@ -124,7 +125,7 @@ export class InicioComponent {
         assessment = 5;
         break;
       default:
-        assessment = 0;
+        assessment = 5;
     }
 
     const newOpinion: Opinion = {

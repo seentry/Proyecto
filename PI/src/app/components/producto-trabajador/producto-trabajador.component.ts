@@ -33,7 +33,7 @@ export class ProductoTrabajadorComponent {
     this.service.getServicios(this.apiUrlServicio).subscribe(
       (response) => {
         console.log("Servicios recibidos:", response);
-        this.servicios = response.filter(servicio => servicio.stock !== null);
+        this.servicios = response
         //this.servicios = response.filter(servicio => servicio.imagen !== null && servicio.imagen !== ''); // Filtrar imágenes vacías
         this.actualizarPaginacion();
       },
@@ -48,6 +48,8 @@ export class ProductoTrabajadorComponent {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.serviciosPaginados = this.servicios.slice(startIndex, endIndex);
+    console.log(this.serviciosPaginados)
+    console.log(startIndex)
   }
 
   nextPage(): void {
@@ -109,6 +111,7 @@ export class ProductoTrabajadorComponent {
         this.getServicios();
         this.actualizarPaginacion();
         this.cerrarFormulario();
+        this.changedServicio();
       },
       error: (err) => {
         console.error('Error al agregar el producto:', err);

@@ -19,19 +19,19 @@
     <div class="row justify-content-center mb-5">
       @for (servicio of array_servicos.slice(0, 3); track servicio) {
         <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mb-4">
-          <app-card [name]="servicio.nombre" [price]="servicio.precio" [img]="servicio.imagen ?? null"></app-card>
+          <app-card [name]="servicio.nombre" [price]="servicio.precio" [img]="servicio.imagen ?? null" [description]="servicio.descripcion"></app-card>
         </div>
       }
     </div>
   }
-  
-  
+
+
 
   @if (servicios_productos == "productos") {
     <div class="row justify-content-center mb-5">
       @for (producto of array_productos.slice(0, 3); track producto) {
         <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center mb-4">
-          <app-card [name]="producto.nombre" [stock]="producto.stock" [img]="producto.imagen ?? null"></app-card>
+          <app-card [name]="producto.nombre" [price]="producto.precio" [stock]="producto.stock" [img]="producto.imagen ?? null" [description]="producto.descripcion"></app-card>
         </div>
       }
     </div>
@@ -44,12 +44,12 @@
       </div>
     </div>
   </div>
-  
+
   <app-carousel [opiniones]="opiniones"></app-carousel>
 
   @if (user !== null) {
     <div class="d-flex justify-content-center">
-      @if (show === true) {
+      @if (show) {
         <button type="button" class="btn btn-primary" (click)="showForm()">Ocultar formulario</button>
       } @else {
         <button type="button" class="btn btn-primary" (click)="showForm()">Añadir una opinion</button>
@@ -65,7 +65,7 @@
   }
 
 
-  @if (show === true) {
+  @if (show) {
     <div class="row mt-4">
       <div class="col-md-6 offset-md-3">
         <form action="" (ngSubmit)="onSubmit()" [formGroup]="reactiveForm">

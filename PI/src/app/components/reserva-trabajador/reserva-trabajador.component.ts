@@ -44,6 +44,7 @@ export class ReservaTrabajadorComponent implements OnInit {
   public getUsuarios(): void {
     this.service.getUsuarios(this.apiUrlUser).subscribe((response) => {
       this.usuario = response;
+      this.addUserData();
     }, (error) => {
       console.error("Error al obtener user:", error);
     });
