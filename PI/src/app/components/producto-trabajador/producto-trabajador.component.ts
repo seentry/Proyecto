@@ -33,7 +33,8 @@ export class ProductoTrabajadorComponent {
     this.service.getServicios(this.apiUrlServicio).subscribe(
       (response) => {
         console.log("Servicios recibidos:", response);
-        this.servicios = response.filter(servicio => servicio.imagen !== null && servicio.imagen !== ''); // Filtrar imágenes vacías
+        this.servicios = response
+        //this.servicios = response.filter(servicio => servicio.imagen !== null && servicio.imagen !== ''); // Filtrar imágenes vacías
         this.actualizarPaginacion();
       },
       (error) => {
@@ -47,6 +48,8 @@ export class ProductoTrabajadorComponent {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.serviciosPaginados = this.servicios.slice(startIndex, endIndex);
+    console.log(this.serviciosPaginados)
+    console.log(startIndex)
   }
 
   nextPage(): void {
@@ -89,7 +92,6 @@ export class ProductoTrabajadorComponent {
   }
 
   cerrarFormulario(): void {
-    this.mostrarFormulario = false;
     this.productoForm.reset();
   }
 
@@ -100,11 +102,16 @@ export class ProductoTrabajadorComponent {
 
     const nuevoProducto: Servicio = this.productoForm.value;
 
+    if (this.productoForm.controls['servicio'].value === true){
+      nuevoProducto.stock = null
+    }
+
     this.service.postProducto(this.apiUrlServicio, nuevoProducto).subscribe({
-      next: (productoCreado) => {
-        this.servicios.push(productoCreado);
+      next: () => {
+        this.getServicios();
         this.actualizarPaginacion();
         this.cerrarFormulario();
+        this.changedServicio();
       },
       error: (err) => {
         console.error('Error al agregar el producto:', err);
@@ -119,8 +126,19 @@ export class ProductoTrabajadorComponent {
       descripcion: ['', Validators.required],
       precio: [0, [Validators.required, Validators.min(0)]],
       stock: [0, [Validators.required, Validators.min(0)]],
+      servicio:[false],
       imagen: ['']
     });
   }
 
+  changedServicio() {
+    if (this.productoForm.controls['servicio'].value === true){
+      this.productoForm.controls['stock'].disable();
+      return;
+    }
+
+    if (this.productoForm.controls['servicio'].value === false){
+      this.productoForm.controls['stock'].enable();
+    }
+  }
 }

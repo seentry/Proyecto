@@ -23,6 +23,9 @@ export class InicioComponent {
   public servicios_productos: string = "servicios";
   public array_servicos: Servicio[] = [];
   public array_productos: Servicio[] = [];
+
+  public user = localStorage.getItem('userId');
+
   reactiveForm = new FormGroup({
     titulo: new FormControl(''),
     descripcion: new FormControl(''),
@@ -47,6 +50,7 @@ export class InicioComponent {
   public onSubmit(): void {
     console.log(this.reactiveForm.value);
     this.createOpinion();
+    this.show = false;
   }
 
 
@@ -98,11 +102,11 @@ export class InicioComponent {
     }
   }
 
-    public createOpinion(): void {
-      const usuarioString: string | null = localStorage.getItem('userId');
-    
-      const usuario: number = Number(usuarioString);      
-      let assessment: number = 0;
+  public createOpinion(): void {
+    const usuarioString: string | null = localStorage.getItem('userId');
+
+    const usuario: number = Number(usuarioString);
+    let assessment: number = 0;
 
     switch (this.reactiveForm.value.valoracion) {
       case '⭐️':
@@ -121,7 +125,7 @@ export class InicioComponent {
         assessment = 5;
         break;
       default:
-        assessment = 0;
+        assessment = 5;
     }
 
     const newOpinion: Opinion = {

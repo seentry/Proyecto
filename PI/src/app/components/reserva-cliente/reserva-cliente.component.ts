@@ -46,7 +46,7 @@ export class ReservaClienteComponent implements OnInit {
 
   public getServicios(): void {
     this.service.getServicios(this.apiUrlServicio).subscribe((response) => {
-      this.servicios = response;
+      this.servicios = response.filter((servicio)=> servicio.stock == null);
     }, (error) => {
       console.error("Error al obtener servicios:", error);
     });
@@ -105,7 +105,7 @@ export class ReservaClienteComponent implements OnInit {
     let fechaCompleta = selectedDate && selectedHour ? `${selectedDate}T${selectedHour}` : "";
     let loginUser = parseInt(localStorage.getItem('userId') || '0', 10); //Es un string, mediante parseInt forzamos a que sea numerico
     let pago: boolean;
-    pago = this.reactiveForm.value.pagoEfectivo === false;
+    pago = this.reactiveForm.value.pagoEfectivo!;
     const nuevaCita: CitaNueva = {
       fecha: fechaCompleta,
       precio: this.price,

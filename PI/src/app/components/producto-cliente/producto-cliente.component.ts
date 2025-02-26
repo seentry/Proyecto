@@ -14,7 +14,7 @@ export class ProductoClienteComponent {
   public servicios: Servicio[] = [];
   public serviciosPaginados: Servicio[] = [];
   public currentPage: number = 1;  // Página actual
-  public itemsPerPage: number = 4; // Elementos por página
+  public itemsPerPage: number = 6; // Elementos por página
   public apiUrlServicio: string = 'http://52.205.151.118/api/servicio';
 
   constructor(private service: RequestService) {
@@ -28,7 +28,7 @@ export class ProductoClienteComponent {
     this.service.getServicios(this.apiUrlServicio).subscribe(
       (response) => {
         console.log("Servicios recibidos:", response);
-        this.servicios = response.filter(servicio => servicio.imagen !== null && servicio.imagen !== ''); // Filtrar imágenes vacías
+        this.servicios = response.filter(servicio => servicio.stock !== null);
         this.actualizarPaginacion();
       },
       (error) => {

@@ -1,14 +1,20 @@
-<div class="card shadow border-0 bg-transparent" style="width: 300px;">
-  <img [src]="img" alt="Producto de la tienda" class="card-img-top object-fit-contain" style="height: 180px;">
 
-  <div class="card-body text-center">
-    <h5 class="card-title fw-bold text-primary">{{ name }}</h5>
-    <p class="card-text text-muted">{{ description }}</p>
+<div class="card shadow" style="width: 300px; height: 450px; overflow: hidden; display: flex; flex-direction: column;">
+  <img [src]="img" alt="Card image" class="card-img-top" style="height: 180px; object-fit: cover;">
 
-    <div class="d-flex justify-content-between align-items-center">
-      <span class="fw-bold text-success">{{ price }} €</span>
-      <span class="badge bg-warning text-dark">Stock: {{ stock }}</span>
+  <div class="card-body text-center d-flex flex-column" style="flex: 1;">
+    <h5 class="card-title fw-bold">{{ name }}</h5>
+
+    <div class="card-text-container" data-simplebar data-simplebar-auto-hide="false" style="max-height: 120px;">
+      <div style="padding-right: 12px;">
+        <p class="card-text text-muted">{{ description }}</p>
+      </div>
     </div>
-    <button (click)="onDelete()" class="btn btn-danger">Eliminar</button>
+    
+    <div class="d-flex justify-content-between align-items-center mt-auto">
+      <span class="fw-bold text-success">{{ price }} €</span>
+      <span class="badge text-dark" style="background-color: #c4a98c;">Stock: {{ stock }}</span>
+    </div>
+    <button (click)="onDelete()" class="btn btn-danger mt-2">Eliminar</button>
   </div>
 </div>
